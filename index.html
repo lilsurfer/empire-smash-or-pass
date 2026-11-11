@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>England Empire: Smash or Pass 👑🔥</title>
+  <meta name="description" content="Tinder-style Smash or Pass game featuring all 51 iconic characters from England Empire!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0f19;
+      --bg-surface: #121a28;
+      --card-bg: #162234;
+      --card-border: rgba(255, 255, 255, 0.09);
+      --text: #f0f4f9;
+      --text-muted: #8c9cb1;
+      --accent-smash: #10b981;
+      --accent-smash-btn: #ff3366;
+      --accent-pass: #ef4444;
+      --accent-super: #f59e0b;
+      --trim-red: #cf142b;
+      --tarmac-blue: #1b2a49;
+      --gold: #f59e0b;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: radial-gradient(circle at 50% 12%, #19263a 0%, #0a0f19 80%);
+    }
+
+    /* British Empire ribbon stripe at top */
+    .empire-band {
+      height: 10px;
+      width: 100%;
+      background: repeating-linear-gradient(135deg, var(--trim-red) 0 14px, #ffffff 14px 22px, var(--tarmac-blue) 22px 36px, #ffffff 36px 44px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      padding-top: max(10px, var(--safe-top));
+      background: rgba(10, 15, 25, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 90;
+      flex-shrink: 0;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .logo-flame {
+      font-size: 24px;
+      filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6));
+      animation: flame-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes flame-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.14); }
+    }
+
+    .brand-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 20%, #ffccd5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-count {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 7px;
+      background: rgba(207, 20, 43, 0.35);
+      border: 1px solid rgba(207, 20, 43, 0.6);
+      border-radius: 999px;
+      color: #ff99aa;
+      -webkit-text-fill-color: #ff99aa;
+      letter-spacing: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .icon-btn:active {
+      transform: scale(0.92);
+    }
+
+    .matches-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, rgba(255, 51, 102, 0.16), rgba(245, 158, 11, 0.16));
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .matches-btn:hover {
+      border-color: rgba(255, 51, 102, 0.4);
+      background: linear-gradient(135deg, rgba(255, 51, 102, 0.26), rgba(245, 158, 11, 0.26));
+    }
+
+    .matches-btn .count-pill {
+      background: #ff3366;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      box-shadow: 0 0 8px rgba(255, 51, 102, 0.5);
+    }
+
+    /* Clan Category Filter Bar */
+    .filter-bar {
+      display: flex;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(18, 26, 40, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      overflow-x: auto;
+      scrollbar-width: none;
+      z-index: 85;
+      flex-shrink: 0;
+    }
+
+    .filter-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #8c9cb1;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .filter-pill.active {
+      background: linear-gradient(135deg, rgba(207, 20, 43, 0.4), rgba(245, 158, 11, 0.3));
+      border-color: rgba(245, 158, 11, 0.6);
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+    }
+
+    /* Gerald Banner */
+    .gerald-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: rgba(27, 42, 73, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12.5px;
+      z-index: 80;
+      flex-shrink: 0;
+    }
+
+    .gerald-avatar {
+      font-size: 20px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .gerald-avatar::after {
+      content: '👑';
+      position: absolute;
+      font-size: 11px;
+      top: -7px;
+      right: -5px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .gerald-text {
+      color: #c4d3e4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      font-weight: 500;
+      transition: opacity 0.2s ease;
+    }
+
+    .gerald-text strong {
+      color: #f59e0b;
+      font-weight: 700;
+    }
+
+    /* Progress Track */
+    .progress-track {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #cf142b, #ff3366, #f59e0b);
+      transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Arena / Card Deck Container */
+    .arena {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 10px 16px;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    .card-stack {
+      position: relative;
+      width: min(92vw, 365px);
+      height: min(64vh, 520px);
+      max-height: 530px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* The Individual Tinder Card */
+    .tinder-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 4px 14px rgba(0, 0, 0, 0.25);
+      cursor: grab;
+      touch-action: none;
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.2), opacity 0.35s ease;
+      will-change: transform, opacity;
+      overflow: hidden;
+    }
+
+    .tinder-card.dragging {
+      cursor: grabbing;
+      transition: none !important;
+    }
+
+    /* Background stack styling */
+    .tinder-card.card-layer-1 {
+      transform: translateY(0px) scale(1);
+      z-index: 30;
+      opacity: 1;
+    }
+
+    .tinder-card.card-layer-2 {
+      transform: translateY(14px) scale(0.95);
+      z-index: 20;
+      opacity: 0.88;
+      pointer-events: none;
+      filter: brightness(0.9);
+    }
+
+    .tinder-card.card-layer-3 {
+      transform: translateY(26px) scale(0.90);
+      z-index: 10;
+      opacity: 0.65;
+      pointer-events: none;
+      filter: brightness(0.75);
+    }
+
+    /* Card Flip Structure */
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .tinder-card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      border-radius: 26px;
+      overflow: hidden;
+    }
+
+    .card-face-back {
+      transform: rotateY(180deg);
+      background: #141f2e;
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    /* Card Front Layout */
+    .card-face-front {
+      background: linear-gradient(180deg, #172335 0%, #0f1724 100%);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Atmospheric Backdrop Glow on Card */
+    .card-ambient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 55%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-ambient-img {
+      position: absolute;
+      top: -30%;
+      left: -30%;
+      width: 160%;
+      height: 160%;
+      filter: blur(45px) brightness(0.4) saturate(2);
+      transform: scale(1.2);
+    }
+
+    .card-ambient-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(20, 29, 43, 0.1) 0%, #172335 95%);
+    }
+
+    /* Card Content */
+    .card-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 18px;
+      justify-content: space-between;
+    }
+
+    .card-top-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .clan-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+      letter-spacing: 0.02em;
+    }
+
+    .hype-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(245, 158, 11, 0.15);
+      padding: 4px 9px;
+      border-radius: 8px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* Card Portrait Centerpiece */
+    .portrait-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8px 0 4px;
+      position: relative;
+    }
+
+    .avatar-halo {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(255, 51, 102, 0.8), rgba(245, 158, 11, 0.8), rgba(63, 169, 58, 0.8));
+      padding: 4px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 51, 102, 0.25);
+      position: relative;
+    }
+
+    .avatar-halo::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      animation: spin 30s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #101822;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .card-face-front:hover .avatar-img {
+      transform: scale(1.05);
+    }
+
+    /* Card Bottom Info */
+    .card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .char-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .char-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .char-archetype {
+      font-size: 13px;
+      font-weight: 600;
+      color: #93a3b6;
+      display: inline-block;
+    }
+
+    .char-quirk-box {
+      background: rgba(0, 0, 0, 0.32);
+      border-left: 3px solid #ff3366;
+      padding: 8px 12px;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #d1dced;
+      font-style: italic;
+    }
+
+    .char-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 1px;
+    }
+
+    .tag-chip {
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .flip-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 4px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .flip-hint:hover {
+      color: #cbd5e1;
+    }
+
+    /* Card Back (Gerald Dossier) */
+    .dossier-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+      padding-bottom: 12px;
+    }
+
+    .dossier-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dossier-body {
+      margin: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      max-height: 310px;
+    }
+
+    .dossier-intro-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .dossier-intro-title {
+      font-weight: 800;
+      font-size: 14.5px;
+      color: #ff99aa;
+      margin-bottom: 6px;
+    }
+
+    .dossier-intro-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .dossier-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .dossier-stat {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 9px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dossier-stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #8c9cb1;
+      letter-spacing: 0.05em;
+    }
+
+    .dossier-stat-val {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-top: 2px;
+    }
+
+    .flip-back-btn {
+      align-self: center;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #f59e0b;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .flip-back-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      transform: scale(1.04);
+    }
+
+    /* Swipe Stamps (Smash / Pass / Super Smash) */
+    .stamp {
+      position: absolute;
+      top: 32px;
+      padding: 6px 18px;
+      border: 4px solid;
+      border-radius: 12px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.1s ease, transform 0.1s ease;
+      text-shadow: 0 0 16px currentColor;
+      box-shadow: 0 0 20px currentColor;
+    }
+
+    .stamp-smash {
+      right: 24px;
+      color: #10b981;
+      border-color: #10b981;
+      transform: rotate(16deg) scale(0.9);
+    }
+
+    .stamp-pass {
+      left: 24px;
+      color: #ef4444;
+      border-color: #ef4444;
+      transform: rotate(-16deg) scale(0.9);
+    }
+
+    .stamp-super {
+      top: 55px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      color: #f59e0b;
+      border-color: #f59e0b;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* Bottom Control Bar */
+    .control-dock {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 12px 16px;
+      padding-bottom: max(16px, var(--safe-bottom));
+      z-index: 90;
+      flex-shrink: 0;
+    }
+
+    .dock-btn {
+      border: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .dock-btn:active {
+      transform: scale(0.88) !important;
+    }
+
+    /* Button sizes */
+    .btn-undo {
+      width: 44px;
+      height: 44px;
+      background: #1c2637;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fbbf24;
+      font-size: 18px;
+    }
+
+    .btn-undo:hover {
+      background: #2a384e;
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .btn-undo:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-pass {
+      width: 60px;
+      height: 60px;
+      background: #1a2436;
+      border: 2px solid rgba(239, 68, 68, 0.45);
+      color: #ef4444;
+      font-size: 24px;
+    }
+
+    .btn-pass:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-super {
+      width: 50px;
+      height: 50px;
+      background: #1a2436;
+      border: 2px solid rgba(245, 158, 11, 0.45);
+      color: #f59e0b;
+      font-size: 20px;
+    }
+
+    .btn-super:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: #f59e0b;
+      transform: translateY(-2px) scale(1.08);
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-smash {
+      width: 66px;
+      height: 66px;
+      background: linear-gradient(135deg, #ff3366 0%, #cf142b 100%);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 28px;
+    }
+
+    .btn-smash:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 12px 30px rgba(255, 51, 102, 0.55);
+    }
+
+    .btn-flip {
+      width: 44px;
+      height: 44px;
+      background: #1c2637;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #94a3b8;
+      font-size: 18px;
+    }
+
+    .btn-flip:hover {
+      background: #2a384e;
+      color: #ffffff;
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Keyboard shortcut helper bar */
+    .keyboard-hints {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 16px 6px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .keyboard-hints kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: #cbd5e1;
+      font-family: inherit;
+    }
+
+    @media (max-width: 600px) {
+      .keyboard-hints {
+        display: none;
+      }
+    }
+
+    /* Matches Drawer & Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 580px;
+      height: 88vh;
+      background: #131c2a;
+      border-radius: 24px 24px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1);
+    }
+
+    .modal-overlay.open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #182334;
+    }
+
+    .modal-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-tabs {
+      display: flex;
+      padding: 8px 16px;
+      background: #0f1622;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: #8c9cb1;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .matches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .match-item-card {
+      background: #1a2536;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .match-item-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 51, 102, 0.4);
+    }
+
+    .match-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .match-name {
+      font-weight: 800;
+      font-size: 13px;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .match-sub {
+      font-size: 11px;
+      color: #8c9cb1;
+      margin-top: 4px;
+    }
+
+    .match-tag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 14px;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #64748b;
+      gap: 12px;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-icon {
+      font-size: 48px;
+    }
+
+    /* Quick Detail Popover inside Modal */
+    .detail-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 15, 25, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .detail-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Endgame / Coronation Screen */
+    .endgame-screen {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 25%, #243552 0%, #0d131f 80%);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      overflow-y: auto;
+    }
+
+    .endgame-screen.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .endgame-card {
+      background: rgba(26, 37, 54, 0.95);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 28px;
+      padding: 32px 24px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 158, 11, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .crown-banner {
+      font-size: 52px;
+      animation: crown-float 2.5s ease-in-out infinite;
+      filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.5));
+    }
+
+    @keyframes crown-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .endgame-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .endgame-verdict-title {
+      color: #f59e0b;
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .endgame-verdict-text {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .stats-summary-row {
+      display: flex;
+      width: 100%;
+      gap: 12px;
+      margin: 8px 0;
+    }
+
+    .stat-box {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .stat-val {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8c9cb1;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .top-picks-preview {
+      display: flex;
+      gap: -8px;
+      justify-content: center;
+      margin: 4px 0;
+    }
+
+    .top-pick-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid #f59e0b;
+      object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      margin: 0 -4px;
+    }
+
+    .endgame-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .action-btn-primary {
+      background: linear-gradient(135deg, #ff3366, #cf142b);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
+    }
+
+    .action-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 51, 102, 0.5);
+    }
+
+    .action-btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .action-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(20, 29, 43, 0.95);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Canvas for Confetti */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 180;
+    }
+  </style>
+</head>
+<body>
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- British Empire Tie Ribbon -->
+  <div class="empire-band"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-container" id="logoReload">
+      <span class="logo-flame">🔥</span>
+      <h1 class="brand-title">EMPIRE SMASH <span class="badge-count" id="headerCountBadge">51 CARDS</span></h1>
+    </div>
+    <div class="header-actions">
+      <button id="soundBtn" class="icon-btn" title="Toggle Sound (M)" aria-label="Toggle sound">🔊</button>
+      <button id="matchesBtn" class="matches-btn" title="View Matches">
+        <span>Matches</span>
+        <span class="count-pill" id="matchesBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Clan Filter Bar -->
+  <nav class="filter-bar" id="filterBar">
+    <button class="filter-pill active" data-clan="all">👑 All Legends (51)</button>
+    <button class="filter-pill" data-clan="The James Multiverse">⚡ James Multiverse (10)</button>
+    <button class="filter-pill" data-clan="The Oli Continuum">👓 Oli Continuum (6)</button>
+    <button class="filter-pill" data-clan="The Leo Dynasty">🕶️ Leo Dynasty (5)</button>
+    <button class="filter-pill" data-clan="The Lucas Order">🧢 Lucas Order (5)</button>
+    <button class="filter-pill" data-clan="The Jake Syndicate">🦁 Jake Syndicate (5)</button>
+    <button class="filter-pill" data-clan="Crown & Faculty">🎓 Crown & Faculty (7)</button>
+    <button class="filter-pill" data-clan="Mythic Legends">✨ Mythic Legends (13)</button>
+  </nav>
+
+  <!-- Gerald Commentary Bar -->
+  <div class="gerald-bar">
+    <div class="gerald-avatar">🐦</div>
+    <div class="gerald-text" id="geraldText">
+      <strong>Gerald:</strong> England Empire needs an Empress or Emperor. Swipe right to smash, left to pass.
+    </div>
+  </div>
+
+  <!-- Progress Track -->
+  <div class="progress-track">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+
+  <!-- Main Swipe Arena -->
+  <main class="arena">
+    <div class="card-stack" id="cardStack">
+      <!-- Cards dynamically inserted here -->
+    </div>
+  </main>
+
+  <!-- Keyboard Shortcuts Bar -->
+  <div class="keyboard-hints">
+    <span><kbd>←</kbd> or <kbd>A</kbd> Pass</span>
+    <span><kbd>↑</kbd> or <kbd>W</kbd> Super</span>
+    <span><kbd>→</kbd> or <kbd>D</kbd> Smash</span>
+    <span><kbd>Z</kbd> Undo</span>
+    <span><kbd>Space</kbd> Flip Dossier</span>
+  </div>
+
+  <!-- Bottom Control Dock -->
+  <footer class="control-dock">
+    <button id="undoBtn" class="dock-btn btn-undo" title="Undo Swipe (Z)" disabled>↩️</button>
+    <button id="passBtn" class="dock-btn btn-pass" title="Pass (← / A)">❌</button>
+    <button id="superBtn" class="dock-btn btn-super" title="Super Smash (↑ / W)">⭐</button>
+    <button id="smashBtn" class="dock-btn btn-smash" title="Smash (→ / D)">🔥</button>
+    <button id="flipBtn" class="dock-btn btn-flip" title="Flip Card Dossier (Space)">📖</button>
+  </footer>
+
+  <!-- Matches & Gallery Modal -->
+  <div class="modal-overlay" id="matchesModal">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h2 class="modal-title"><span>👑</span> Empire Match Center</h2>
+        <button class="modal-close-btn" id="closeModalBtn">✕</button>
+      </div>
+      <div class="modal-tabs">
+        <button class="tab-btn active" data-tab="smashed">🔥 Smashed (<span id="tabSmashCount">0</span>)</button>
+        <button class="tab-btn" data-tab="supers">⭐ Royal Court (<span id="tabSuperCount">0</span>)</button>
+        <button class="tab-btn" data-tab="passed">❌ Pass Bin (<span id="tabPassCount">0</span>)</button>
+        <button class="tab-btn" data-tab="all">👥 Current Deck (<span id="tabAllCount">51</span>)</button>
+      </div>
+      <div class="modal-body" id="modalGridContent">
+        <!-- Grid items rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Endgame Coronation Screen -->
+  <div class="endgame-screen" id="endgameScreen">
+    <div class="endgame-card">
+      <div class="crown-banner">👑</div>
+      <h2 class="endgame-title">The Empire Has Spoken!</h2>
+      <div class="endgame-verdict-title" id="endgameVerdictTitle">ROYAL ARCHETYPE</div>
+      <p class="endgame-verdict-text" id="endgameVerdictDesc">Loading your imperial verdict...</p>
+      
+      <div class="stats-summary-row">
+        <div class="stat-box">
+          <div class="stat-val" id="endSmashRate">0%</div>
+          <div class="stat-lbl">Smash Rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="endTotalSmashed">0</div>
+          <div class="stat-lbl">Smashed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="endTotalSupers">0</div>
+          <div class="stat-lbl">Super Smashes</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px; font-weight:700; color:#8c9cb1; text-transform:uppercase;">Top Royal Picks</div>
+      <div class="top-picks-preview" id="topPicksRow"></div>
+
+      <div class="endgame-actions">
+        <button class="action-btn action-btn-primary" id="shareBtn">📋 Share Royal Verdict</button>
+        <button class="action-btn action-btn-secondary" id="restartBtn">🔄 Reshuffle & Play Again</button>
+        <button class="action-btn action-btn-secondary" id="reviewMatchesBtn">📖 Inspect All Matches</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast message -->
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    // 51 Character Dataset from england-empire.web.app
+    const ALL_CHARACTERS = [{"id": "jake", "name": "Jake", "quirk": "Roars at the camera. Everyone listens.", "intro_title": "Jake joins", "intro_text": "Jake arrives mid-roar. Gerald is briefly impressed, then offended, then hides behind a bin.", "image": "data:image/webp;base64,UklGRpIDAABXRUJQVlA4IIYDAACwFACdASpIAEgAPsFUpE6npCMiJnM8yPAYCWMAxuxSPnttDd71CDVY8I941UK3Ij9tib3Wm1qaxLaG7kFgRouc989jLEPfaSFKj1JzGj5k1hQEndPS7y5admx0E8LSvlVnpsHQKsemGUmqb3+iqW1GNhtUFd2JKOv6I/26EsRh9d6Y5ozZyx7Z+e7cSX+1FmqdoAebu6ykP8LiqtVMUZEXKwfOOkO3qZG3NxPhrMAAzjo2dmB3T8ImsGZZ8M+vvs2KWUXSrJUAe1NhECNwX06TCdTLgrOWnDwMUBRsJrJW3GhbFaghdgMXePi+KzBLUfkUPkhX3t5Zfe9jbfg0Pgi6dRgm7VL1UkbuuJUFV2MVKP3DiCiI1lOdnTv3HP+g0HSuGZpFKutk2AuutycRt5QyHvuSsDMBaJvn3oRVspZzKmdl3jTkUnYLkJNM+N3NLAQbVHBd5WvDKKF0Sr0GJrPWSYaN5yLwd8NO/CVa45CJKn45mvrJ4lUJCqI4bGc3nmgVSc89V5kN6oJzPuuMVXSbeEVgg2oAID6EAVT84zzGWmeE0emUXTOBCh4Owlk3g71MPCeW121t+2NxGV55fS4bxiNfk1TvOunBX8OCqpb+41C1Z7vfTJTSXXuZej/cJRHqqoRgEI/vNqbwaSkMJ5cHxk8+RQx8Rwq2WJJxz50+WnD92hNnNeZI1WIQM2YHeOOoFOha7I6pYFsXOgO1gLIWdzXbuUF6MIgxRp/Y0T3q2nwNKOXkmaOyLXzcmOQxAjlCk0rqFjJo3AiafR5qV5jwBxxVr5Zl2K7FX9LYtoWcyPRA0la+y5LGND3ByiUZ16RFtU/NpfqfFsS4/uEQeFX9MOOvjdWdtK+InwICSyGeUoKcMPZDKRzzWGTx+X7sc4uQeyY3des1DhIrCVlR+iGSDR2PEYbQVEbo+jgwaFbifyEhC9b5cUQyVozM+4cAL8uQVF1awoniCT89ESwVi1x+PEdd07zHT24PlbKngyWUu8ENAVch3y5aFsZqJdOSzKnABSl1E6WpekD5KKH37u6kVgYvzphtSgtZGLxsGS6Y/wtbUl1N6EEZSc8z9257vIlpLg315YDSALLZvKd029dxCiXO39r/tu+JlLnf6T9lxxQS0POIyAsXI7Nx1gTEi8IpiMDkHXUS44yahLJAL7NporFUrk9wZzu4luJoxX5wcHJc5wAAAA==", "archetype": "The Roarer", "hype": "Hype: 9,200", "tags": ["Loud", "Beach Legend", "Adrenaline"], "gerald_quotes": null}, {"id": "leo", "name": "Leo", "quirk": "Sunglasses on. Zero sweat.", "intro_title": "Leo joins", "intro_text": "Leo shows up in sunglasses on a cloudy day. Nobody knows why. Gerald blinks first.", "image": "data:image/webp;base64,UklGRqIDAABXRUJQVlA4IJYDAACwEwCdASpIAEgAPsFMoEsnpCMhsfJOiPAYCUAXmvJp2Si32lU9toCBaSNgOIwV1bCUr7xZW2jEjwx7760VSGHO+IXZlJbSkCB4Uq45TTJtbMuaxalqgReRbt+Sz6r8MQwtz4XaD4pMQ7os1mUN54wmIr28fQ6N3EjuX9zCCDEHL74drAQ8CR4FueCMAY8l/FsC31HGxJdrbdlr1FETMYkO0ZTlz4PwAP7nFY75hJNmacp7rRXfGuTL2aqKe6q1dLi38c/2prCsysln/7F1lsFb+WMg4n153XyeQZWqnGFS2FbH2EaDsiBlq4Q56af4qbDjNe8Ygo8enYfA6YZQCVvJsQa6vwjGASMx0HobIjuxUsWQixcf4qm7Zc0deEAzIhvzuPGuBPiqmUm/975X5Ipvnkl+459lSkvzVbmvIHuAogHQGRzXpqoiRcbgm1akFqY9enX8pWiYRN4pcO5UdehJCew0+SczP8M1LnYB4OazlqAhPAwfUxV0tx8upr0X1M3DWVNSYHkpP7HFg3cLsW16vm7dnTwD7lZ80dkIMbu5AZKe+jcpJaAuDOx1iyGfEaOJ7DObbwu7Mw9jvSi/g5H1h9Ul4RL1FYGJk9zzBncmMihQrRXm6qq9tADuOhzHCgFnmN1bp3MHRSkDMHqYQK8tC9OZjUu3LtfYps6KPlLsfXYcAGuZmVouOh1ZDrGETx0TnP/dGe9SPrkL7H52LdAWR+HelZ43Mxa85dzThEENgbmD1wbT8OkrkS/EdVUDPldtFqtEyqmBvLy+e4LBTbJadNqnn5Tesa2km/HrmvhqlKf9y2IECD+kZvlfLTCSfpvvUVw3L8Kg/rqjrKJG7R0uj2MvvlNMQlju+eSIlUzhk40XSO+jDeEfBSvXujsMTJ6ppTMJG/qGu1KdZ9wwoco1spG7ImFw0iwVmqRwP6nlSuQo+4ROk2N/yaOI4K7yrVL04P66eKaS+RvpGN4JSu2bYb/4FXYXToYJpxwusisSrymyoI/fpLSn7r/sw1OdmL4ekqHBRcHe+fMd/Vs3fleFdxO1pZObFpOt5saHqRjJ8MxBAnbMP0UVRRB5EKIMhZvki1X+u0MpdwBCVQQNZ/oEiQ+G4dDLBtMeTPRWsyAFKkYGRQ0o4Uc88EYQIkl+i/Qa9MobBR4DAhAycWomd6AaR51HLi3iot75FERjpQsMF0bfQAH8gjFslE1AEalVdRIcoohwAAA=", "archetype": "The Cool Operator", "hype": "Hype: 8,900", "tags": ["Sunglasses", "Calm", "Zero Sweat"], "gerald_quotes": null}, {"id": "lucas", "name": "Lucas", "quirk": "One stare and the queue sorts itself.", "intro_title": "Lucas joins", "intro_text": "Lucas stares at a hedge until it confesses to something. Case closed, mostly.", "image": "data:image/webp;base64,UklGRmADAABXRUJQVlA4IFQDAAAQFACdASpIAEgAPsFSoEwnpKMiLNM+YPAYCUAXk4ASJieTT6WH/3NYCL4x1NPjCPnYD1F46rrrf5dsH33IXbTKSvNiqASgnX7MLgBGK1tRmnk2tU5eTIFlT1MEP1cN2PfoMtt1EjJzKHYUSn8pofnteAF9cLLpTlOoyhZdEd4jtdgoO7aTYS5bF6tSgUoL4g/3CAzk8680HnH5V5w167X4Hccmu8ufNjGAAP7bdZ5crP1n7UH3cRzDLFpLfAC4jnhXjmT4XMNBQQZ4ioJYYD55vcpqA8U/zNxDlrr4lq0cEvTAizpBw9Zknr/2e8TU51q2PD5pOS3Yteww64tFFHm15Wx1PoDPoL9qjxDfee4ftWgHnwwYAtjsvcikil084xA/sDi8vDfhtw9PqPNEj0O6EirJFZvv5eL1aXAcDBNba1KWbMfhO8n+h/kMx9RDtJSaStFvT/wUbzST19gDy5RyIZfjlaXRAYWOApdglVsqv5v6TiMEp0kEXM+6PhQzRUE58oiTiWXTheMBPFAS62ns/QKI3vlnTVe6MNSA8n8J2lWVB3iRq0LhDWhZketA0/cnfv3DtW8pmbQWUJVYLuOUjToVW0yqQwEg60+xWp2eG5vso7IaogUB6TQBcI4J/cLYotnvBHRoOwlQ0tA53TgKrCTQ7+JO5Q47fh+DnaRyw1/BAuJzfX4/cmR9JOd/9cM18QHdco/BEzcpe7uqMU1ahys4U7UbjVRir8iKDKcTLNCWPYtEuy9OJpQEEMF+C8kF9xnfxdUjGPxEuvuTR85585JXOvKMfhukdyaoYV8GOFBOP3rz0G/VVBRZGMvl1Xw+JHyAQN3d2U+M/i2ksy0Y+ObLQnqh4OAKWZQBsKNiJt4YLCC8RIH9qtxiGCSGiYAjIww77bmquF9QD4GAGIWEcrcJtZ8obh4lggOV9xtqw9T6so4CG+zdTPGhxJqX2uJzBahlNMq8NCEzmB+pSDuHtdoepkbmopzupTLPrPiLp3sAKPMqz4oiBYfk3FvKh1d2eTIshZApGAktce2MVauYL5FxZDOojCK5CBAh5QNcErfCws6MObkj/2bw+lXPvsVq4YjLkTp3ts30UGNlJLlkQbDOJ9ct2tP0Ov35x2pdP1DWgAA=", "archetype": "The Queue Sovereign", "hype": "Hype: 9,500", "tags": ["Stare of Doom", "Unshakable", "Investigator"], "gerald_quotes": null}, {"id": "oli", "name": "Oli", "quirk": "Big frames, bigger ideas.", "intro_title": "Oli joins", "intro_text": "Oli puts on his enormous glasses and deduces the whole crime. Then fourteen other crimes. Then what's for tea.", "image": "data:image/webp;base64,UklGRmwDAABXRUJQVlA4IGADAACQFQCdASpIAEgAPsFWpE0npKOiJ7VdCPAYCWIAuzP2koKJ4HcHjcFreP0dHXb1VwuXdsoOdtYUeAG4HHn0RbklZv1oV7cDCUhjiiSzfZGXny4H5+oJc3Y3ArkZ3W6iEwGmlS5d9gXhrd6lMBnTtpVs3B5aQsa59abhRVs9UlIUwoASSx+9XPTJUR594Psj4qbGaGhj/fGJtgzFjNl+F3NmPxFTOwdD5Ht5vJJKTiO8L67k99kAAP7LxlhgWtFY6AYVkpL3K388va4N/1jY0b7O0bky+4Q0UqiOxBNuTXqODC0qQiYgvNUgOZAifB52IxrFmX+vebJ3QC5ICiVNsuQfGTVuJZHDYxB8XeFMaRzJeefRQ8SIf5MefBeeQFA+T1Ai9JnOJ2ge0kxi+NluOOhhB99zlTjoQSlfvR54WdvAKH0p+kspEo2qMszfq0IhWzaeZHMRjq6G/FQ14hMdbVXwVLG+oxjPbND25PDsAMna2QCStYUG1EJakFF4sn/pXkxEcJgNQe8JDpPoctaWZwGujAlgN+LlW6CG1hWnsF+ezci7fA447KKVNJixSW8Baj3zhflMIQmMHNcKTNuRywEgN7SdobIZuJJUb1ZOKSbP20qf4WEq0ydpVOtp/O73XoMq5Z+S8LW9mrEEnUoshBR1HyP2SVyE6G1aE7LyPS/5QkdmogVV9B24Zu+x7p6L3bayXbfTteyYvtJo8PJtviw8YUCZLeaT00bC4vSSIbaoBn+xqseir3Vu8JpmUF66/MndzWQYDVZFR1jjTqi7Fcnz21Z0JEZ9HoUzILlQFlFz7TBhaj6lGU9SRKb/iCGwOpHRfS4m89cg70SQSU79DQ1NBU9CCDHtMLpiVFlV61RWPE78OXnRWHR+/8AXhbKmjqvFPHi5w0kHkyjLXbPPybvpbbC/ObrmltLku44/AiJHKOQWz7lJYf0QFapGCn/HSbarmV4yEAzzAzU/8JEp9dsUeMYMN14AEfzYn0ANzxcDbNlxyBqhEZXgSQWjjBywstHC7MgZvTJPqMyzU6vckksHZDs4MadbQZUFkMob21L9NIhoFRaiLa+D3B8+sEGE2OYKMYLRcLbmfVuGdK/jU+8wtGXQ7mS8aNMVhD+Kvoz+Hi4OxFga/cyNWg+4AiLCUAA=", "archetype": "The Visionary", "hype": "Hype: 9,100", "tags": ["Giant Frames", "Mastermind", "Crime Solver"], "gerald_quotes": null}, {"id": "harrison", "name": "Harrison", "quirk": "Takes selfies mid bench press. Spotters are nervous.", "intro_title": "Harrison joins", "intro_text": "Harrison turns up between sets and asks if the teabag counts as a protein shake. It does not.", "image": "data:image/webp;base64,UklGRngDAABXRUJQVlA4IGwDAABwEwCdASpIAEgAPsFOnkqnpCKhsLYt+PAYCWQAwFxx1rdYa4DGuURZ0IMRH7guzSv7lB+JOf9lCxCdE2hxgKe3nN6sXFLOv2coMpsmSP+zUQTd0tsh+HVJ+iMbRzCeTb6yzCBM+mQTbT1/g5eoXx7wLCCiDKR94A8zwwESulFrjndFloEJUYTDb7fAIyDmro4MZKYvhFZFFvGQwZo/5AHHs97OoAD+9CNO1yfeMxE8/2p5Nr6pVL+iMDSg2qwmNClCEEf/uoDI+p35Vnl9f+vyhmX3nnecRqJIpfCvr49+cyXjLYReJtg0yGS426EDCFRtGpxBzZ1xtFkZWVzXMgcxC66JComm2ZdBve3L3erJQKGCFANWtWMQNHRLtMcTo9iIcaPhIMYWrMIGDw93ddSi+c9mzPXjB1CubDEoOEX6Wc5fB78SjndlerpWYsSKEndd/vJtzGzvsQ5pvm+tO/EN9qulfbWeYq4vBTJe3Nr3J0YTTUE0lMC7WrAT8C2SCbF7ImjUmvHmrT4OPE5mgpgkY4JQT9rnaJxlJM5wXdqQXWKToUSUE7AUCZoQnsNtfhNeBkfuf00DoI8XY12rkmhL6mRVPIrvvgyNDjg9w2SGsobeIIeEQGAHopnRVR138WyKL+WN+76iHJl0bCcmSq4HagXvAaH8rR0hkcfC8deLPxgKcRcjGUuApEID31Cg1u50XV9vl+HctFP1X3x+OeWB2KdQUKalPxQZOvgQuwArZuGlVnZk7XZjlb69n43oL0xuBDxi+SB9D4u0mkA/Qf1/+Cr8p6v6V2TKsXBcveBeD9q2zf+ehIwfsrdcKWlu4DpfLKh33rWtU9C3M1ECjqZhP1FjDNBb2kkWLKdby7hPdD0u2l8s+dYLHQCQ8sCUXqDEBH+Rnaj38OLjdyqiES0lxS1zJlgvE3zwDecVE1t3TTut6IQpWqfAR8MoKMquDBgzyr1qHfPAPesskFH4eU6ZM2V/qnLg/Vu08NEbFaRh+X9Lcp/g4jUhpiO/+L/7D3SbbRWPMLp8tG5rZt1x4P/6U9MkTTYAoiP7z5lB0yAXNrIlkfidha6vAZurMzA41zBe1sDggOGL3tXvE+SfX2b9ZYtmE+Z9eY5QCxgpzeCBVWsSz7ksa7xx8oV2k+kNAlNNBsh2iJyWBWzjAAA=", "archetype": "The Gym Disciple", "hype": "Hype: 8,800", "tags": ["Bench Press", "Protein Teabag", "Gains"], "gerald_quotes": null}, {"id": "james", "name": "James", "quirk": "Soaked in the rain, completely unbothered.", "intro_title": "James joins", "intro_text": "James arrives soaked from a rain that only fell on him. He insists it was a tactic.", "image": "data:image/webp;base64,UklGRgwDAABXRUJQVlA4IAADAABQEwCdASpIAEgAPrVKoEqnJCOhsfSfQOAWiUAYoX/pg4iUg0DzjTsQI6aXpji9Kl9QHCBcen1anb55AGxrLCyb19k7XhcYMCARC4FDRiZ817KQ3F4s13QvpNIpVS8pWtiik0FfyYFn/VTLbIAsXdvRMGZu4zCzg9vvXPF+yqogoRDSXHXH5CgMzrOUgZPH+lurBZDvifZAnzdr+TcvMbUS949wAPlzkY9KuSdHEgIm+ZE3N2lvEnXmhsuCuCrXQRqmoYPKpBocDgEAPCc5kQTTB1RIc83wlA7Tp0NEaz5ogRaRdiWyUDWd4t6nEPzzDWawRDssdDkOSSJCZ+nyDSG0m1Xz65m3w7ToBDvvSYMF8Yctha01HD61bhhXVTVsiBwo7awE699lBdd6+rmnlgxFiV8yDcXLi/3rgv5GWWNWzjaSUdNPsxKTH5SvIkP14sKh44SxPEMtBdNB3JE2iU+vDj/KVBxpebhJ8W4VbZfpe8LfJB9i/cTRMFZ1MRF7Hfng4Uai1K+n4atULQbeCc0psgXDjtIXc8tUpzPIO/YKGU99mOhMuI7RVBPIxhPVnmxYMnYM8xuXXEFoJAgSr5paBPIXX2ui/7s9ZjR/JDfmHS4fleJHGLc+T0By2xCakasU844wIIRyZ8U1mzGinTebnu8Skvo6Pse6R9pOY2wm715w5FtxNANiYVqIQ3+tgTXrpZtdxC0xuGT2FlrAkDRs5GQLF/LRV0mDXS4R8UnR70zkxeyw3gckmj/QYMdpx6Zm1JUU2+5hN7VZi/Dg38Zatx1xYkcBDyToQFSBstabO1N8d684NhEFJ8R0MRIK8Ni5AK2BfFvR4k20tTi6EFZyO9+UpgO/Vs0Fd4iCKk3ifj3ZXav3pkNOPUgb4ZRDM9F/6Dsnp0AEOtEk39ukuUY/zHiODsZer0v7CioHolVeRsm88h3MwCTctXa3nDC4ufYyPrtVFXIr+FJstIGT5Id8ahLXId6lm/JJhK4H3fVa105f0qrSt1i8h604pigAAAA=", "archetype": "The Rain Walker", "hype": "Hype: 8,700", "tags": ["Weatherproof", "Tactical Soaking", "Perseverant"], "gerald_quotes": null}, {"id": "erika", "name": "Erika", "quirk": "Hair does whatever it wants. So does she.", "intro_title": "Erika joins", "intro_text": "Erika's hair arrives four seconds before she does. Three seagulls salute it.", "image": "data:image/webp;base64,UklGRo4DAABXRUJQVlA4IIIDAADQFACdASpIAEgAPr1MoEqnJCMhszVcyOAXiWIAsR+c0amjDlo7Lg4uSltJqt98FxuH6X/NR9IPwmbAReNpO5jdtiatn68gNAgRxxNARXzdepOvKTzPZsaQ4vrVNW9RevhlsMXVKcoxB1HdfiSjZBHiQRIAmhddbsMhfHcrwtwRH97eNxLFzGvNK/x2hdsLYTuW1sInLbF2nUD/CIOlH5ng/m5z+HQJ8TWkVeUsQ7QAAP7UkY6l59EHRd7zziQRF/Ks/Uksq/ZxhvtcZTOSIwzR3gwxQ6evCc+hCSJIrKY95QuVLs0AD4t0FVsEjRec3tIYZu/ak0TQ5nZGzsly0MbbWqyWhvfDRGmyr4uq5wZImoBj5GaTxGMveQoKdhxSl1xaLVeALjZ2CF+QJouHJxEeMG35K3fUTt/mFatB5rdJ52VLbVylh5R2ACO35dcYxAlQ5VsIhv1ICPy529KTuqEmTW+4Frq057I69MUlWDkwcc/dem9b1fLVl/zVT+NFdYAaXwG+E2RL+Z32daBckUFK/LGtBlnbOJV++QDxvySddmKISLZYazGmF+sv3kQ73LZA4QwXp3ShibkJFkuTZHDbabg0kJ+Sr/xMEMynp+QqEhx2tblg9HC6zWDBeC7FG0n+TFRuhNoW5SQJDchYtrR+q1gV1/UKDVDSyz45V2oUq/fHIiTV4hge+mpH2PegQrpj1mIjYJPMf09WqRmyN9lYwwZLRdMfA/5SQx3PL49gc976SucHYYF4JcX0Nx2st02yWB2HajmYu+AR8NvRTE2ed9yhJozDfoo+6m8fYLYGMHFHTaz30L4FdzQ/HwU01Otd5+5NiL+PaL+YX1Ypr39sglkxbIBYHeYZhlfWUYR3yhl0/nGPtrSrdSuC6sDEa0cle6ENXM8SCizPF422r+OHttum/Js6uK9WNj65oONj8fX5HXlutUfIcZlhHXB4leDMlOe+rxwZjeUL+J6cvcE14y8dNQT/HvXslz16cdWZ5kU6gyeUcgQVHeVorq004keHBxu6j+V+yXc51Xf7mGgX4jdQ59PCRNy1H5pHkrBDXF0sv3dLLVOJywm6Dr06I3Wx0L+u0HQZKr93T8TLdDS2jEZafz+CYlWn4ujsd5DfyIxm+QLXTipOd7N/KXlak5ggDrMtmC9b1mk11bV3ABu7FIQijHTV0oAqx+69VgFpAAAA", "archetype": "The Tempest", "hype": "Hype: 9,300", "tags": ["Legendary Hair", "Seagull Saluted", "Free Spirit"], "gerald_quotes": {"smash": "Gerald salutes: 'Three seagulls dive to salute her hair and your union!'", "pass": "Gerald squawks: 'Her hair will find someone more worthy of its majesty.'", "super": "Gerald swoons: 'THE ROYAL HAIR HAS DECREED ETERNAL HYPE!'"}}, {"id": "stephen", "name": "Stephen", "quirk": "Beer garden legend. Never in a rush.", "intro_title": "Stephen joins", "intro_text": "Stephen strolls in with a pint, a phone and zero urgency. Gerald immediately starts negotiating.", "image": "data:image/webp;base64,UklGRp4DAABXRUJQVlA4IJIDAACwEwCdASpIAEgAPsFcpk6npSOjI/qroPAYCWIAtzgAjNEYPoJaUCmVALUQ3qCemD/nVgoVTlP246bQa5g9JuqGx3fdK7n2zFwwPu3hCvQM0gMui+GB+Gq/GbWQNegbGncDUNhlgJ7buU+L8pEeSoAPUiLAVM5I2FeAEqPAfUh6MQalQ6ju6/YmYWCeyJt8+PEdAA0wXMmqjZFg9McDieckCYU4i4kgAPt2EcZaRe+Ru7dlyZQCNeOPOLPQeP/KyOozrrSv60Xndd7LxNNbGTfs9qOpU6ML4caN8WNu3Isn6hrRAC00DIn2HBfmsF8P1p3u78+T8RhgEMTKUH/WZRyRInxALDyULF+boeJxG8Dck4kq+e3ffEdtCbGxmqhnzwOvXGB08P8tz/8zWwS3UvyM2TBbye5871x62C5D5ADmu3plmW/MZW8QLZN2tjhHj/lpZevJG7G41FYEa7ajX7l+v+mlqsmorz2kme3buajS5yD6O3dBAupgVWi0hhR8S+Ct8xfDjK9YB7PRKc0jyqfAzlk+eGDtel5IiEdzbGjlLjEyfgQSXQx5zJXYthppJZpPK37XT4DDVJ/tJqL880y9IWRAfRnQ9eWJcZdz1lbueMKnUQjFUTCpqQ87NXD1ehZFmU8fPnbeEi78iHOdqCJQbINDNAahLCqL1o2ghGBG7BxxByNrpnxs3sBKeVOq7jWGwMUn0tNZVFfDiHeoDXraj67axwe7JjdF0KY7lGnIa1/WA/D3YxRgBC0ir3vwqh4JRiY6b7cLp14/R++0BbPaX1+smTU76lPNA2mcQhVdy9vz6oXGQ9VO//tqohDvU9HDhIiiOynNRhXmQ/AoRIAZGpNskVExLKKMEif2C+AV59IhMLh0LXQqj6Pb/jpTunAcPVtNc0vZv/IAWAyiWYZ4RtsMS76a75S7FSPn18Z4QwQcRYQo/HF3zEhCRXujA4WSeUyOXZCt+F6aquP33dA67S7DC6jeV3qSg4Aov8oD2QaPuXbU8Pq3AHHdVbV6I9RYbFPlD9gs12+7XBzU/B8WaEuwFoxwaxLg9Yv++QRAU6iqVtSY0yeFDFJowXnE6/PS/liWnZVqH3gQqYXJoBLh6L1Z3FVzSCZpILCFnN9E6fMtB8xJWOQ3Cv922X3muhGT9YISPqrzU/kTaQC3CjGeRMmIBeChqQSaBAhQBOH57fk572tq4WRPXLONlipFX1gAAA==", "archetype": "Beer Garden Monarch", "hype": "Hype: 9,600", "tags": ["Pint in Hand", "Zero Rush", "Chill"], "gerald_quotes": null}, {"id": "papa", "name": "Papa Brogden", "quirk": "Propeller hat at full spin. The final boss of dads.", "intro_title": "Papa Brogden joins", "intro_text": "Papa Brogden descends slowly from the sky, propeller hat whirring. He has seen a thousand seagulls. Gerald takes off his teabag crown and calls him sir.", "image": "data:image/webp;base64,UklGRlQDAABXRUJQVlA4IEgDAABwFACdASpIAEgAPrVInkunI6KhrNTeYOAWiWYAucwAjwmuEHugNyA6inn1/Y8/cD0cmlO0nP1aP7mkLLyDaj+XZP29dBHwzj4TIw0n47blLwZXjHsF2MfB0JZkIQ6SDt1Ui1+uB7fEkMmkkket9SGNEJh41BgftlaowoQd0n+MRp5XvQe+oyCefYoVusr+rTAG14422G/+cEM59VP/EVU9ckMVILEBlG7YhMqAAP7vlfS2Pea08uE368yrdP+Rv5s0gqa4mg6WYse3E+DuADY53iKQq7HYH1LQ7QdGbtUv8634E43FKbiDqDDOxnWyYOxr1m7VsW7ozuOcdmadAy/Mi5TTeZbi287+VtaqgGK3FPhaMoKL/mudx4Fpi2o4LLzmnSc9gPtjfoLt3bgBp51tOecLxuKjdcSQEkuevg+KTGQcJwQUQ4wmC+Le1qhYOBXgaO0Fkby5qeYJW8auhM8Q8uHwQySmsaykJ6f8/E2alWpQSJwq6S1AVmVKrd6398H3+QZCqCZ4jp5leFDh2Vn+lPZDQC/KBh0eImqhR4KotK9zZB6j25/J68wCQt0ebn7rTl3g8kwXq+yzFM1Aoyh5thQaEszCiPePrWiDTcz/dolS3vHn8z5XyN44IjmY8qYSgoQDRAfADBX1Cl+AfAY1MWUdSLikMnZ0oCKhm6LDuCrKnG1Bv/GlD3PDVGyvot9hg2mM0YdUcuqnadZ7jXO9N7wh6v71hvwulKiPV7dk7wAIbsVmy/INHm7HBIPz/n4IBko9Gq8/RcV8wwo3eP63JcquNC9tfzZAzSc7qPcZMclgLqu67WHRZ7WHs3fYzJtZ1fuOD7JiU+LD/ekMzoelqcOUpPxr+yu7N3hSCZc0pLZagZR/WzQSpG+itiGdLFNh1PR4Jc6Xq7NT1FqACx+heiifpBERJaNd/O/7Rgm+dpqBWQpVZQZHNCUvofH3MowT60SU0Gv4RbCo8hJQePicl4VmLuVmoY8de9sOgWV61nXi9DhB1znXhGdwPjmCa6uH/MJzy0S8aRMddceyXH4qvHS5jj1YH0TwHeG16qwVlAr3Sholg4+BCtY9d9F9TEqzHeZgp50C7BoWJzgZEjLA4vrodEkOAAA=", "archetype": "The Sky Patriarch", "hype": "Hype: 9,800", "tags": ["Propeller Hat", "Dad Final Boss", "Revered"], "gerald_quotes": {"smash": "Gerald salutes: 'Papa Brogden whirs his propeller hat in royal salute!'", "pass": "Gerald gasps: 'You passed on the Final Boss of Dads?! Blasphemy!'", "super": "Gerald bows down: 'THE PROPELLER KING HAS ARRIVED! HYPE IS SKY HIGH!'"}}, {"id": "olifinal", "name": "Oli final form", "quirk": "Fully evolved. The side-eye alone does 9,000 damage.", "intro_title": "Oli final form joins", "intro_text": "A blinding flash outside the chippy. Oli steps out of it, hair at maximum volume, giving the side-eye of someone who has already won. Regular Oli is confused but supportive.", "image": "data:image/webp;base64,UklGRiIDAABXRUJQVlA4IBYDAAAwEgCdASpIAEgAPqFEnUmmJCYhMzZvMMAUCWIAwnfkFHi5LAG+DNIDF/0EulL7AAVVCzWKbNF/fe8dNBlBP6H4WOoFW/FX6GuhN12eW9GQaGV3ihxjU+bKWmv+CPM2hQppSwwIima8mLiyYXBWQanJ0/yuUWXio2NRVUZQJpjjxVKiOCzmGYPvo9HwFjAWtAU7SEfG/igtQmDgAP7vxr73SEm8SV1fjJRG+WiXoQXWQyQ6/CaVn7YTp6n/k06VIX92Xu8KdZR61EydXZ0A4ynwMr7VK4nvNF0RYex/UE67itUvthJn4e5FXMDF9eQOcaNdXiKRu9YaIkpGme8+PWgC+0tzEbLX/9N2ya3kMrQaoVi2YxQfV8Ej28X8w9vHVvjbW5VoWxjHRtbwL796eJfD0ifKvI6hWSy47TyZp55QcEInjLm6M4Qx+m8QjupHsNkNeoCkVCcFRvpfrX+A8eiPZp5LhY0K2iWqXD4UsqsnhyxAeAf+mV7mi8dTncGwIILfvxZ39Yk0BcKRDB3NtZ5B21uE7UMQSE9ZKmcQfmGiXQ6b97C0se/KodXpJ85AoPGfBHfyKoo0JlVHPg8Yn35NAAZE3XYcslf6njuz8Tl93X6uKfATdmxGzBpn5H7wywy/JIjGnwCWIvv9wYWsxfumfVa9Zc/loV0PLHIy05Ob8oau0E1HrB5bfKpYx13r68lw266q4QoL5yxmkUD2Lp33oU0YaRyNJJtlSqxmgPqrvvDG9bQxE7HC1IEuJJG70w4xm0tr2frD1uaEL0EteAFuX4LZuBn0cgZVMc3G2GMORSdO14qZmEwvOHn4FCvodBPNj/MinHDwwvFkfBI+ILqzV3vn0dD5eGL1kWD31k81NOmvA615SABLcq7hNezlQVRiOCIPdBP+Urk2kC7yfQY4X1drE5Ktq0CW9dtgqqtoEq/0jwJJfYemKleuBgE/uycLS+ybxmQWdlcgWaePECRYbwupmv4lg7qlgeCcojmnjNvlJYBS7bQDcBYRtbpt9q1YYS9ZtSfc6y33xyiaYh2uA4cmAAAA", "archetype": "Ascended Oli", "hype": "Hype: 9,999", "tags": ["9000 DMG Side-Eye", "Max Volume Hair", "Transcendent"], "gerald_quotes": {"smash": "Gerald shields his eyes: 'The 9,000 damage side-eye is now your personal bodyguard!'", "pass": "Gerald dodges: 'A near miss! That side-eye would have vaporised you.'", "super": "Gerald bows: 'ASCENDED OLI HAS BLESSED THE EMPIRE WITH SUPREME VOLUME!'"}}, {"id": "bailey", "name": "Bailey", "quirk": "Very good boy. Wears a tie. Runs the whole operation.", "intro_title": "Bailey joins", "intro_text": "Bailey trots in wearing a school tie, sits down and stares at Gerald without blinking. Gerald drops the pasty. Nobody has ever seen a seagull apologise before.", "image": "data:image/webp;base64,UklGRuoCAABXRUJQVlA4IN4CAABwEQCdASpIAEgAPrVMn0qnJCKhrhLtIOAWiWUAygBPIxEucur6MGuVoncyAD7ASF+RG6jfJqriWrpGi/zukT0xDYeACOX5szeMNbwe1p4StooVSbNALSTfpurBWAHh/gVQQ4TGJcax9ULsYxsAG6EgqR61d6RQx6cbYbfy1+vNllpTZcIzxA7MX6Qz5uh3qlvgt1AAAP2JaC3iMytlqEf8xxxR5xpd/uc92vWI3OWR4q7Jry3SavFFfCg29VtxtJrf092zWH6siTG3Gl3eYzhQphJ24RNuNw7zKaMw0l6NRApkUv35ab8n8FV35hpo7Tij/BYGVAcA7sXJ0XIMSq6OE9EBJipRIpD4aEFjDYQjAfukVt0oaDfl9cCxsOzacRRBqMPZDz2TU5VwAO/hQNE5jLU+o7Os8//h9g8AYQJcctxobC4YFoXnPVCoM7cXTK768LCYiA9IRwIUNrfp8U8fF/pna3iL6o/R/Dqq3Htzfg8/kvvobBACVemW1eKa29VoGwuB+xV7dSqFMRpX0LozYl8Wd1m42FQGBstjqiSAT2AUH5SAVsuTgkQrTMX1Cb4F0EgwRw3YfHL0FA+IxXUXkuimwpd00jMPerpVSiorE9RwJaAqHgadFlCQ3Ew7HVhFzO0Bqe1i1IUzXvodZ+Sk3V1Zc7966lh9lDjBw1QJdCclIqfH3ABgUJu1B8Z90N7U53h8xaUcoQ/rxY4caqkAHg+SC35R3AlKVFr+nvzYB6ap1uGyfy/TkRXzqj257YxZUUsFmRKblHxVNG3fzfe4h+aEIKjX3i6lMSil3chHVUgzblxDjO2Re4gpyIH2JlKhKH88mZu8Eym/yz/sqKq332vY7HIaGhx16A42ovz7E2wT2rDD1wv7aw29+SqgY7wAPqLRnni1PTuA3Y1wz0T8Q2YjW27Mijj33OYVxram2okiYxKEiukSqlBcs1+9IvmuYl0l4awoDEZRchgAAA==", "archetype": "The Executive Canine", "hype": "Hype: 10,000", "tags": ["Wears a Tie", "Chief Executive", "Best Boy"], "gerald_quotes": {"smash": "Gerald wags a feather: 'The dog wears a tie. He runs the nation. 11/10 imperial match.'", "pass": "Gerald gasps in horror: 'YOU PASSED ON BAILEY?! Even a seagull knows he is the best boy!'", "super": "Gerald throws sausages: 'THE EMPEROR OF BARKING! Long live Sir Bailey!'"}}, {"id": "zander", "name": "Zander", "quirk": "Navy cadet. Salutes the sinks. Folds his beret with military precision.", "intro_title": "Zander joins", "intro_text": "Zander marches in, beret in hand, flag on his sleeve, and declares the chippy a naval base. Gerald is now officially enemy aircraft. Bailey is promoted to admiral.", "image": "data:image/webp;base64,UklGRgQCAABXRUJQVlA4IPgBAADwDwCdASpIAEgAPqVElkmmJCIhNxqqSMAUiWUAyanbB86C5aZjVtLMazj6RpWtX/KMJuaOjoqlQdkZS8UhrullWCztT8t2iCkK7dScldA7nN+Z+HlVc9v4O4EeI1Qj+J6GVF+v/7xAByFDHqqRcG/5R+N51DtN54c7Bj2+5DsbS8BAJSquYqfAAP7xP0lgbDk2vZfKvV5ZZPwI7xxM4+y5gtr19AEiH+p0VZPlz9bgvWhVwf3T7ON+3Xawp9J6nzQ31bZMQSPiz4C5hNda1IzaBfhGke5HOJUzNsXUriu2Y08NZH9231IZMwRprq3RafjiOuKZ3/AkicUPrvWj6On+FgMzk1uoCJcU9HffIcO4QNWJOlL0WWhMKUdVhEiL5lS6cfrKjMyciA+anmGZgSjF3ZV7G4ssjvQ7UjkAOWQgLoak4V3JZcHH8r0u99iEWPe5JNkZzlKF7RYfn3UZkevXA6a61fz6EMmHBbFKW+MLAihkSnNmf9HJjL8prllndgXrJMkqdSEf0Mv5Is/DalbqLlqT11yBG7NuCepgAhEofyvI52ssCmrdu+994QJTqci5m1/HZNMl8/TzpOMBubV1pccBPvKKFeWLgOGsVHTBVrWMNp/veUDI47SZM4ncvc1j47IaPoE7QaTU88pbwN/nuwJJ8sQPAAA=", "archetype": "The Beret Cadet", "hype": "Hype: 8,600", "tags": ["Salutes Sinks", "Military Precision", "Cadet"], "gerald_quotes": null}, {"id": "ethan", "name": "Ethan", "quirk": "Only takes selfies from below. Looks down on everyone, literally.", "intro_title": "Ethan joins", "intro_text": "Ethan arrives filming himself from directly below, like a hero in a film nobody asked for. Gerald tries to photobomb, but the fringe blocks out the sun.", "image": "data:image/webp;base64,UklGRs4CAABXRUJQVlA4IMICAACwEQCdASpIAEgAPqVCmkmmI6KotxgMkRAUiWMAxnQBeUzG0YeQ6wwwEHokNw2oqUv+0k5lPTVW7whZF+BUxVEkranMbWPEvB1Rb9LeqO4IvpWtjR+7xzf703VRUuMTDm75xxrxr+kkLp16RnbZsKblXKKhyaerDmVZhB5Nq4iDszRhF655QZk1wgOpgT4/Jo3+soHpuAAA/v0r9f7CMZI6H5yW9YCCFYyAzt5wtvTJ7ve2YkMXqdzEbdLhDsEsjQ8Vxj4skVrB/jHQ8xk/R7YOyMrwIsVKIepsS9jkfaqYLw8LPO5CvOgB3xNyvPEvKZ4bLqLRiP8197mukW6TX7qvcgN7T5xNVa3P+8crid81f9NQJafLLRJ5vFScFulpzh4RIX7rjjAh6lw291WOsXyLGUw+eLPhKDP87g7bJ3KmPrIIOgykinlEyc9MJ3zpqStgA/3wrQ6PUWPP+Zs4t3a9DGV6MfrrbtFdDM8DGgt0b1rVc0Gfj3fBBC/d4ewQD0xbgAog6GMSznx7MX2R8VCoxcIYMtj0VPLLcKdwvRxt/Av/4LBUMi+NvYz72y9uOIM1oNtwp0jrTQ31hNlAj1EaDqCnrCC8C36XjXR5s3g1u8Y6DVRj8XppVTVPvaU4lMQlt/0a/iaMnSlxkG3Vpj4PL2KxlR+H4zh6HHniCbg8oIOgaccDuDlJ03de+qpzhtoqz3Fp87ShIqgLrUAP4L3lVgsNkbsBs4KUzzE8XRmAwzS3n1FUiqIqP3cEqNoxzqm0wbcwCmWbaqsYTK9WX6brTXlD21H2NKcQCls6XCNJLfIWSEEoNNBSsuvPas3N95TCIKXm1pVUZDoR+V8iaMo9dYe5p6WoDAvjjdzvcwRHr5/EujsG9pXE0maEqza5/mvFR/hOg42+R7a+Su0JN1Kjk6sI9jf0KIfJTKnBt2gQAAAA", "archetype": "The Perspective King", "hype": "Hype: 8,900", "tags": ["Low Angle Selfie", "Towering", "High Society"], "gerald_quotes": null}, {"id": "gingerleo", "name": "Ginger Leo", "quirk": "The side-eye that launched a thousand detentions.", "intro_title": "Ginger Leo joins", "intro_text": "A second Leo appears, but ginger, and giving the most suspicious side-eye in British history. Regular Leo takes off his sunglasses for the first time. Nobody is sure which one is the original.", "image": "data:image/webp;base64,UklGRq4DAABXRUJQVlA4IKIDAADwFACdASpIAEgAPrVQn0ynJKKiKPSdUOAWiUAXuPxY6X4PXZF/Fgj7JYM5q8iidetLyVpOvi8xXTZtZNrclPAoyvP0afkl2/13DAXk++6mMYkZoIcJrk+fu9kdQnLupaAHaFKkju+Wqh4OIQXot4XmbRMcTimTjvhuEknQdw5ZfoqjMVqNmBW8THEoZgADvfbpQOFq1oP8IKKqTStM4s5iXjMGmwqn9ks1X2lax4M+AAD94Ov0Pk/35xbg+DveIIW+l0AYGV3YS5AFv1yUMUdb9MkfQQI0jf2LXjXzToByNt7W+Vksh9YCafXxR2yxD0FQJ35zOmrnTBbYuuXyLAaYETZCemhUVJ0rFEhDu2/13+z3Ij0y8g1A6VG0GU7cMJqozmP0SbBAd94wTsdp0PVkAixtGY93ysU6u8T+dvi/VWY4/zYvKdYpy2JqLmKWtoi1iBu0VWp79YqXVDD5ZETUUaq4MSdUJWg2haFM6HOveYXmTuKmFqC6Dzy7Xp9tZd75B8LLY2FhZjKCbK1j/bSL1+nIYRGHMzqyr8bkvgmP4eYlLEcX/sOOGh/ALE+9dIBLzL8t0IZKiXxKndGw2c+Rbwur/b9+jZ3DgVUPJ8sMEGq3s3I7BybVFuCqVHZ9m9PX0n3rm8OdxaxQNm4U+R2Du+nRXAzifPoY8wMot2IXQUwhdhz81eEeJMpS/sg3LpPV8JKzwfztLYC/f2FvZZ6DYQB7cESfWzHBOY8oP9tlDC+CXfrB12aXQ6WR3gx92wzLIRrx8B3ml6HZRbwrag316mZvJhYTLtJVSUWGUn8oh4cdCa4iZG2g7VJhnyko/sWDKlVDoageaVQTAkmqZNw9ODwC1g0SwwKah5gofcNj7xtv0S4q412NNZzN/ewu0sa7huRqfiNf/bZm6eTkjQscSyG+GhlgL27SJ0D752lhHfJ/b1i/M1HbvlLW97CNgRJGg4R8s/Mr+E2fMnfan2uOAfhIyNdecabx25WBADI5Y4T4Msd8YeXnuqRbUdXb+zl8mxLKqh7zzcRsVhTlykqQg1JWWGdyTPC0CeB/guRACTbotZdHGmVT/kP02qjpIGW1xaPGwZz1BQybdgBKPC2LHbKxvSyghYUt9B+ms+B7JpQSE0Mnh/T40ySXg5OEYgMKQZpP5g0lnMw/mkJsFwWjGPpwoODCiJkVSopQmLOnQhpfevpPG5W63I4HDZ6/E2M/4Y96lSsEVwpGdsCQLhg0wAA=", "archetype": "The Detention Hazard", "hype": "Hype: 9,400", "tags": ["Side-Eye Threat", "Rebel", "Untamed"], "gerald_quotes": null}, {"id": "farmerjames", "name": "Farmer James", "quirk": "Grows hype in fields. Moustache harvested twice a year.", "intro_title": "Farmer James joins", "intro_text": "Farmer James rolls up on a tractor nobody saw him buy, straw hat on, moustache somehow fully grown since Tuesday. He offers Gerald a turnip. Gerald accepts. Peace is close.", "image": "data:image/webp;base64,UklGRo4DAABXRUJQVlA4IIIDAABwEwCdASpIAEgAPrVQoE0nJCKiJ7VcMOAWiUAYVn2IuAycHWPiv4KRwbj9iU1jpDhSAPyGTObRcyxB084XPWEYXhv+TWSX9I1pEz7P15Pw2U4b5JmhksX6WvNB7wEaLqhDVUcIw8+qug+fltnGfQLmzxgx9A4aMRwxKDAMG0ZvEZvehGF50Jdbk1RaQOzzlp5krZzBs9AhH8JrPei3+dAav0EwAAD+1iin9U0ipByUpoHVMcGcW6Fcv1mIfzhsXgEM9WWizVxjcwN2NYBUhoozDrivSmFL4F9MQVV2rKiW7zRh53jMdLG5gF9GVd04cIJm6Jt6gW4sNSBwJG+eaVCiaZ8Okm5WJ95y4SzExlhyMBNzWfzuGPRfqDx3Pey09pmNEFnFI8PkNO9hFLtf0w+kR8zBgfPcR4phidXA3zWjpP67IVLyqUFUgJ4CCy2bb/nkF7+BeUuvQjJXhY+aBW2/MKUHlQilsqrsSzD09cJI2wOuDDu5XHnj3HlX0KDXeAbQ/UFvM3FD8XnnigO0XIf57NlV/4mLtlau0nUh0IUVy8weUyhRwolVv9bTPt9ZcqxvKbVQUFlWqKqp1ITykey4YaYFGeoZdHiAPaosZOwfVflgvvjfCeNIJTKwxKYf4s2lYWDwotsNZfYPOixiOJCTT0E/hhrRdYLdoak+GOsc42K6ALwLako+cIJCXH/1LzhqJYFMyEUGwNYOqN777TQlYFA9fcIEPj4cw8zlNyNtGWbGohO9fJBTr2nccTa9NTW8iSJgAzLLmE1769oOHWLssEm3RFur1K6sR3KUxnnJzp/jcmtsKu0bHw3eBcO1SuN02CnWM6gZp0J3zwqBuZyq6vHNz9B+PI+LSRfgOqwJeulS/F2v/d7SlBWEFoaOmjMDLFp3+XFfx16fLl7HkFBZS+ugfxSugCTX/xEZtTIbWI+vdmTrmdtLXY3/9FGDhDQF3jG2Ozb+wIA5UgccpJKD83UeF6eFZefKsP8LmEvUY+Byiy36CLF3jxEi4e+535tqqMiukdDv/HKGCo8RwJPd5t6hFrcU2Kk/n1ByS2wNxGP/gk7qtMO/EULfgjyf6hM3GDEdQ9KCysPHvemvC3Uc4f/kxgHf0/O7Ci9IQQQyplheu/wbdU1GnQTs9Z6PAcFHV7eeI8eLzD7ZVfhEjwBQXrnkSjI27ADUfj7fnMLoAAAA", "archetype": "The Hype Harvester", "hype": "Hype: 9,200", "tags": ["Moustache Harvest", "Agricultural", "Down to Earth"], "gerald_quotes": null}, {"id": "harvey", "name": "Harvey (superhero form)", "quirk": "Cape, glasses, lightning fists. Still says please and thank you.", "intro_title": "Harvey (superhero form) joins", "intro_text": "Lightning cracks over the chippy. Harvey lands in a cape and glasses, fists crackling with golden electricity, and smiles like it's a school photo. Gerald faints. Bailey salutes.", "image": "data:image/webp;base64,UklGRqwEAABXRUJQVlA4IKAEAAAwFwCdASpIAEgAPrFMnkmnJKMhLNZuYOAWCWYAw2fVz0Gaxmc6+kTb48836Rt5mgXb640+vrzp1one3WoBv3C7i3z9ZongRTGL4ZKocakkG2w8w/nCp9dK4JK7o3wpmFY1insd+m5FTD/4zqggpmvUwlBX9dP17BHWoDSg1KMt0XEzg9vIJMMrEEHvAY4Blnsj4YD4Gc2m9ILXdsUqT/+IsTbh8TgZKqr/SpHYZO2kjSTur1Wao28VbsnymWlWV7L9/AD+9W7mpxNZkuTFG4aCQmWHkAfkVbq/d4tDPolI0dOb3dY28zl3G6x0PiGx/fRmSJzN0ZnZdkfe9ER32ru/WjMOSFeSLxyG7aEgvwD/e3GAB44KKqS8F52UXh739lx2x2dePCWQf2GxD+Rx6pYi5DFeMcOBCDCqgXWza+s0dTi1UFd5GiS4OV1z1Zv5GOan03BYx1evjdIBVzgO11W3S5jWFZBGWY3+T4yZj9NR5iLaXpRWfB+0cjHtLIzcu2faZeeZADXa3ZmX1cO/vtWYxAqGW/PKUJsvJFGIAddFURVdOLlKaYo8Oak/o5MY0uJnq/Kc1/NpZtrpKSPClSx7JyesqyhRD1rIXlAbwHIKkpIJ4uSQflgW2kjSJSoewOHcrUZ+UKMaXGDheOkwihHADKUw8Ddoq8L2rcXM6Mw/mQbgKJXdna1ySXEf7kkSpK00qfj7j3RvWxSWKVCY1eXaOfUn6h5hfJBXzHfVOBhqSuba5cdTanNhktTfFAm22k9F2SuasCGlIgUC/Egrv4jH75ePjHIawBk1SrR0skheVvE2dw38F5Fpp8iSTxFQq/hDPJwr+iIpgFIXRlB2MbtdWG9wvsWPfH6J+urM9OBy+8ku6/e1K8rHavOqALRaME1XIl9HGW2ryQ/Nh9nBmJjaZpb7TKgWxV6f3Bx0v9QjoIQ6xTRUXFlX+ZsKwrbIeVERcmIrsgs0fSNUHHy49fi7bBaFWBn1ty9YHdl/8v+S9dx5sywDsPMEv175MwjT8+cl/JRlhBHPWDtoMaxdsnvjjJ0W7p2Lrx/ICFWnkVUE7wIoWuGxiKkg+qHUovbBNoD8n+6/C/66vEzI/62arGlsdmFKqXEvryzUeJ3XNrOD62jbYjpspdPi0I82IE+Y1f6KGI6Vq407bNDpdgahhPZxrnHE4WnnAI81q1syQuNA5Vvbpi8lwMk5NEZUJ7orqOwmTGijBDBWeudZ3/TGHMyb5bT6hQZ44e+993Ua+cU62HQyG0JHZ5UQblGJz0bGCO6R7U6KAWdURDIUP9qE3NO/a1XYcFWiUFcxfx3B8yVtXFRtYjO5e+jo6PR95KJFBHmki0HkD3tjzhd/YCOdVhJG5EFpQpxjpFnjJpREGEPTmwdRnNSE39NEZMivENTk8eCFTwbcJAmBu0tIPm2DFoqkx158t2W/W2moFhVXD+336mQQktq1E8UfyfWrFP14T+VnpHppY1fgDINKJ6rCz02jDpbmx50H/L17CLeixibi+5elLo+LGuUQq9kQR5/QJCrAvK+SMi2BGhXvOPsLngOL8631hCJaXEfmGjxA5V0AAA==", "archetype": "The Polite Avenger", "hype": "Hype: 9,700", "tags": ["Lightning Fists", "Manners First", "Cape & Glasses"], "gerald_quotes": null}, {"id": "gran", "name": "Gran Brogden", "quirk": "Biggest glasses in England. Sees everything. Forgives nothing.", "intro_title": "Gran Brogden joins", "intro_text": "The door swings open. Gran Brogden stands there in her biggest glasses and her reddest lipstick. She looks at Gerald once. Gerald hands back every teabag he has ever stolen, then writes her a thank-you card. Papa Brogden's propeller stops spinning out of respect.", "image": "data:image/webp;base64,UklGRqIDAABXRUJQVlA4IJYDAABQFACdASpIAEgAPrFGnUmnI6KhLhdO2OAWCUAYg4cJucxVkxz8bJ94IePA4ARkB+0tbYCXISyTNT7aXPrX/m4hE6ZZOoMmCd7Llpnil7P9VYGsEO2cjEpin6rXui6nNIpGVNntPfJMaGPf8bpSdAMtl0TyY6GHRTrSuGOskMZ8vTytFXi1nWM+D+Yca/Sef77kCLb682e12EcQvDUm7beDqjmQ17z7SQPuNAAA/vi160dMq5JpnImY/7v2p/H9sAdLJxaSpzP5uOENS1L61KAYaocTN7M5aGV7VUBBd9trcLKWZQg62B7NdWu2bvLGAtFnrpXHwpYPRkUbuhS/8y5hI7X5fRHuLFS4E+1GH2hA9zc0fu4dja1Q2w/HW/CUfSVBBIjLGMd0znS4urRRmfFEUz5mAvOi4nkvTVanaVQdljLsM6XqGo84bZiIXsiuf7fEln0LmhOJawSg3Qvlp8lALF4RU88H5Kuoe5XsQOn/S9x/uNWUREFl2ipt32J8zK2tcLYQd5xVwPSE1F7CfLsY4tG2leXPCEJH/85v1ejReUNCYNgrtFPuOHgHPB2neP594da2uoXSDumoTEFbbBrLIMNHtmT+Nw5z5gTxQq8bGHKE4K3Z1Bsd6nTN6wfz2mKA45ug2HuV7dpmXxeAkLpoN70ogbmfQO23CXiCurG77wcnma2yv31kqH4EBVPJFhiYU9YaMIUUvkC5RM5qfhDBtURhf6TuwNoYlVLq6xBwE9Hf1G3WjbFhU6/8Jxm8tqCC/irOTYnpgkNOoPSaXaCe0DIIqt0ly+0Gv0EGC6IxEFI/5hEeoSfXqqMPHEfg6vn/m9W5xsdjGXemisgAokV0KEQ1x7X+/pXp1VWGiP7CnEIWwqFgcE3Qw+vx0sHwMrtLITf99n8mpSX0YuDseIz5Lbkf4vWyDkzkHRi4D5aXQV1P9w1QBsChPCBAQsquvjNB97uZAbY7afysOgnzscDT6kXqeEF16QmBnmSzkYrxc9qwgBz+NY4/m6x8aVHiurlWrWN5NzpjkD/aCUWLqZq5yWofIn5jySJ4OH0TwIOv3KrdHBSKtuGpxVjC/Ke9QPQrQoowuyRMwXMMY8ANDoRTP4Twci/o0/ICwT2yZwc9JFPOwTg6lTiYOgU4Ohjzmq7crMXxq3EFrEGW5+csekjcFFNr2cQS1zVxXkrPfGlZyKiA/r27L6CC5kDyaW03h3wMJB+gAAA=", "archetype": "The All-Seeing Matriarch", "hype": "Hype: 9,900", "tags": ["Giant Lenses", "Forgives Nothing", "Supreme Court"], "gerald_quotes": {"smash": "Gerald shivers: 'The biggest glasses in England approve of you. You are safe... for now.'", "pass": "Gerald warns: 'Gran Brogden sees all and forgives nothing. Watch your back on Sunday.'", "super": "Gerald kneels in awe: 'THE MATRIARCH OF THE EMPIRE HAS GRANTED HER ROYAL DECREE!'"}}, {"id": "blunden", "name": "Mr Blunden", "quirk": "Pythagoras on the board. Hype goes up at right angles.", "intro_title": "Mr Blunden joins", "intro_text": "Mr Blunden walks in mid-lesson, marker in hand, and draws a right-angled triangle on the chippy window. He works out exactly how far Gerald can fly with a pasty. Gerald is put in detention. Everyone gets homework.", "image": "data:image/webp;base64,UklGRr4CAABXRUJQVlA4ILICAAAwEgCdASpIAEgAPqFEm0mmJCKhNHn9UMAUCUTgAn2muDzGwKDT3Bw7Y/51rocNM5i8holPW55n3Bw8zuRY+7ey3w5R4ijLgpPvvd+0n/p6j/s/nsgPyemgfUSVTjO8pkGd/MfOQWYGoMhctqe0xnpFTVD1fTniwEVl7GXtzWi+iDRBgBYiy7yvy09b1VpSlfxEAjQE8J9agCE4AP5A9l+DEoWi9aNCYPmbJzK7txuv27ONbulLb4meLiZkB1F09v277KzIvTVVZiQR0fKndQQDRx3kfEVDb17/Os6suboeiOShTaV/moe8nSwi9/icQaqrMfk1RazGgl4l0R/TUrBb+x5WlmVUPtsYnC3SXGjzwMVnTfPBesSAYD1G1sssPZyCYHbsDcJn38v1KSZpOTiB6bNQ3cxAfsuYaN8Tj5owjkXsnHx6mxgRWDIzqXFYU5wSfFTxlI4LV2yRN8WJZiJ06Ba7fVddZqy5BUiu7yw7G98T0SwzeSGKVAFbxtHDodgklp+d+QLUFrFbVkRzv0wgNBY8CaETRkM2bjBl7N36sTt79YyOi6497Yhn/Rg6J4aTD1PTIorVSz56+fbqdsLoVAgqVNEvbQAh4s+zJMCurj2cPYOCF3At85VZXiz3TQLbb9Ox2L0Ov86HEobMKnqgn+/rOxz3RjBjRfFy9rsq8Xy2UvGbI8bFi/0l+Nw0Sk6M6nTCQYOtKxrmdYheTElh7TMWUeljuahB/8kh0vOTsc05uu0ffJV00E7p0wJBWbeIqFlQ4L773WttFAElQ9cSh8ahawd+LC2gWSVLnOr587js/BAeqEoGKRMtS2zJZbXS6DvtUthXIj44k+l/Vp/clYktnzlIszD60IMLwrqJESZvDqO/ggr+UaYeddENRRbiZI6dQY4wQ6FDQQ8AH8iAAAA=", "archetype": "The Right Angle Wizard", "hype": "Hype: 9,400", "tags": ["Pythagoras", "Geometry King", "Maths Royalty"], "gerald_quotes": {"smash": "Gerald draws a triangle: 'Hypotenuse squared equals true love. Blunden approves.'", "pass": "Gerald calculates: '180 degrees of separation. Class dismissed.'", "super": "Gerald computes: 'THE RIGHT-ANGLE EMPIRE IS OFFICIALLY FOUNDED!'"}}, {"id": "douglas", "name": "Mr Douglas", "quirk": "Calm, glasses on, built-in halo. The Mr is non-negotiable.", "intro_title": "Mr Douglas joins", "intro_text": "Mr Douglas strolls in under a glowing halo of ceiling lights, adjusts his glasses and calmly says 'Right then.' Nobody knows why everyone calls him Mr. Not even Mr Blunden. Gerald calls him Mr too, just in case.", "image": "data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABwFgCdASpIAEgAPrVMoUynI6MiKlYKWOAWiUAWo34g7NgCHQMYjZn3GhZrP/CDOPqJpPTPE+V2fWS6je1UQSa/3bh8ILPvreb+KkrZjCsR/0SldfoMozrEpC3cXvajnLJnSMFbMmetPTf9/HyC4/w44qMFpbgxL+kPHPSfrTEeXgbsP0Xq6glKmAu4H4vHAL/QynhwBqJC4k/hyX912KxgnPt88iswuj9rz750nGNvfX/bB4UlG+6Gq+ayAAD+/hRXCcnwUY77Jz9c1ra9S0c87jK2uOs7q0YLsfdpGy6uYKUAV0xhmmh1dQAi1j+Uj7OFbKO9XeE/6boU5DHm62FIwgRANocpLd+5MbRurZNVtRfkUHaH5rSzpzm4gG0FjC3yVFF6xtLt7gjIDtMkplKSmJUiy5Oy8OSekvPN/Pt7B5C4dol55l/tvpUKMQ8ou7zrsx6SqXQHOWT9wRRohVky2+tWPvQ6Pw9pob8BeEsognY+MrAik8wIsVcl6rdC4U1Z+M19PuWtgrTe76NGPQ02mDjylGKhvyIWHgjWImZ3u2idOExKV2eZyKOn97FMyfZgJ1Nc01Tol0tdUhe3xEMrdvvZydSBzp7LTNxXH3VMd2mW81Xi9ypjM6Ja3RKeOO/6xg7DKuqrI6/DlDNhINrXMmq1++5TQIYlPuCO9nVGQaVkQ6btlPCj9BiUPrfEKvKlL6R+RE2S1s6gOtF9hqeCx/0lVxeAsUQ/eiJUTv4oo3kdUWRrCG38b7u8ZvYs16LSZDvIb1TL+1d5Bbinb93+PvPveBAzoUvmlKKGdfqt3+I3Of/FMTdlbM1TzVbLZeSh7e2JgvEeNgydKwFN7ifGWZNZ431L0RmxEMyNW0IXp1v2OCdWu1DPtNgYSK8jBOJtIP5RXEEivNsBbgz02dIOR8CLq+vs6FCq0/UASIzxwuz9pSdMIenx/y7Ax71khwbPeqjvRH/fkP7Dj4BGk4SZL58bKAq/yE7IRitk3gy0SSmPPKAn1bEXxdLcgH1lB+i3+snMIa70r7wsDX7UMXrJKwQKlnb3r1oQCH6Wsg3ogl+M7r1xOKjL0wmLM/QziDwlH9PAc5DYZEHWPocAcuirlRfmaW9k3+rZmcd65kwGvvTxh70JnNtz2zGzsODyIm5+BGSsWTKPwBs3PaCh5Km2+huWJW8XQQzEBdU2lbGz26Qn/E0/T8eH+iGOAR+OSt+NXybGA1yo8LdJD7TRQzZVnW92kaWc+MkbDthAmMoUav6Ix58yH98iR2806OmVHrSdB7YmLVBVzjjwAc4OXwriIOB3yd+cuHUv6K15RUqWM/RekVJSFG/JL9AtIFxtSssqgeTuL2kAArYdukwf9tWA9bM/0se0gjfyP7gPu3Ys0tCg2QLyfWhxl/wCeC/MmG0wS9L+szXv/hSPOT1U05wERG/eWpVkJG56zAPgB5wAEAAA", "archetype": "The Blessed Scholar", "hype": "Hype: 9,300", "tags": ["Built-in Halo", "Mr Non-Negotiable", "Saintly"], "gerald_quotes": {"smash": "Gerald adjusts his teabag: 'The Mr is non-negotiable, and so is your excellent taste.'", "pass": "Gerald winces: 'Mr Douglas\\'s halo just dimmed by two watts.'", "super": "Gerald kneels: 'SAINT DOUGLAS HAS BLESSED THE EMPIRE!'"}}, {"id": "zanderloud", "name": "ZANDER", "quirk": "Zander with caps lock on. Way too close to the camera.", "intro_title": "ZANDER joins", "intro_text": "Regular Zander is calmly folding his beret when the camera gets shoved right into his face. ZANDER has arrived. Same Zander, but louder, closer and in capital letters. Gerald covers his ears.", "image": "data:image/webp;base64,UklGRkIEAABXRUJQVlA4IDYEAADwFQCdASpIAEgAPrVWok4nJKKiIUz44BaJQBWGcdIZKLH7Zrf5jwxske+GAHvbS5fK8SykjpBmZZ5n3VAJBFIhmgWHFW1dF6zjWZUmrhUd4WU2Nf4mQJlzNVmhrAASK19MJS5JZ2DvuhbZFuZJkG1ec/toSNj+igJ1crrOwZe4XgSUoAaQthqPFnEAbAJBWdcEGIwEfEdYmsOaKSaOCIYlWcvRFLZ1EO5Fn0URFBHb7HuXs0+5QYoAAP72vWHWsCDdkMb700WggLzCxU1FMySEzrJPUTV5Sj949nzjzRD6saO0R+9vd3PETBgIsDWczZhf/4INlh65S0MncpsPO/0GLqCWsJ8FOE6lbaJsEtrSWCLElPw+jCGgnDjAahcTAmApVRuneia1/2HPwr1lyJaepwCwo4l8tnmahio+H/v3rlx0w8B4wVqIK/kUKWaqwq8ZTTNbV6LMQh9U8ji96m2JScHb/c5XvMNl3StDh7C0/pZQkjGZWwLfCXgk33iFNmtkYnTgcySCQpobvNLB0HNuRMSGdvpysETSz3wEER1W8bRod3GBhPZsr2Wtb5PvfxZD3o41v1hJGYJ5CYJ2+cRZ1LOrXfFUAWqn7/hghNQ3X6DpnoouVf0ze08OhoR+NA31mXTePZplyrAo8GUnAKiGmkOJaiHpJ/+wDffo0pldbRsXogeYehneVIJYCV8brGWk3nsiFyTr9kzujFewLcIP6Hiy0pHj/7iNztnzyxk7840WFDu62/AoMgthMBioGsYR6mIO5eY+MJ/nDjCmVTNn1kYAtHhVOZqc1CMj7bNzbrJYrQh8XJSGhSPk9kj+YvkWNQvZWVclE8CV2ku+9O0whBzw4jVye2wNKt6tgwE+JffJ5mQyKU9mtTz/Mqc4xB3NT8b91clnMlWfCLqNdoamaDGC76m9aDa2n8WJG1W1WemeMrwAp7T4dsLfKWmHMPLE7Zg82f2zphnT+mm57Q1i5rw9O5RVMeT30u+McvBCSuoJEb2FiIeULcNLK/5WcsRmrH/VrOfzTkjupvXkHPrsRoTACCjVFiCmXeizgW0vfjXeDV4bboE3Pj750NsTFmAh35lb3EaU+CH+bkROLYeHNsuecpMNrUoHLym7D9BhqtTWkZ674+dFRD73KEoazc+J0ltln/yiS33WzCf6aOq6vbNo5AFslUlkYD9oV8Nu40vsoL+Qn2xrzQ48bWbcAIrtUTnVEjsfDNSvAejr+4mzlr56/UG4nlNcsvWjdH8RNuz9/kWlY7RYejiDANKhYciabtzCCR5q8VJ49RS3H1VbfBl+LCOAuIsCCrD7pHh5uhMA/5oOWdkoeJrdls2H4bO2RLBR2D6HSxKi1fe2bwcnAZu9Y0e/W7+7Fo2aoYEnsF9T8RFnnnBHD7MwfjLHfhLisqpldxZXMMUhbNlFVTgmebQ/B+AA", "archetype": "Caps Lock Incarnate", "hype": "Hype: 9,500", "tags": ["All Caps", "Zero Distance", "Deafening"], "gerald_quotes": {"smash": "Gerald winces: 'ZANDER SHOUTED YES FROM HALF AN INCH AWAY!'", "pass": "Gerald covers ears: 'THE REJECTION WAS HEARD ACROSS THREE SEASIDE TOWNS!'", "super": "Gerald screams in all caps: 'ZANDER ASCENDS TO THE CAPS LOCK THRONE!'"}}, {"id": "seriouslucas", "name": "Serious Lucas", "quirk": "Hat on. Arms folded. Has never smiled in a photo and never will.", "intro_title": "Serious Lucas joins", "intro_text": "Lucas walks in wearing a black hat, arms folded, staring at the middle distance like the final scene of a film. He says nothing. He doesn't need to. Gerald confesses to crimes he hasn't even committed yet.", "image": "data:image/webp;base64,UklGRmgDAABXRUJQVlA4IFwDAACwEgCdASpIAEgAPrVKoEunJCMhqPSeMOAWiUAYEweg+xyve2nWembSQ/x13z2qH0wiNuVAkKy5Lf98Gt5IWrXHmvPln41f8o+UQvzj2D2yuFLczW2/JSayfv2NNhuNOOAngd9Z3u7Suq9h9sdSj1NfzLX6HRzBkiKnvhvCYC2NT9AWKUguPKtVLTv4D41wtWSTX4TBFBHTpGLj2UawAAD+6nPwpVLVeAj5UojViDJ3jG8gal8vEmOk51uHi5ZucS3XdW/sKnvJZ4RhStoElhxfJ5nTd6UzA8nMYwTH9roA9+m2/Hq2u5GYEsbByxGHWBsvfmAt0LiklvmnSWZDtvkApNxxNUm7FcprfufdcCGpHebQ24nn503eBZRGGtWFlJPQeuRv1/5q5GBRmm/GRZR9xXYUBdlDY8pI42gdCe5ASvTGl2A8f9u85pf6dv26mnUmAdnZTHzgukst5n0+CV/XtaWUqxoMkHr8QrdBrFbL2Lm7NYd/Lkid2gJrySdbavQ+/2+OmRCAL3fKL+xNZs4rxJ1ZPACDCOai5y3xVaAoV1bi1q3NTCZ3ihvJ/MlkSeSwrt9Fq7v3ImFxawk3doOGE3dcc7IogWgtSdVnODOdfDoCvU6o4I+0uuMxp5MfA9BP70jjnp7Mc7CNsa8nlsZZDCFWYXxsn+tO+sqCSUYG1brZnFrsc80UxNCa4SpEV1ePgPU0qUdOzTDDjVVNM9hjQxrV63mCtW925cSUBTaRYecg8s4HGVCVygmZV7SGNhndoi6/J2u3EVLKQnxugSM+SRXLjYYemgnPSVyYrMpUGK9OYZ24tyZrnZAG1y3Mb2LO4tGH2r3Y/f1ZzDiwCidwMEmYRhtiAB70s5OtB6CcfRjYPWPyByzCnL2uiXX5vD3y/dPeuEdxIbGeyZeJl9E4mxSEejJTtl/SOpI+4e6d9xsqcXILCv6YoCKvpJ5CpXto6VbKb4NaiN4Xi9PemAaxh7Fu9CA7IafBQHktKQeFeLFU+LIbmUiesPm8H5+02WZ7gNFyOCxV0aq4EnsK9E/ytXsEPdizhB0B0QIXPca36th7RRmmQe2JWGAGrmFzvsvXEF9dsULrCNiE1psY5lCrRcQ/pEXa+ll2PrNsE0/41Yyo9UJsZs2HsAAAAA==", "archetype": "The Stone Sentinel", "hype": "Hype: 9,600", "tags": ["Never Smiles", "Arms Folded", "Legendary Hat"], "gerald_quotes": {"smash": "Gerald checks: 'Still hasn\\'t smiled. But inside, he\\'s throwing a party.'", "pass": "Gerald nods: 'Hat on, arms folded. He never cared anyway.'", "super": "Gerald salutes: 'THE UNBENDING MONARCH! Not even a smile, pure stoic majesty!'"}}, {"id": "ethanfinal", "name": "ETHAN final form", "quirk": "Tie worn as a moustache. Eyes fully maxed out. Unstoppable.", "intro_title": "ETHAN final form joins", "intro_text": "The ceiling shakes. ETHAN final form bursts in, eyes the size of saucers, school tie tied round his face like a moustache. He has transcended uniform policy. Serious Lucas almost smiles. Almost.", "image": "data:image/webp;base64,UklGRnoDAABXRUJQVlA4IG4DAABwFACdASpIAEgAPrVKn02nI6KiK5HM+OAWiUAYOJhBz5wFebHYLTvBTxH8AmEnsatLvE6hIPdkSQpXueXtfGoLbIL1ZyW1z23BYx8BfnePMlGtSiK0d2pouIFiULGTYR94ZTLVLlCgtAeL3mKYcraJGEAMsuqMZsGcYU8Nsxb2XQbEjR5mMrPU80dmm+7u9M1jZelAObd+FSXmEKGUvqBb8eAETbg4fTN17wAAAP7tMaGjLeLCy236Acjl5TWV7lO/RNV9aCPbW8JBOb6yCi7nJZwvbc/ssd8OCMOReWTH+UoQJ7pvRYekSTi2lHYm+blM5O8kSvaWGz/V6XDCqCjsQHOXzTo/9R1sKJfj1uAkxSBBqBtbq3a6OnXJMI/ua5qvWNXozp3J+Z7QdSTQRBM6sfc0WnxrEJ9R9FKRIyaJHBIDwF4sPodYzGGQAnjn7+ZCSnesQ9OQw4z0V2JuiQ/zxZg3m/+83GM0/nm5ZDskJBdYSZbYUIzT7PD5gwBcyJR5zX4ny5pr/lp+en1DY7PTKQkOP91/URmxHulVY2NKJlPwKbIxuR5gF2q8kJ4O6pI58gwad8QoJoGdIy1CB8XxLMGPrXH2cdPxLKvJY9XExs/5IsLRd9iep65k9N1eP1LxRi59h0CbCh6zCGOW4U0PRCtHepAPoUstED+7C940z8xfiocJnYQEvzora7hWxr08gcOHckRRQolocxgy652LHCABKKPKZSevz23n3C812eGQ0lzmYQQq8mBzxRPiZJjdKGiYtyeqRhTxUEIlsbIiQE6Z/Oleo6Xzg5r65hRTY7g5yFgaSreYmfJBRtv4V2rBhS8s0D+JQjgupOmV+78gSmqI79glXgYXYZVFOjnhb13yIGV86tIggdGSFlVBJBjjc1Px7npycbzbLojYjs68VZ+HrMkQ3mrWttBRttr+zJ/sAB8R0AneWOG3oCUYxigVu3btZeeXyLjvrL+cHhRDR/1nc6Q/ffkc5j2Aa9uf3iM8xMlKL4atAZy+DmY0oAvJIPk1HR9Z8WtE/Iz2Elzdv/o6J+2YtvoiTyadETJrZ2fbSUye8G39WUjOy5CAk+CoiwPZxkLAKj+fBYxal85LQjS8FssvVQC+KL5eINI0AT8QTcCBSHLUYzOHgNq++fGSQA8cXTpcHIICCu4AAA==", "archetype": "Transcendental Ethan", "hype": "Hype: 9,800", "tags": ["Tie Moustache", "Saucer Eyes", "Policy Breaker"], "gerald_quotes": {"smash": "Gerald salutes: 'The tie moustache bows to you. School uniform policy shattered!'", "pass": "Gerald runs: 'Those saucer eyes are staring right through your soul!'", "super": "Gerald surrenders: 'TRANSCENDENTAL ETHAN REIGNS OVER ALL HOMEWORK!'"}}, {"id": "sillyoli", "name": "Silly Oli", "quirk": "Biggest grin in England. Personal space not included.", "intro_title": "Silly Oli joins", "intro_text": "A third Oli appears, nose pressed right up against the camera, grinning so hard the pier shakes. Regular Oli and Oli final form hold an emergency meeting. Gerald laughs so much he drops the teabag crown in the sea.", "image": "data:image/webp;base64,UklGRgoFAABXRUJQVlA4IP4EAACwGACdASpIAEgAPrVSoEwnJKMiKlQLwOAWiWQAr7eOlL/D+cfjtHCt0+mVLIusswE0fQwN5++n7bCRhPx+zsypVNiv8X+5yQeH8B+zBb05LOxZooZMaGx9dMdu12lSLlb3YstzM8C9+S5KuhNcKHHEDVgNFoH/luoY3xMJrRx3FuJPS02fZi9lxvTqeIcsePkKwlOhjmLUGhajkAA+8UGZTYCFzpGjibIc3tVctmuZeLNBjb/0eU241WRxCorKwlLx4kSUI9dIPPmftUo8AAD+/j4/4uniUSkagWJL7piUwjQiI1iysd2X6tueFN7GB1+9ClvXN5V+Nit8Jx1AvtwruCCJYEStEHn+SnX02utDbpd6mWsUs9yN31mQrwYZr9zKxDyTqO7s1JqMxTyxjojgPtpjtOMxg2jZ1SfNoQ7weM8hvqf41rQmPd7R0rsgxe0glBQgVJOxjliU9olfYm/HhINzfB8Bzw0+OebpPOxjZ6MZhmHkp5WErGe9aU6qQkqKe+9CBe8NgYsj5sovSQqiPIlItvTV100diWeqHXxFk4sUwdg/kshtF1I7i30GLBWGlsO3GbAGTM8pv+w7MGwMdZghPP0AqylIxbQ3mhBmqZzR3ql5i7xjhrIYq66VqgPKwuhUQ8o3ujdNMuR689Nx9WsGd7onkrkqOGheHGQ+7Cap5F0P8vAgtGpM7M5wK2EjUm4kUQH14Eg8xJUkOlIEp7bIoA3OsEQIYcuUdnDb/Q1mdZ2Xe70G80SZm0mP34OiML1YiE0fNm4VgaBDZsOB89TVJXTdEb5Ywg7EsVGVrwjE3E3Cbc0CtbgXBD9gCOZHdwg/RAjHYOKGIvC0PJwA72XPKgeZYt3pffzJDewtZyOtQG3wuKG6sAnTrj3p+gDVnDBIb07EoqxY2FQKK5CXAcxi3EKz01IqW6r8Un+RDKKKgUz6U73YQ1cyn2+Jdo/82vWWkVpSppz4TV6UQqJGg12L3wwJJKuob3Fc4p1t79eOft1XJ6Bf31oBvTNb9A70TMNe81cdbGtj8GH0ezy+xUtkOqfClnZ2JxonJ6eeROnUyH2jfkMt4aoq3bm4APPcDRzWaAW9sWl0ok0L3zNLf2LQ31iNHn7EJkmspuWu8ZKAY/iJGXVucq8aHz/4XgcMt5BvGurJUyEg+Dni1c3sfMiH/THjp4TwrryoGHUR8oL9lzxpJ33K8d55SaenyHDlAki0BdgnQTCSVRCTzL/YPx4ywCJx0FS7xtXC7TIim5cgl0JtyxZQrlYqJ+D7XftljkJ/D2ETH/ToRFOtswgX7qRteGhMd2ewa4ZB6rHVNKaEs1lJkljgp24Vzz2KZuMWbR0LbBuSWfGHq3v6kAsmQeqzDK/WLIGH8EWhHITiILk3kbxVMTpnyeQ+E0XWjl74YLzjVJc+xcAkFyBYn5GrlcB97U9d46QXKKC1CklvnhiR+gNJqGJ5RQ4YSnQZIDdf4TfdBb4pp5+QS66zqA9NGeMCfqupkuJMUDOp/086baiWszhePKceij044uCyX3QOR2gwEwX6pl/O5jpcmK1A22PJoWceKaKr2t7TZMOrOv3bMyJmzhWo6Pugwh/VaTlGI9A9+EI2BWzsHXz+LTm+KVvCMZQfuiBf8oGSk/Yi/OBG+ra+I5T2BLBCqbmXjP+FQZ4a7tCARstjkVLj14PrIRWD1k1DkW6f/ITgAAA=", "archetype": "The Pier Shaker", "hype": "Hype: 9,700", "tags": ["Infinite Grin", "No Personal Space", "Contagious"], "gerald_quotes": null}, {"id": "sleepyjames", "name": "Sleepy James", "quirk": "Asleep on the bus. Mouth open. Missed his stop three times. Still working.", "intro_title": "Sleepy James joins", "intro_text": "The bus pulls up outside the chippy. James is on it, fast asleep, mouth wide open, head on the window. He does not get off. He does not wake up. He still somehow earns more hype than everyone else combined.", "image": "data:image/webp;base64,UklGRrwCAABXRUJQVlA4ILACAABQEwCdASpIAEgAPrFInEmnJCKhMfW8WOAWCWMAyYCdpd0lFBugU964kJvYtT9HJd9PVAmPFKT57XVmemq5xgOFtFNgD6CPjjBuvGevya00nzfiVlQdPM6RfqViUmDxzb7T0nJsk7ptBDt1Us1Rth5lI3yOwSgchAPu75aS0JWt8vZAMmll8XLK75VopzVqsbYxLPOD5/hF2sxImUwIwEPb3lwAAP7kkyKr7XO9DBc9lOIuVm8oLheBpV+wBTFxGABbzdgN7Yh61P5DME9iVEZzhQn+o1cGLU8RIL7MF0FBniVBz2PujugrTVnIIAbyGxoDJYAZCwuiZoRklGtOJ9smo/XRqLtVTQW5LRkwvS26XD1pKAx2t3t9NqwPzhG5ckzXV8zGh+/rlHtprFBCbDfVRaz7l5EBry/XWZoPort8VvhccLx0pe4xPCRduiKlJJhG8YTssKSOL9Sy+5pqyuJP6nOeqcriTqLV5wHW/e9El4P1pGQZWiAjI/Kmuv/GikvUOlEXj5aJ534k+acUoI1QeItlJC9Zp2rh0QRpTD0iKid1CwS/0Y5nJa0LttjMGQeWTqqlp1L2vD+tUmytiwfloBIqLdPbppSRWGLjaFs2be41AI2/XclVXJJSmT/aP6Zou2lSIJF+eQF4k2EoFINpNNP+pPgAl2U2FVc5lgl7PKyHGrHR9jHUVdyb2fRn/i34yO5rjG55tggOJuR1oYwB0rWnCBVwqybDwYbmVKEjLLZ7KvrzBaAnsLq5L/XcNqND3xeIjeGPA0Ms0x1AGS+ns2NClpGHfltK/LC9M6CLaNRidXu8ErET7RHthsyzEu2UZQkb2VgDDSi7hSKLrdc0oC3pM7PCnfS2lMGHGEhSJk4CcOtRISUH0uc9ZaQz5zoc9NR6ILqRJTJDCIWl6sAA", "archetype": "The Bus Somnambulist", "hype": "Hype: 9,300", "tags": ["Missed Stops", "Mouth Open", "Passive Earning"], "gerald_quotes": {"smash": "Gerald whispers: 'He didn\\'t wake up, but his hype earnings just went straight to you.'", "pass": "Gerald shrugs: 'He won\\'t even notice. He\\'s sleeping through three more stops.'", "super": "Gerald tucks him in: 'A SLEEPING ROYALTY! Do not disturb the royal slumber!'"}}, {"id": "stephenfinal", "name": "Stephen FINAL FORM", "quirk": "Laser eyes, Christmas jumper, zero urgency. The ultimate form.", "intro_title": "Stephen FINAL FORM joins", "intro_text": "The lights flicker. Stephen rises from the beer garden in a Christmas jumper, eyes firing twin red lasers. He is still in no rush. Gerald's teabag crown is vaporised. Gerald says that's fair, honestly.", "image": "data:image/webp;base64,UklGRowDAABXRUJQVlA4IIADAADwFQCdASpIAEgAPqVGmkmmJCKhMzmeYMAUiWoAyUOJyc/W4Rd14OP4IF1b5KH5IEXEDWU7Qt0mqymWghnCy3eZmJvJih4OtGe19WtmsHJeYANO4ItJtu2CXgIvpRvGYmQpmPpN8YPKpSwuV1Uef4Ff6TicWS/sl/N7Qr+WNtfopgcAmo+eVmLFJKpu4lHVn7v+xw+I2oN1s1bFuKqcKi3+/Le0dSv7q0lWBKp1NBmJuo88WPgpU5AAAP6sUIYzZlEo8HPziHQ3cGjTgmTc65P7eB1r7N1WP/85gkaBLB9xBHvJfyf/6F0tXxsCjt+11dWi02rrGWVyfY5cvMaR7qJJ4IwuoGxy23yuvp1CwFB775gahuBM06nSTy7+GGz+TQ6XwY8kUtTy6Kxsv7F6CmmaEn4voA5lhGpq7gIVpcrzGxhjiVGJBuenQlMUTb8lMBxcE6EE1CFqPyq5f7FDS+MWVuYtnkDIyBmhcmX0ka1uNqgjanAYf6pSYRF+lTdPHWJvVnDa0yzmy43Jswy8H4QAWwkCR9rT0gCuc8MUkKHr7XqNmmdDNw033e/3Uk0FWoK0kFlZ/wS8J89JpHG6pxkPGPFbZ7+R4AYqrQgYNu0FWEJzBA2dRR1t887hwcqFLH0GmiWtb0bCawA9RXgHN4Y35Emt3Dbwr6ojSG9WAHUhxo/a+gtYI0JdRp6zSFVKMQQaE4dAfQ/201+vVf8zqfZqee/PM5WbYpuVxRW0Wmb4YkGsyn4XjscnuxInlobXoJbVcI24NiTR6UAOWGvNY2OStvL3GcnK803DFvn69wd/8vOfaY0Fdf208ZP0k06G7YojM3LPcUfyOojkXd+MvB7blmWklE8cmJNFcCR77Xcs78P5/OC2/g1sRKaiAE14ClGUqIQAxmwYIxC26QQv79xYqRXEo82sOwedJhpr9ztdCsWikyQjxIpupqHw78dES/ZiC9YnVLckC+U+k8VF2X6QXIrYaSAN9XkPLYw/0iO/t43KP3jqT1VPT94fxC9hfSagQyjpIPLmoOiK8KnDnV2Q7/6+XdUOvuKRnLPFyUXhR6XxNM25inE7Hq/7DJehCIkT/9Qx/TFX39guaSiI+BNZTuE92Wz1dEftPsXLDXravnsMO/yBAKOAAkZA7xEPGh0kXi2IDAy9q5WWWVgr3UdRDp/2lXtJ2XKEEwOWMMIAAA==", "archetype": "Laser-Eyed Overlord", "hype": "Hype: 10,000", "tags": ["Christmas Jumper", "Twin Lasers", "Unfazed"], "gerald_quotes": {"smash": "Gerald bows low: 'Wise choice. His twin laser eyes were aiming right at your heart anyway.'", "pass": "Gerald sweats: 'Risky move... pray his laser eyes don\\'t spot you in the chip queue.'", "super": "Gerald salutes: 'THE LASER MONARCH ASCENDS! All hail Stephen in his Christmas jumper!'"}}, {"id": "leofinal", "name": "Leo FINAL FORM", "quirk": "Sunglasses still on. Arms visible from space. Thumbs up at all times.", "intro_title": "Leo FINAL FORM joins", "intro_text": "The sea goes quiet. Leo walks up the promenade, sunglasses on, arms the size of two caravans. He gives a thumbs up. The thumb alone weighs more than Gerald. Gerald surrenders immediately and asks for a lift home.", "image": "data:image/webp;base64,UklGRswDAABXRUJQVlA4IMADAAAwFACdASpIAEgAPrVMnksnJCKhrNgLuOAWiUAVYPNwuA0vvCRt8Cg4ZZw4fSY5Of3FCLL12GH4keYXQyjKnLqewr0t2KiLBr5iEUgm/GFcfBMDxdv+8P0rxI6tgVngrZkifCKi72MWuRKSBgeOIRTN3s+I63gR4dLMUvTeFfaBMNnu1wLdACKAAgV621tKzlh5AHjaTRrYaIuXFQI7CTEpreRFzTesGTeAAAD++brZmP7KasTGvacrwptZXegZuEQjYr2WTlQXE1oAjltRhNEYwBhef0+Wb+5PUadOjga/DB5mNw4LLGhqwr9m89urqiE2yHJ+IsJmcuJ6xrcJEWekesGQjLj76i6GspA/qipQuLBYHEV8Sy/RzdLqyqy3rV01n4U0hNtL8NQzYPcUBjFt163yg2h0gvwVcJ3cpdGL1+IJNMYb/SzmS2415Xjy6qBQY06VW3yjqpPJKSubWqn14EknbLifoeLm0h8lRZqgawbVxOmy3H5AVfyd395TejXanmu9HSdb3hO8iU17KShOBLgATbAuQF2DV6N21xXF8R6TcN35leixI7c31DZuj+mnUUUvASqepHUdBler1a46rmk7sCIIQHXsZ1b1SublH7FIvmktAaY0E94mGwCNEEmPV9S5sj2YzYvnuwuy9Fp9bEDya6iFEyfkenDdEJylgeMr6mmYQQTcNu3WYYoHlq5UvutiOqOy4dQMeWwOR/gBubgLyDhWq0j57kWB4VG8PxJM6FKv2QKOSdKYKF/SkHeQptpQclcn9T/H6OZmWzfNiKweV11GOKm335Yufu4KpfIQ80qTNAsbJFNZG9hvK1hPlZQRf24fhiqenV4yXwJcxF5G1dgM5XVjI7N8umJ1qXizITCTkoOrV3g/HfcuyEevk8cILdYoRWrFcU85QKLEnFgnXV1V2FMG4AOBGoVEmoAcQDtIaqd0w4+VJw0o4fVc56BviZmkNQb9ye4xcdIbMsjuKGlu6iwV2cxS5Y9K+BqtiLH5utzgdG211Zw8n961BLMnJd/IDvWdcfqTvq2HbfU96OIi4tAn/lIrdr2jOQPWBQEap35h4YI6Dp0GqA6KE03bToVhRygW7wHJkNFrmfhdgGyYks86FU0KtuWDzwb9lcchgtffZeT609fcuKwXR2z8V8N7uQxl39XqkXZMo/EAHGp3VGiQk9Usn55+DCR9KZ5KcdjMxZPvli2M7CLNr/dMeOzq1/TygnO4DL1UCiyVJZbTdFxngK4j8iyCxUtX/ONIfB7pYtDWwvJ98AA=", "archetype": "The Promenade Titan", "hype": "Hype: 9,950", "tags": ["Caravan Arms", "Solar Thumbs Up", "Unbeatable"], "gerald_quotes": {"smash": "Gerald surrenders: 'The thumb alone weighs more than my entire flock. Good choice!'", "pass": "Gerald gasps: 'You dared to reject arms the size of two caravans?! Brave.'", "super": "Gerald bows down: 'THE CARAVAN TITAN CLAIMS THE THRONE!'"}}, {"id": "dale", "name": "Big Brain Dale", "quirk": "Forehead the size of a sofa. Thinks in 4K. Glasses barely cope.", "intro_title": "Big Brain Dale joins", "intro_text": "Dale leans in through the chippy door, forehead first. Then a bit more forehead. Then even more forehead. His brain is so big it needs its own postcode. He solves the entire seagull problem in one thought and is mildly disappointed nobody else saw it coming.", "image": "data:image/webp;base64,UklGRlYDAABXRUJQVlA4IEoDAABwFACdASpIAEgAPrFIm0mnJCIhL1qs6OAWCUAW34TRWyOP6WORn22bhZzjxVXAkKmi9azTQh06cuJVs4t4c9jLvc1Z+/1yobCkLem3YqL7k6N+bnOQGK2WF7/SfzarrHE0tr7eEGvNqu0JU6AxDuiPuosRnHENb9y1Dsx1gUOJs6v2sj8MgU+EKhQUD5t9Q37LQAfI34D1fV5krr/RujxjbwI8/uKXN9i7D2UAAPAbzEbCTUXYzC6/tkuZTscQFmgQlX4CD/In+oqIqX5WkbFXOhZHKC/Z7SA/Yn6eLf3J+O67Yp0BQSPxs/zjRf3uSr7YLFT6SNMqqUy8oKxoI8j6p/6fplSRujCaKC1UoAFUD6ssj1Vj+O+fM/Tq22y4dfIdomC35NdzFe8Mp05MHhmFVIpDw7foLTAb+mB39ArI7x6Eq3HpiMIrCWObSaFOCHRbJUuo7ufN5hqJnEW3JWO9cv9zjvQF0hCVhWarPRzv1pY/2cfbqeaOHhDjBvBOtHmbs0NmyuFq53uRDnIs254femCvfxXhISuim1AKpa+ANP5Nm6NgH72ToQLc10li20OWE+gKE4tPxOH4SihX0fFSjrxC5NDPjPYVbVO4UuAnCWPMQXaxAEoNHtOCZx+BlS8KhNIcFGnA9LkmkOTfNsM3lDNN1LSw8Sl1eCGaDhLz2hfPhHZSj88Z2pJOTmHq8dUNBnCtHKJQkIC+g1iCqCamq13hmnIKQZjsY0nylC2sJ+0hd5G4dJ3xHS/+djhTyK/0MKh76/bMmrk35w7iV671vMb57E0G/TUHoCxLZ0OetajL4rAe/h7pJ+kOhgVkhoefSkxImJjqPOc0QN6VA26YvpxipsuIbYdZZ1cyaDKicSeRLt7nVOj5P6gQTtMtiY92fJilF+i6ocP7fQDvLYkkM8ldaaK9Nsn4fpYclYJLhY2XOLeIpX6H9GYeWgRuMAEe2xJXQg7SPZiE/YAqjex10gNqekalZyEf7mSwrQaFBQHCaLk3ujO8U7SSq29nkPNqFBkhwhTOd33hcruc2AAeV6oZcmO8NAKmVdEli65Uu5TGwYbSppRIvXBoMLFIg767t6uF7zdfWFhp0eFrh4D5k6b7QudTh+gAAA==", "archetype": "The Postcode Forehead", "hype": "Hype: 9,700", "tags": ["4K Cognition", "Giant Cranium", "Postcode Brain"], "gerald_quotes": {"smash": "Gerald calculates: 'Dale\\'s giant forehead computed an 8-digit romantic compatibility!'", "pass": "Gerald sighs: 'Even a postcode-sized brain couldn\\'t foresee this rejection.'", "super": "Gerald faints: 'POSTCODE BRAIN REIGNS SUPREME ACROSS ALL REALMS!'"}}, {"id": "harrison2", "name": "Harrison 2.0", "quirk": "Solar powered. Lies on the carpet and absorbs sunlight. Gains go up anyway.", "intro_title": "Harrison 2.0 joins", "intro_text": "Harrison has been upgraded. He lies flat on the carpet in a patch of sunlight, eyes half shut, recharging like a solar panel. Every few minutes he mutters 'one more set' and goes back to sleep. Output somehow doubles.", "image": "data:image/webp;base64,UklGRuQDAABXRUJQVlA4INgDAAAQFgCdASpIAEgAPrVOn0snJCKhqln8sOAWiUAXQcJrY9UydELv+nTEL9nYuCdWrAj/5Yw4wnNur2v/L/dX3cy5zzN8O8qKCWJE2LE+lEF/jtJBo7I1TrppW+IAmndSeljL/r6a1MaSHYrlwF2SMZaZjSA7k4miaorFZ5TtmdcGHhkCzr0A842KxcGxDjddP4Xfz8EcNGvn4WrZC3FpD/UK9tzSPGeq9mzvxzlRumjudPgMLk8KglCQwAD+WTWh9tdIqByAtYtk7oTcGx8kyRn6xO0x/khCCRllAuOkmWqoCeXlI8PR2RgNpQNTdcZZscjTtjc5TNEWEmWheogE0VmYo2IF8BEN60Kl5lFgis7rhBE7A+46r0fqTFoGR6p4LWJwaFdvpbNEzjPjYdukLKVUpWmeLLAd6YR3ZFLZH0Lis5fqPc3sw/9CxOAdiQzLYq440OC7vuCwD0LHYgLj4vkLQUFNqwyBQvUEZb4rb4VIT5D3TVswTvEWryDGBIQJzjVLuYMuXMToN8PZKRz5XwaF8IeTQ6S9rCmYx7lcX+wWNP365uEcMvYzJ3ekr5cAk1qhSSZZvYkqC1AtCnB3226qennJn+NiHPtxxxn86dKiVqkfDujVIH2fORqOi74vbTJJbTQ1DZsbSGy/vedoGyUKsNdsSzxzKWVjOXAml+0H7m2z3Beh+C2PvJwBNS2mYbUjEbdpW7wh/wqGBVRoAqHV/apLUurAv4M/I0CgN4Dy3AszFamrRNyeONXzp4CZL4pDIeetxeJiv7QHgplG4vn0IrbKGRvPlP99s325kc3uw0e1xBP4EN5DU5JcdwSEgnF1T/tGyb4uxBZYEPCwrU8OIikWTd9RnRvBCyUrP7CdVTvI8uGF+stiUME+0yjBDxyWPn7ukklTEuoqIq+YxX+e5hIjKRI+Ajj1XeygPXuHygOA8iSsLNuxeRnKbLJAml/LUWU9r2iWn1yrl8LNWNMGBhHBCzrgc6qQsmsNELvYTKKVPyRU/lbkPpky5Giyp508PbS/iiPKl2O2SVjHWvwk3bWus40MczaQUWDt5eQGOIlPfFhZEcZLnZnBGKx/XydmkpOisI4fkbiZJ2XcLnNOxIJUIB1xArlZ6Ts2uvMR4ebUX6AXHUGJByFCO+a15FvFeVecclzPKbrLjmQa1562ujnah7CD8MoRbfBdJdKRIukpCrip1oz8oW9lbhpH85FkWOa9y3myPMaOEUQQIjrsQAiGyXyDaC5djebpr0O0a5Su8kDkeq5FnP6H3PAXpQ+lEmeR3IqSnkDTVSZ0IZvK8p5OTuHAAAA=", "archetype": "Solar Recharger", "hype": "Hype: 9,400", "tags": ["Sunlight Powered", "Carpet Napper", "One More Set"], "gerald_quotes": null}, {"id": "jamesmurray", "name": "James M", "quirk": "Braces so shiny they double as a lighthouse. Way too close to the lens.", "intro_title": "James M joins", "intro_text": "James M shoves his face right up to the camera and flashes a full set of braces. The sunlight hits the metal and blinds Gerald from across the pier. Gerald has to sit down for a bit.", "image": "data:image/webp;base64,UklGRgAEAABXRUJQVlA4IPQDAAAQFQCdASpIAEgAPrVMnUunJCKhrhLtIOAWiUAWufU427FWBlPujVy/jdZiOnqywcYfaJ8OynbcHV8BnZd+OXolcVtxffEAB7pWJF7H5UnsEvcCSOftLfmpulqCEBvLUGiHRPnqV2r44YCNRp/B1gdmGndBbDzlU4rBlEydnGgwfKLbgAijSOk9nSyPuqjAPoHKScuTVHChBAUNma+YkbeuVN/WRvdwn6dG9dSdpyR5JgAA/u6Fn5hkH1hi3uAS07+cHF9SQFxvu4K+Q6ObUjH5UMG4vx36CrOystJV5qtdh0C82pF1maJgaPHNBEIh+7QVS2yTkzxx5XuK+HHBasg993CvMNsWYGmrb/bwRTio/PdIfqWnekWjuAUYlKKMgtrb9MZ6kWKvBz+SAz3sjORTJcyNH+fAiO/5nzay1zr+2+h/wzgE9nvtx/rV0NwNsDei8F/Gz74cFmSE2Y31Vtu8XCzLi0jMvnzdfGi9nXZ9gEx6tYlrzWxKdqCdDalVS85LEho2aSHE2iONNcdqehjCrZpETOVMDgY5S9lwXklt7pTxkfPbOqtv5DLtYVioVQUwy0TlzoDy3xIFF7uAafUBPVBDvj2yHG6bbUQUlqvVO9zPsikrIsVOwRyZ4k8u4PyoT95ytzkEgb3GmfSFLR+eKGP0Awq/+vMnueiTsEI1+wTMnU89yvQRyYfr3U5N2A86UHDfvv/Jr1ykvYsV+QscX/QLVzu3P04FljdDrC371PS3H2kDte7nQFu43H6t6wz8aYx3b8xTS0Y35o6Zy8DwkoHyzjKRnMWjpPHXN5zV7247Dp1c2rG+VFZYrjP7JFGcl6A2jeKJoY/X/OuMkTzeJz2jgLJyqLKcIr/fg4rWyqjxkcRRuCVTLSfcVaEjs37Qm+zehD7KUlM62tqywO4B9SKRy7Mo5Q/28EoO64nHWA38q+/hf/OA07LwZ2yre1R/L1gQSFjeb1Jp53C5KOl1S6gd+WRrpP7IVwkSnxdZixGfQxZVtexnkQsVjCNstV8b/v3mrGlyG806wUHwbZQgsubHe9rNsUHWACMsGt+KV+SyaFlHBHj2wJCUZLxV9m7LaRR79FALLPjC59QjEOpdsQ3YwUMokVIFlIjzfew9sFIB0b4cBxKfCBmHG0IFRNqfXeU2x471QoGx9n1facySSNWzZyfzOAbd7dEvcZl6jYozasZtPhcCqO6q7ZNn3guQt7MmnKCgyFdk+iGuj6gqIwymUEC8rvEfVSPsWmnzGVmJH1qMDrCVEb2CKTZOWlYbe5bLwYDkbkX6lZjNdHsg3SX8tIESiUM8iqgG3PW3OSP2ejPuKeQ82/SR7wwymAXPvAAA", "archetype": "The Pier Lighthouse", "hype": "Hype: 9,500", "tags": ["Braces Glow", "Blinds Seagulls", "Wide Lens"], "gerald_quotes": null}, {"id": "wiseoli", "name": "Wise Oli", "quirk": "Has seen every Oli form. Knows how this ends. Gives excellent advice.", "intro_title": "Wise Oli joins", "intro_text": "A fourth Oli appears, calm and knowing, like he has already read the end of the story. He tells Gerald that a teabag shared is a teabag doubled. Gerald thinks about it for a very long time. Every other Oli nods slowly.", "image": "data:image/webp;base64,UklGRl4DAABXRUJQVlA4IFIDAABwFACdASpIAEgAPqFEmkmmJCKhOFQ+qMAUCUAXz34gqLICOEeGgqLYNwjft0DXaL9YIWT6eX8XwrtsUehCnxtZz0Yo1K7Q00XJ4UGuZ4ggt8frG5jUssGKt/K+lsqBoqwZMe5n3+fQ+sbixoFQXVktxzzj0ZVfz6VwdHOc/SN7ty6zMIQcQ3dc/Yemrg7UTFHKmxev5voQz04p21Nbuyh+cs1gEhFPsEEKKqLcAP40fdU4oNBGlbFhqeErkVsnHOkixVV1ijMZzkuM0KxvMa6QHGHGLNmwGSwy7dUR/74j7E6eIKPdnBPLuqARCcI+ATsnvfqVhr2khSsca7GeWniw0l22M4p8d+DAtFcsBmIulZBo9gEq87Ydn/jjHjs1+2atAlmjf/n7zcwMpspvKYCChX5qko7FPFgRwejQoQHtCN4cfirTA0+mXTpzPtGCLrZ+1GxLe+GB2dHogML2Kg/EmowEq5Sqf9oTcC/8k/fCVhaPlL68MIK474zKlMV333TSK9GUIr82hywYrpaPtuOtV4cIJlvQ/Jm99Bb0f5sd9I5jScQLjzPUN1Wy6iv28SZvHLJC/8EpZGtEN7wBLUad+Ujmr3gelWYqyF+ZabDFVbLS0GwP0zlqKLh2RJg7Hdpz77NollY7/i/eoi4vrDuHopdNHEIqqNgU8wcSQ4OE6QDuaEiyLaWIaoXR2e7zGgbAkLGoer4l8aS2s578zGN9+46SustKF1Q62hfk+2pQ+X6KFIFvQnXtw+GuePIkrQhAlWEvuuBKWfFeSACG2XcgWvUAQrqFXqsCeLJpXH6WNRoDQ/Z5LXrOoavFxNfkcfOO60EuNhevEt4h1oy1i6ETND8wlOKP8WzMWA7ac6jTHG/sNAuZ/kY0hm3zr4qIrcBPZ2HMQMgaiRsH8OyoRp0L0eTlQsDS4MMlmW99fYAB6kxy+Kz2BQuRBqiPOLh/HT8EKV8dfTxV68YAdU0PL0ejdewkOId9T23H4wL+2NYyE7DUsQAeLeEByn9/f6yKFOJiba+JCPOZKf51vluzVFTevjWwZ1pP+6ZPkaRXtDYRJ8d163PknXkTi2l/X67YrNBvmAN+aEGyHQZCyKmR2TScVyBpyBSak38BUu47hD7yAAAA", "archetype": "The Zen Oracle", "hype": "Hype: 9,900", "tags": ["Teabag Philosophy", "Enlightened", "Seen All Timelines"], "gerald_quotes": {"smash": "Gerald meditates: 'A teabag shared is a teabag doubled. Wise words, wise match.'", "pass": "Gerald nods: 'He already foresaw this outcome in timeline 42.'", "super": "Gerald ascends: 'THE ZEN MASTER CLAIMS THE ENTIRE BOARDWALK!'"}}, {"id": "tissuedale", "name": "Tissue Dale", "quirk": "Wrapping-paper hat. Wears it with total confidence.", "intro_title": "Tissue Dale joins", "intro_text": "Dale is back, now wearing a hat folded out of wrapping paper. Nobody asked. He calls it a crown. Gerald, who knows a thing or two about crowns, is furious.", "image": "data:image/webp;base64,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", "archetype": "Wrapping Paper Monarch", "hype": "Hype: 9,300", "tags": ["Gift-Wrap Crown", "Regal Confidence", "Paper King"], "gerald_quotes": {"smash": "Gerald glares: 'A wrapping-paper crown?! I am the only crowned king here!'", "pass": "Gerald laughs: 'One gust of seaside wind and his hat is in the English Channel.'", "super": "Gerald accepts a duel: 'TWO CROWNS ENTER, ONE TEABAG LEAVES!'"}}, {"id": "awesomejake", "name": "Awesome Sauce Jake", "quirk": "Both thumbs up, permanently. Visor visible from orbit.", "intro_title": "Awesome Sauce Jake joins", "intro_text": "Jake turns up in rainbow wraparound shades, both thumbs up, and declares everything awesome sauce. Morale goes up 400%. Gerald is reluctantly having a nice time.", "image": "data:image/webp;base64,UklGRt4CAABXRUJQVlA4INICAAAQEACdASpIAEgAPrVOnUmnJKKhK5Ve+OAWiUAZjzkeHKBdgsV2cuiq60uJD3SlOuYtyTO7W1xfhvWxpQwxg99xAMbbeeOA1QojM0KDzIG+0sXbEmKkZgiZ9NFIcX+C0BF5QMkv3GLjP4iYNMxsa28H2U945yICGxVBgDj62B4Qj00AnUM/I+WIAAD+9yDFB9GYlnOGOeMAwI+n67dXI2KB6G+Qr6yQv+2ePuQs1QvgMtC5Lr/cClo+BwrYdeSE/PB6h4SojSZcR7ggs6kCb5t180KHYTKCxo0UyujfonaPQ9cehwA2VJ16H4MSdoE96z02fdq83sN3z4Z1p9WCwZoY87tNUDkLd2f2AiDpaKSzRM50kOtKsQ6QVGupczyksMBEt3qnVJ6gn6UqXSdw5GTROelySLiNnUjjoHtmvWeRV3evzh1WGikRx5OZBukRS0CBhza552BOzhCnvc4OBdld17PIaJFPY1r7wfBOh97Vf+AnhpoaTXBicPJpA4m/e1VwS4yaRwU+vYkm2Sm3uJfD/zMoo5CzQSBJCEdTQbcTnbeio0uEPuI6vR7DHPZn7eQgmFtTWMeTCzCosC+pILw/gwbYm7qfriWorSr/t5y0yd5UtX8M+CBnLuP7ecugo8icGT56Snqy1GjFntRoJarsHrXocmCW57rU1tpmhv2bGvhcaHc5XZRuNvh39myKlT/O0xdD9+ahj4GpGX0SbpO3RXPFd+ksJVYNVttKlX0+r9Ic/P8CsO7DwzSZmE0NGsh5gAVTvYknyYpCgcecMurovA2KFvK/rZMxP8UtvdC10h79qm3lvPNtbNXhMlGnYLXjdxzL7obJjr+MokyxNoNITFqG9dq4OhztA3qypREUy2CR5noXhOIgBKOOyR1GE9q1cvlTNk7ZmOiazWfaDHaCxucj9uh+RSGBVKRW+1H0tNhV9GuAioDU02smQ5DH6AAAAA==", "archetype": "The Rainbow Dynamo", "hype": "Hype: 9,600", "tags": ["Awesome Sauce", "Visor Visible from Space", "Both Thumbs"], "gerald_quotes": {"smash": "Gerald flashes double thumbs: 'AWESOME SAUCE! Morale hits 400%!'", "pass": "Gerald puts his shades on: 'Not awesome sauce. Jake is currently roaring at a cloud.'", "super": "Gerald explodes in neon: 'MAXIMUM AWESOME SAUCE! THE COOLEST PAIR IN BRITAIN!'"}}, {"id": "erik2", "name": "Erik 2", "quirk": "Hood up. Says nothing. Knows everything.", "intro_title": "Erik 2 joins", "intro_text": "Erik 2 arrives with the hood up and a mysterious little smile, like they know a secret about the teabag. They do. They are not telling.", "image": "data:image/webp;base64,UklGRgwCAABXRUJQVlA4IAACAACQEQCdASpIAEgAPq1GmkmmJCIhNbWsAMAViWMAt+wmx2g9LqMZCMHGwmnG6DnKHbyi3SvWwx91HrU/CzC3ybYVC6lTMNdZ+VD6z583ahWH4g0SIGSRc0goi9EPIjueJ9YuJAZn1OaIJlO6gVY5PY+fU9pSSpEdTBP/Rew6cQgZURPhUpuArPJHK7qfEqBXkS9MG11KAAD+8FxqqGMqIb5SqsaU8jTqCOAqfJ6ONUGub8CdTY7SoEZ/+kOAOayLWovyriMT4hqRN38N2towdG9xl1vSmec3sC0eIwkgkMd9JbmQDP5WAETD+1PH36KH5d0qJqa8TWE7ydTbWjNSOdQhxMBvdHB3hgGh4ZFEVZIKg53MMVXNUvQyikKBnPRrTECy2OK771Ztv9P6b3sc6kb0vQg9PCRhEw7RgLtKO6KVVAgr7vgwFaA4anWzbAONkt0JkDMv/r8PyEn91rGaysw7tTWYysM61y4W/v5esbS534Kq8L3z7zPpapcieLKeTF/spQGSbHWxFgINjoADhNe5hDubuKCDaYsq6dkCa2/6lDv2znIJ4ULVu2iwrysozY4LAyYct3o/4+YJRx6CCDuG6j2poOzyzUEMhPayW/R1LUiHX0pdncZ5K39K9ojtQEcEvt7yyVU/g9sh9/ITlKeGGsegbXwvcxVx29fzl4AAAA==", "archetype": "The Enigmatic Hood", "hype": "Hype: 9,400", "tags": ["Secret Keeper", "Mysterious Smile", "Undercover"], "gerald_quotes": null}, {"id": "gogglejake", "name": "Goggle Jake", "quirk": "Swimming goggles at all times. Just in case.", "intro_title": "Goggle Jake joins", "intro_text": "Jake arrives in swimming goggles, in the back of a car, nowhere near any water. He says it's for aerodynamics. Gerald has stopped asking questions.", "image": "data:image/webp;base64,UklGRt4DAABXRUJQVlA4INIDAADwFACdASpIAEgAPqlGnUmmJCMhMLTvUMAVCWMAw6PZSKq8bBMntCh8CLm0zObwYgQefkErvMNHvioimV7WDgU2qat6ZF7Sq8eyu7ZeoZWnYSWMjNewrdV+X4sr5UWPJ/SJesujDPwWETT6WxVHE/WDA9GM19cFrV9MlnMksgFZ/SX34orcqYGCYzmOFSJnJdMaYNCVTMLkyUCKkRart1qUHJTtCUlLcXf2QPAYq1XkUAD+swcb0SAtLHyM/CBEZ8XOTdXTW4a5GnjDZcv3H0hb2eCcOZoUJZ2iYeAAsj6+zGKeRBNwWqkOrBjjp+iTAxUcTrOgzvlW+WeIEk8SCirHVCiQu9S0gv+O0uLlbWq7vZowYtOEYBaYg0OFBtbJO/E0+eV/rUARHKk/qhq8qk5HfEAI/uvr9dArbWlQowWWABTHBAOtHJJOFaJDDn39O/0dw7W504AbEQ4GpY+hPtMbC3X1MTAowII9C3P7woKDtZmDyUkHUZG80IHeyeMlrAQcTkwuKHJD9yCX5/yvOTqit2r+ImmgJGqj+8hksFl/w4eQXrvO51R496RAHgF8+UIJ6DeON5VhjgzUenj/kG8nojbPYmYsIX+GFb76fvRgDCLeSL5Opv9+E3Josg8j1byQZ+I81hVWsPf0g53FMc7hxeTEqBKCX5JN893ZjRIcKX5ogqkGrMFA/gX21w18TKJd7y1nlp8xzRf8nEobKClrnntdXEfrZsyxVJLZXnzUKhOsfKccoLMZO82FyutgIQXiWpvoMLsAU/lt2t2j3b6XEaQtbCfO6LBeF8IACDOLaCV2wvP+ZOJLV6Po+NjeGdlvndvTl4LYNb6RjWZB26ulpQe06zxdZtRtxyYh5RA431Mf8BQ0cVHiFuEOk5Bwxf2uOPdCV+pznpADryBW+V4Le9ZHFxprpdesejTsSWwBBddob1n5yhCRNen/k7EOLwbpVzKe0dts14BroDtv2UFT9HRlcdxwjnTa9VxdUvLV1DMVIxOOaIxisSDnT7HAKYagjsaZbhAd6jSdRU6XQVeyDmKKJuvrJc5BVAgtamBNNAWBc2trLtCH0S1h1w9dONby5XkYP0HAjOUn7ASVGPtUD/UkM4wJvRhRrLXYAD0Yx5tTI21a5K6hAHmfh8oHnm8njhCf9xv3hz7DuA6hmLfTKXjI1OhlrrgJQVu2akJqjcSjMuENkO67hC1kzfyxckpxFRKQlV5L8Kiaj81+qj9oaLnUIYse+hr3sf46k3OwQ6qhGk0H1w6dg0E8/oF/UrRbgZHmZgdn9VXKOATDi8AAAAA=", "archetype": "The Aerodynamic Speedster", "hype": "Hype: 9,500", "tags": ["Car Goggles", "Speed Tested", "Dry Swimming"], "gerald_quotes": null}, {"id": "metalucas", "name": "Meta Lucas", "quirk": "Smart glasses. Records everything. Peace sign mandatory.", "intro_title": "Meta Lucas joins", "intro_text": "Lucas strolls up in smart sunglasses that can film, take calls and probably do his homework. He records Gerald's entire villain arc for the group chat.", "image": "data:image/webp;base64,UklGRjQDAABXRUJQVlA4ICgDAAAQEwCdASpIAEgAPqFCnEmmJCMhNxnLaMAUCWUAwjxS6gDMvTMNedVnVe4Cjl2yTGAiXK4OMveOyMyRFjvBSsYnED7f907VVHb+EnSsZF8X8yufcIfiKNSKuf1GUYIuykJcMfu8YGzxnvaIQNTM9iTJ2SMcQjR0PaW03X1PBshXFOfruw/v6Vlx6BuiPITY5TOIHgsyzG/r5FMRR8B0tPLrAAD++qo+iTtmcCLjpf6BLHgzl384tezSpFgPBXzCkAWlwC66e6NLGQSBvGwAnYYtRCgGya1At+ncTXz1VW+JNDg7BjGxpOntUN1qm4q7cFN96MwoQEN9/1dk3xjFZqh9elzJZdBVMXkdqpglZcTCpIKOpRPQJr+RpfU3KI53lkHGyLGLggvzaKBrrZX4TjsiCA/QZxvpgEHjzpC7ftinUd0P7NAxUtRSdcS+XLmzg2feXgbJZd5N8ek35tc5om6JbUIoKdJEsMOJ3ySc0DkWLTSAtehwJMO5r3sLrMrwEnk87Ptd254gcRPCHUgDxqIKkLwNPobtjogbXiF4ihhsGpxynrpN9d+guj2OdxffiN7/IheDFZtCs16Dr3ytH5ZACQ8/a1yrdMsozioGC2qDaY/ldeKQqwj8CMMfg29c4u4YxxceqJsRDX4l/xTA5oz1vA2q+CJ3DTNopU/np7ONz167sHKjqoI5ST7MuzpTDn7/vBiRdBJrl3IXgSmGPq4vk0/Vzd2ckzb1Aysd4i2yZ1vvnV7pzcN+s4B6iAjHKMXFGqD+YbH3WMaBQrs3ToTlayDwsU5MIgphcywSUUPi84ACyA6O7KkBUpfFGiyydtCVxUG445XyCJpbXgAxE3B15M5QnQOKtmLO9fs5ZN46NU8K8/3t2yjhKTsWDMSV1m4/xIwB9dujrWqkFoMJ/gCuQB3z7bAPUrf2M/0e9yRw2Dxl+69J8XGh6h9ca4DfAN4AZeAFpBBsS8rQBINot3kKaVsNfZN14zQCByjuQCUkl0s71RsvwYhLaln2AuJHmSkbfKHTEvv8J2u9oYxy94oCdfQMimBUz0Eg3dIT37NTSWd0e7N9EnwA", "archetype": "The Cyberspace Archon", "hype": "Hype: 9,600", "tags": ["Smart Glasses", "Villain Arc Recorder", "Peace Sign"], "gerald_quotes": {"smash": "Gerald poses: 'Meta Lucas just recorded the engagement with his smart glasses in 4K!'", "pass": "Gerald cackles: 'Your rejection is already posted to the group chat.'", "super": "Gerald does a peace sign: 'CYBER-CORONATION STREAMING LIVE TO THE NATION!'"}}, {"id": "steve", "name": "Steve the Seagull", "quirk": "Defected from Gerald. Pays in stolen chips. Stands very still, judges everyone.", "intro_title": "Steve the Seagull joins", "intro_text": "A seagull lands on the pier, looks Gerald dead in the eye and steals his chip. Gerald is speechless. Steve is already eating it. He has joined your side purely for the snacks.", "image": "data:image/webp;base64,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", "archetype": "The Chip Bandit", "hype": "Hype: 9,800", "tags": ["Gerald Traitor", "Stolen Chips", "Pier Terror"], "gerald_quotes": {"smash": "Gerald shrieks in terror: 'TREASON! Steve is a chip-thieving renegade! How could you?!'", "pass": "Gerald cackles with glee: 'HA! Take that, Steve! Go steal someone else\\'s battered cod!'", "super": "Gerald faints on the boardwalk: 'YOU CROWNED THE CHIP THIEF?! My dynasty is ruined!'"}}, {"id": "ehjames", "name": "eh James", "quirk": "Eyes wide, \"eh?\" at everything. Somehow always mid-sentence on the stairs.", "intro_title": "eh James joins", "intro_text": "James arrives on the stairs mid-sentence, eyes wide, going \"eh?\" at nothing in particular. Nobody knows what he heard. Gerald is now nervous about it.", "image": "data:image/webp;base64,UklGRiQEAABXRUJQVlA4IBgEAADQFQCdASpIAEgAPm0skUWkIqGYWxaoQAbEoAvgP70TENKpLe+3gruMMbftcq1HlqObxAp237ldSLF42SsHTCS1H1EvlOddyd7+Z3CZb5asnBLRKt/VNUtcHYF8QDVlgTT77aiTp0ZuktPYbTC4jo3En1Rg+aCqy+AGB8eRhi33Zeyynbwy9RezKXnAG/PBw0BPFx1CaVRrLSy1Tb3dtnGAo+1lAORnS3jvwjFGHqYzmTqorx/5pdgA/vi25fxyy6DuJYld25yz4X11zonq4QlFo5D1vubA337vdVM83yAvTFE77ftRuyRjOVOmHgGKYno7TYqjX/OEINxGlxRCxOKFgcCczDjiDeB6xxrsQgXfNF7AOU5dFrQWXOEB/2M/kIQrAT4ZDRBQM61l+x8hwtkt/Wf6nm36sL2Ho2cCMNrdq6xOrK+2Wxwl2SeaNwN+5sef9EyhSIQ0mmJsNGFeT2lVwV60pbzSwoGhuJhl+QPtuowIKjv9jO6X2q7u6Ymzh6i5TGdufwU0pFhB1xSvFn8lExnxY332xZU129ZGohT8xvZetgEkNaeqC5R360wdV725xGwXr7OyvFRO+GxQ4VbT+IxxkE/7KA1etV7MClykvr76xWZaaoY+rNtayL2H+9Z3TtndRVzU/UaDdlLCtBmCm+sTdLfJxo46CAB83NwzSRsvSpv40sKKpizV3Qv2DnrscnjsAI60uXdk7jUVE4HGyB1ox6QTBn3HrJVESs552sxJGcTFa5/WE7dTM/S+VhC9ns/JoabXXxAA55ksYG6Wk5Rscn4UNJXswCzuKK1XpbqeFqi2mzTOl0+SfwGp9Y5/qj2r5JAn0FMXtVc1BF3jwNSUjEIscs1+sGdavMYzH2Nq27kKb3h+LM8vBPstzPIsr2fY0TLRGi5CtM+6DqMOWPsUGeudIgbPcMC5wiA7DbHYh1ob8gs8hQLBicSZxvdQ5kndPiNA/NlOmpK8D/EK0gftZOAEt0KBeBj+at8OFZd9QTu8dd35lnghmmAWw1HjrFVa32GLnzEXjPpzHXm1BNjRGP/pMTTg1CA16NcqFPEw1OVPVKKXgkS85qORGgRRTw8h3QRrHdl198zN/bEVdzIM1jw5Ye2h4qYH6DbXpZ6AM/CzDrRfXzPhjzedTaDhWQhWX4jnIC4AiKwsZeahjIH1hAKLbtzPtTRe2jnsyT/oqj+ZH6NhbgmsVMpND47IgZHiMNkX/dOz9n7zbL7e5PA14cJcTjPSoyyCfdBJfpwOmapsJbncrOHwDJ7R2xVyaqJn5TUdNXf2waMQlTjXxfuYuFvwjqGYRHfH+gUBITuNoZuzIRaweaWLLsf8DQcTbO2CDdqb7TxM1xmyMuDeo1Qf+1hBMG2c7cmDXu7dbiWQYqeDAAAA", "archetype": "The Stairway Questioner", "hype": "Hype: 9,200", "tags": ["Mid-Sentence \"Eh?\"", "Perpetual Confusion", "Ghost Observer"], "gerald_quotes": null}, {"id": "drivingleo", "name": "Driving Leo", "quirk": "Helmet on, shades on, top speed 4mph. Overtakes nobody.", "intro_title": "Driving Leo joins", "intro_text": "Leo pulls up in a tiny black jeep, helmet strapped on, sunglasses down, steering like he is in the Grand Prix. Gerald tries to race him and loses to a toddler-sized car.", "image": "data:image/webp;base64,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", "archetype": "The 4mph Speed Demon", "hype": "Hype: 9,600", "tags": ["Miniature Jeep", "Helmet Strapped", "Grand Prix"], "gerald_quotes": {"smash": "Gerald races alongside: 'Top speed 4mph directly into your heart!'", "pass": "Gerald honks: 'Left in the dust of a toddler jeep! Embarrassing.'", "super": "Gerald waving chequered flag: 'GRAND PRIX ROYALTY! LEADING BY 4MPH!'"}}, {"id": "lockedjames", "name": "Locked in James", "quirk": "Zero blinks. Total focus. Has not moved in three hours.", "intro_title": "Locked in James joins", "intro_text": "James stares straight down the camera without blinking. He is fully locked in. Nobody knows on what. Gerald looks away first.", "image": "data:image/webp;base64,UklGRgQDAABXRUJQVlA4IPgCAAAwEQCdASpIAEgAPn0yj0ekoyEhOtngkA+JYwC4n+jSgS/h/qf14DkKnkVvlBJSK01sgW7J1f1cMNgqk9V5mumg1A8Ey64pfXCxAF/FWVBEtKA+cmbLBGcZ/2rcqtzfc0yQdBSErbgAq2AK48ClVKFSENAAuTaq++BX3MTTOCWI8ntPezr6nrL5Vq7/LajIUKA+IAD+/S+vBJp/ot17+m3QVout3NUIzhZRKp8qQRczMA8GyGOtEATdgX0NwtT5pijhIyh5f8uPss1caZsI4yx095Awup1iCtnANoHA5pVnqpZvb25Y/SvmDkXjL0JVxWda/8ySURiiFPKXiu6qGYK9ghqqRwQPM8mlZgmKuEkdCyXXtAGSSJsi4xYyVAI9aguYnsXcA1uuEgQnqlmqZhEkFiG8p1AdLKXAAEWu9XWcc1FmsRTxVUmni66xoEjmNarT3Hv7jlzjynNbn0VESR+QgUfZp05GmAaM3iA1REsS55SqDv4cS7znybm/CiZjaETn0KhFDaM7BkZm3WZL/9IdmqM9su5S8cXHfoRyO7r0EfsYiPXhkscfY3/MznrM1jne91t8+bX5qp5RrU2sY0OaHqE+98uSt+omWq0LHBJiIkkhXdfetT4ZzmUUDv6m/F+Yy8aOzNLKOZ+gPXeQpiedb4j4pjQkDWXvdS2ItRJHzRTh8PwGjdLlmVqPwvElzyvH5qlD29QZp7e9BIG+9JfDu9cQZGy+eJkNaGZa+cKBCpBtwACG7SdDtZX6c2EkNzI0/iueNxKPdRhT762JDU4SkLeQMOSzuuApnvwUmJ82DUMSL2QvjsTCWQelWDt7E1bEibWOKLb4xwoMcTUxAN7W0rcLuRVzh4+8pmJHWXlsu+7A3DOg5/XhiO2gdVNEDIX1jt/Pk/jGLmJOqWfHltfks2gcqZ5wguGMsuRd1lAmcoBoFJ7hC/imMHwTnhRkX7dORdChJ8IeqfVMOtKUp8Q9m4UVZYfPR/RPF6CMONze/qMx8eiZwAAA", "archetype": "The Laser Stare", "hype": "Hype: 9,500", "tags": ["Zero Blinks", "3 Hour Freeze", "Hyperfocused"], "gerald_quotes": null}, {"id": "piratejames", "name": "Pirate James", "quirk": "Captain of the seven teacups. Green shades, gold hat, no ship.", "intro_title": "Pirate James joins", "intro_text": "A pirate in green shades and a gold-trimmed hat sails in on a ship that is just a chair. He claims the teabag as treasure. Gerald demands a share of the loot.", "image": "data:image/webp;base64,UklGRiwFAABXRUJQVlA4ICAFAACwFwCdASpIAEgAPo06lkelI6IhLhXe2KARiWIAvKITVn6jk3Xu9ln027gnnhLKLn63PHarMGhwcndYW3c6gvS7b/fHbvwlShyCNej2cL6uwBmRFUcpRAjkqB8rXUAoo6LgpErtmc4s1Geb3UYEV9/hXWAC4l06Hhvi6gtM5dCQ/OiDXYSEsxerLDQTDb13BNPK/7X6wg2VOJXsOtJIRVkkyuf1735A3OmCf7Nr/nqJPxzpyPD2mxzW+Ds2hvQpeCLY3HoksWAA/uXDb8wYrggdw92sS5dVCzG9UFD8Vewprtwex1p5b3wZeH5AS7KJcxXn13NXD6ohAo78Ydz9Ht4vef3xvJTBq3hmFwkxznNgGLIfKW5f9PNXLq6l1kWj+r6K752IehiROH3ltGsaJNDUWY8IFpyfxoQMahCHMYI3t3MZuubHIKuEetB1D/aa5zKa9M8+dmnrmlfhtlK46vtIla8ArbP/6fv78ihM5r36jt6wE2duS5+iNIZqZ7FNZ9FZAZGVPCMKAuLYgoRfpwu+K1zafoL1p4sWhF9BdOmHfiA9yYOjc52tXYrAdyVA150Hx4hTQsVJPhhvSNt04Mwtbrk1T5MO+PVo5Ktv4EDbjQ35EIgE3FSAf62rpHVQ46SGutUesn8vbJjPjPiPsDGSAv1O1YHycKj3JqOD9QgpZXBJiT/ZWJV1vwUB/5dE82w2pvBuAHBSN7BFYjl4y3TlyoDFlfnXo7Pc95SdENB4Ie+8bQ2tggPPnOBAL4EU8w2Z4k/YL1CRognEvPbl/2kZHHfcscEZhzksCUKyFmXQ92k4ixU+ZEniSxfwGE2qoDwEqH14qUARaYHxV7ztgMZ0f5SFHI01j9wVwBrbvyd6XBuWdLOLHJDFOMxbYd4Fp6SC1Hh5xSMGT469qQO3deYbI3oZkX5UO+0pP5QRvHIfF1s5y7UQ6Wm1LwyyTqlm/zOrxgWljNG6lZqzYKvLTNXiYc6DX8LYvKFgIc9U1wR/DeLgW8nBOBbLJekm48GdgNMHtK0s/++3RM6J91IgzbT6/vXfhHV+KCP2k1wjr38sCram7YKD99Tw85I6H8GauMX6v1EIvod6yfpupZen3r+i74dtI0CbNGmT8TOutGoZahjRIRkQv4ad6IrNbGPFeFsZ1jU1Lki8lMkyTwYC4US2EQvVZ5D1QGQoM3Q6hX+fb8gTyFT+j0YmrIlc6JEHAPCuX6beIu3rxvOGPoIlk96pY5ftQJ5aopORL6djIB7MXx85wvMcDLCjL9lW5Yj36qhyQ1/Ry/Kj75DLfM2DDgN9GxMp75Aj0kHYdLy4MZNdvBxOTt5evYvuT9+FWe/X856fmztcDHsiwn/vWJj/9lvKhn1PSdyKnJYYWiPPzNQvlu8GsRaH4adn8CWSmLHT5pWLzbUXTOsx9YbdXTOkszOduc4ovOzBpkLuRnBEaNlBzmG7GE85bo6v2GhfdAOGeS8CMy+na7dXgN/ShVgi3w/xQ2mfkI7P6hhdLrZ5YM+0A8t+2JO9S4jlHeShE/298yWqiZbu64ODj+EK7149Gb/fXskHM9vbpZoRZ0pKjiOYxtIi5gxZ8PFEi7MfsHc33TmvOeDlf6pENIXEDTnMVRGDLshM+46UxMtfsQH6zWyf9ZtJteKe4h7XIWLBFuqQNR31pk3/x1z/I7Vhi6z85wcf6dhDIF4rfd+a0XSL4fAvE/3HPMroDEdbwEumOy57X77LYKOvO/k34KKZ+/g3xcAA", "archetype": "Captain of Seven Teacups", "hype": "Hype: 9,700", "tags": ["Gold-Trimmed Hat", "Chair Galleon", "Seeks Treasure"], "gerald_quotes": {"smash": "Gerald cheers: 'Ahoy! The Captain of Seven Teacups crowns his first mate!'", "pass": "Gerald smirks: 'Walk the plank! Gerald keeps the treasure teabag!'", "super": "Gerald fires a teacup cannon: 'SEVEN SEAS OF HYPE! ALL HAIL THE PIRATE KING!'"}}, {"id": "sleepyjames2", "name": "Sleepy James 2", "quirk": "Sequel to the original nap. Even longer. Even deeper.", "intro_title": "Sleepy James 2 joins", "intro_text": "The sequel nobody asked for. James is asleep again, this time wrapped in a sleeping bag, looking extremely peaceful. Hype goes up anyway. Nobody wakes him.", "image": "data:image/webp;base64,UklGRogDAABXRUJQVlA4IHwDAAAQEwCdASpIAEgAPo06l0elIyIhMzM8AKARiUAYoYYA+RBYJY2DlQzu/xiF3XTQVuST2wOf60qO3n8yS/i28Zg5thp6HJFp6J6rr/wURJL8xI5NtF0Hw82sVCHsdpwu8XdY7KiPKCLnWJq8mzqs0Jawc06jCuIf9B09UMkxETmvsD5HQpDhx24gnY0hPBwZ3sXLJyyGpbOove9SkpfyBcMAkAD+1rHxLy0ybqp1GcVlX1/0iDKi6z7mc0EyjqvB4GBkFtDqJljVZO46uvRn+V22VAyfD9oJPy7FZVPiLu5ZsK459PpbsGDQ6DQq3r7+wVGA5+2z8wSHxBfaQj1KZ4Y9t8jqX5BtcQyWDwsxGjlGBUk2tiFloz/R5E3eCjZJp08WHAlvBpDsMyssyWAlFnrLTYpgclZ5C1NDE/NZISmj18nGNnHaG4rlpA7isWQ/Qkk1/jlxpR62zKXQuwu50DF3f2Xnlu0xcgfCQsU9p7WwPBtLxSvxXLPDzVnOadl6UW8+qQBJOj3Gk8qVgRj+ufkbzzGTNxxxN7MbY2BEdPuC5qYufJbXKl9DAWgLTToHbwAnUISG7omUF2tSW51HbjQnDnQ/pnB1UQOC3G2f3N9Wdky1JGDyhPChiM6EtDXjgr+9cumz63991Qn/KXAiPnmpdFinbABl6DpL+CkUnQVJVcS8THapgbFrf7OnDAAUNseD4Gw22By/tlpeiPgS4w1pEmhBSY6AwlJ0O+Xx4ArozcD/xtzMGzjiXP1t6iPPG/6QtBMcNo5eZ7ps12aw1wGVjzs3KSALfQnWr8rkKNOvqg98AGTKFFNct+E54ptbjAed/GOaTt1yDKZCxVBBR7JzdkQl8TqTfizR8vMP9c2ZtBB+emJs7rGk2KdWg9s9G2R2M5+Ptv03tFeutj9y9uR0yBgWp/nqXzZH/RArwEPuNg9lOsd3v07p9DFI6hCWO97mS3I76y4iuukynK+l5MerPLdyBEFr3IgVTstxmQV9ZQu+shniqMDm4A+MdeWo7OgqMTQxGfRtIe78O0Dz8Kfuxgv4UGPqtl9E0WRPMtwcWBmTJ9hYLqD9wWsf0ZjNTnnkLo4kpEujoMCv5ZcuiquOlg6nuI5IMoSgX+w2PT/P4Ov2VZuicAG54pQCdbORWDvMi+JaPqEKYWqIeJiUbIOTNEgIyi0hrZFtD4AA", "archetype": "The Slumber God", "hype": "Hype: 9,400", "tags": ["Sleeping Bag Cocoon", "Sequel Nap", "Undisturbed"], "gerald_quotes": {"smash": "Gerald whispers: 'Wrapped in a sleeping bag like a royal caterpillar. Majestic.'", "pass": "Gerald tiptoes past: 'The sequel nap continues undisturbed.'", "super": "Gerald dims the sun: 'ROYAL HIBERNATION AUTHORIZED!'"}}, {"id": "bigsunoli", "name": "Big Sunglasses Oli", "quirk": "Shades so big you can see the whole room in them.", "intro_title": "Big Sunglasses Oli joins", "intro_text": "Oli turns up in sunglasses the size of dinner plates. You can see your own reflection in them, and Gerald's, and possibly the future. He does not take them off indoors.", "image": "data:image/webp;base64,UklGRhYFAABXRUJQVlA4IAoFAAAwGQCdASpIAEgAPpE+mkoloyIhqPbaqLASCWYAqS4BWZ5gZseUN4L9QPDuGLu3kArGJ0ciIXG7Pm8+YHqAWkyXeyMQIvGsu/bVob6cQDqyH0Q5B/GO9r3a2o8eSqnf6pQLJh2QtgnA2TD+izp2q1tZqI7PWze8Xs/QGy1IO8sXhFQzxUTDN1Cn1cje9aeZ7fWLEKodOjTsI7IqEWF6unNl3V7NaAAkPkSeAo8RYEBSTOmfj+YWYnCmjTK2l4aHNk+BeksWtpPeVRuC9wTjQzpOEgAA/sKcBNqxFIwyZq/XJem/nry6gJD07SLVfJaWcDP0lQBlVq919ErDFJWscrrZIyiXfIa0Htj2/xgVnMideHm1pTiYG+/LTcVyJltvM+p7HkIvcyxCzQC/aUfg28uGopK8RZXq5srVVjdEohhaou1zBlNvbjtBdQic4ufN7MshtfQ+3qmKZdYDJ4YsuAqCDX+aC+qoAZCjCxcCVwI0wpQl8fzJ3nfKAqyQ59DqJgft639d6dGpmYv9Xehvp4+ymquAiH6ywM7nEenYA9Y2sEO0QUybgxEyGkwHvHpvWBjF1ydxjH4yU2udrBCbqje4xdiDuyHwjXoKXsp6/To9YPp2JV2Vu6fPFsAjsLRS6zTR8jYGH7YSlE6R60OsEY0O/isZeZuLY14xhSQQlwBoEymuZUDqunE3ACIGdDtqTwMeV+eItCRV8Cyk8yOQD+UqZmYvwk0zSVCSrZS6vg4PAGkctpnmPkckcFtoGfaEfzK37mWwpL1v4yYqF+Qz2haMcfkoxj8YKX8G0Uu0PyUenkXhcAHpIEVOUkgz620YDWM7BE/aMd4FkFGNcGbn2eFkJMsEq7dciE8OUMSqsfJLykbPm5SJVnFRl/QLAFsIFlulFKLZGjPByF5/8gTfmrSNwvx1k6wboZXJcsntWQ3O56/CZTFxiVNDcnMlWFiXKgmYuL/IKSQY+17CxtmeeORRDZJ2UFwAzYEZUfccuTag7a+pa7y9MK3XhqpVWfU9FnGrdFtQo1QfB+zvcAB+SSco76jHNUN+iVOmvgFQqX9vOxAQG6zSB721aj3x44GwI5QQ2n9cXg8sfb++avY7REfE3nMtGc3awHtFT+wo8WqsPzjwsuQORzXPUfG6wcvCj4Vj4oCu6DsAjr6+H8QdK5eT6qAp+LhZAVbBq9EUfcrWu4jkt2HUk6DP2mlhKrAJV+g7aLbJwk/eCXPRUGars4VaikXHAiQbmn9PHeyRCHBI1ZmhNtYQhV506eqoVwPy878jEyWGI8GYgtkz76I5lo4P+EDAQE/ujZRfzwGTGp7BnOvgiQsiLr2USZcX77cFjDT+5YwxGUbwMKXZSfH6cYnZCLwagPX8KXcGa3ekxu/6Gx+xlgkwbPVmyVs3TbI4A+xxQgcIqciZowJRtDEhxzydKwcERDSFSzxCMgNg3Rk6FSlZJwljuXw5fAaXnS/T/YI3w5HDzwsuWZF1ARXGDmu/e+IVfiTULleLBphOClJdR9QgiZk3f4r7n/023Z2ej5GyD8nhlI1VbXwSybN8VXnMm7+Pbia4KST1lF3r3j9DzwSojuQyZWO9RYcIX3NwNQ6Jrz6/xXRMhwGs3qoSD9WIsYFo4hqEn0yIECmZxTRjJCXFjL1kzqc/YMp9eO+AuMepQIZiIJtFDcEALaWaGl1Z0g2Q03EAV2Pc+9da+P8tTkYm/GTYaggAAAA=", "archetype": "The Mirror Visage", "hype": "Hype: 9,600", "tags": ["Dinner-Plate Shades", "Full Reflection", "Indoors Only"], "gerald_quotes": null}, {"id": "ecstaticjames", "name": "Ecstatic James", "quirk": "Happiest person in England. Glasses held together by pure joy.", "intro_title": "Ecstatic James joins", "intro_text": "James arrives absolutely buzzing, chunky glasses on, double thumbs pointing at himself. He is the happiest anyone has ever been. Even Gerald cracks a smile.", "image": "data:image/webp;base64,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", "archetype": "The Beacon of Joy", "hype": "Hype: 9,750", "tags": ["Pure Euphoria", "Chunky Frames", "Smiles at Gerald"], "gerald_quotes": {"smash": "Gerald smiles: 'Double thumbs pointing at you! The joy is unstoppable!'", "pass": "Gerald sighs: 'Even chunky glasses of pure joy couldn\\'t win you over?'", "super": "Gerald beams: 'THE HAPPIEST MONARCH IN ENGLISH HISTORY!'"}}, {"id": "fishingjake", "name": "Fishing Jake", "quirk": "Caught a tuna bigger than the boat. Did not expect that.", "intro_title": "Fishing Jake joins", "intro_text": "Jake turns up at the pier at midnight with a tuna the size of a sofa and a face of pure shock. Gerald, who has never caught anything bigger than a chip, is consumed by jealousy.", "image": "data:image/webp;base64,UklGRjwDAABXRUJQVlA4IDADAABwEgCdASpIAEgAPp0+mkmloyIhK5cceLATiUAYfBLpl82Ze/X6dO002MVmzmUGIH/7vr/2nyZiso3Jkw9DRRu9g+IYJPf7mZbZr/XpOa21zO7XYAH+1PxFxbOVyjqkO07wp/9B5+0ac1BjigAMwvsnnIq3GehJGloF4eUApnwSB37zvFvM6LBAtlp7rl5BAXfdMh4znCPD9lLyGgAA/vxYl8St+1wvTtSl15IReRT69iGgfD59/nb6wvbVZST6M06E6tPw1ezQlfE+4JWK0teBo3j+G5mB0kTbkxOJP16O2ezE788M8vL1bh11Ki/mEOPMjw0t5HWLRquMMR4asaStyytbKJc8qYVxofURMuekK8eZW1b0lfCOaU70R1L4m6aYuaZ0BBaHCyhti/obW3mTOzS7E+Z4i25vQkzA1x2WoT9J4ffjx3lcTIErhtbK/ifRE6mj785F22YNVbJ+ODqM38hZv3G9D3tIQ1JVV2zep3P3yN1R6wUEXogFqmcALAKZMtk65YvT+pQzsakhy1d2Ewu+2oiW8pX82WNyeff3PVEYFLrPZMw2BkseT2uL5U+0LrupvMpz7VnZYrPovI2EmFUko8xUf6l094w/l8qn2vrVOUIl9PphzQjtfmz2n8+B9rRClrsuYi4Nlkc+ECQyKm3kWzE/4r5KXVdGsfDu5/ukHv9MRZY9siGQnzU38OHAdxTnGU6J0PO5Zgumig6H6MkR8pvemwO86sSZg4OX0WH+y5zzYIU9VIHSf9RBcRSmsp9R9e5xIOefCc6v+ni4AB+/pdm+jj6t8G0QKQvqOL8hQrHKCTnmSdzIUri1rTINwQWfD4Q1TBRlJgnzkTpM7b4dGpQ5pQ8dZo9CQyj4pC/VRGWI/gmxqW5DWr0BCNS7EzUd7GxoPm2I6/XmtoQ8xd1WS5yjulCSAGXcQ64Mp/fBWkJCHZo40a0V0Q90EJe0DvW3nedFesjsWVipqlrkBCrDVDAsgyo/7p+QZzUmehUipii/HE3Yylz32CkJxfUdeDAGN6vAQSf02ljJ0ZOD8vYIf6IrwDYoeNAe2j0epzlMl5wVAYSJ1SfUzZDnAAA=", "archetype": "The Midnight Angler", "hype": "Hype: 9,650", "tags": ["Sofa-Sized Tuna", "Shocked Face", "Night Fisher"], "gerald_quotes": {"smash": "Gerald drools: 'A sofa-sized tuna for the royal wedding banquet! Delicious!'", "pass": "Gerald cackles: 'No tuna feast for you! Back to sea chips.'", "super": "Gerald hoists the tuna: 'THE SEASIDE EMPEROR OF THE DEEP!'"}}, {"id": "ahhhjake", "name": "AHHH Jake", "quirk": "Permanently mid-scream. Nobody knows why. AHHHH.", "intro_title": "AHHH Jake joins", "intro_text": "Something blurry runs into the room screaming AHHHHH. It is Jake. He does not stop. The noise scares Gerald clean off the roof.", "image": "data:image/webp;base64,UklGRhQDAABXRUJQVlA4IAgDAAAQFQCdASpIAEgAPpU8mUgloyKhMzIvMLASiWMAskwYUhEWPtkueRVFmEMAM1sEuSg/CeF1MRa9cSwgLJhqqceSDVKF2Pc9PU+hitloMINikDOo43RYfJ8ON52CpLec3fJlDELa0V+w387ztunMAWzUf0NHi2Y2VZ1ZiDF1hr611zo0fAsANMTtSlMtMI7LCwp1Zlt1jcfFgTxIzHhGhULrJ6wFYYe5yKC2dqlQMIZJvgAA/vHXcqy9jTvyHGJvXYuir1+BdmxJiQRf6nANkzjbMtLsDMf4arI2SJoVdi10PnUG5mBfkPhEYowSz4Zwpin6Byq/owy2qhaYSktKlS9UIZg5fdXOWVAbliAdIRdG/G6SihAeUZzPsFnnO3NcTrZd0m+6dKisH6zf+eEd1vmCGmGoEwdVeKxxEn9wWSI3cIblYQh6cNlV6IUhOG43pbcXIRxLi1oJIavI4zUgG1Cl0bidST487naMM5TJ1Ede97Z38N/uIVC28ogCgCe/F7KeUhRC5WVvgAQU+lJZUV1Qy1B6MO5uaAtY5iIGPVLiQ/h6YrBV3n0WWv6DWkB4D5nDj+tbxYdOhAFCBfC7Zn6UYkN4PNuwkv1x6yF7IuxEnr9B6Nyqo8NuwJN50CkoaooE68yjwkTWcsYNo/BYwURo3zTaHAY0sk1e7v3B5FhsCeiGu7NFrFGqxCDDxlJTqbUhik0hFFQiPcCWo5MCSDRDqJFB6fdnrImCXT4v70eSXS8R4w5JN+bfeHMLijCkWY5du2rJHgXWI9yrxdRdXluGBg8a1PlNKL6nJ/6CQhjqRyncQFHdzfV5lfWRJvgnL7wZp3rX9fyEdbstWnFTMdMBYzChb+DkhCYGaHwLc9PhbHs7joHlDybc4s2LSTrfofyKy/XgD8V1Mp6HSqaJgyVKrNYlkKoJHJ5EgUxpOvMNphRiNcdenxPu2prRkG9VXt6uC+RM9exkEHMfalBGkH0JWZ4Lli9hpm3VWQFLzbLWdyGDcNGTkBb8au0B83P58DJuZiPS6/AAAA==", "archetype": "The Sonic Boomer", "hype": "Hype: 9,600", "tags": ["Screaming Velocity", "Scared Gerald Away", "High Decibels"], "gerald_quotes": {"smash": "Gerald covers his ears: 'AHHHHHHHHHHH! A match made in pure velocity!'", "pass": "Gerald sighs in relief: 'Sweet, beautiful silence returns to the pier.'", "super": "Gerald screams too: 'AHHHHHHHHHHH! ROYAL WEDDING VOLUME 1000%!'"}}, {"id": "digginglucas", "name": "Digging Lucas", "quirk": "Digging a hole to Australia. About halfway there.", "intro_title": "Digging Lucas joins", "intro_text": "Lucas has been digging on the beach since breakfast. The hole is now deeper than he is tall. He says there is treasure down there. Gerald brings snacks and watches.", "image": "data:image/webp;base64,UklGRuQDAABXRUJQVlA4INgDAAAwFgCdASpIAEgAPp1EmkilpCKhLNmcQLATiWMAxQy6qZrYyswfN+lxLs834Ov4QFp0lBRKq7nJQi9qgZv1NBxj3Ty1r/06z64d+UvOQXuj6g62W10KKlb41nc0xxpTmJ6AlA6Qgry1biCB20WDcAmW6Xsv8vNGLeZlJFPqIMpNHKs1YCgEPPQVCv31UlOn/rjwpqCVWuBv6hVDVeNsPM9A9EwX1PEN49s/LjP2yHNbs0QOiGGsnTzXhIAA/te3AydTYkqDaTgvhOrPfjli8Cmz6XIAPCQ4ynFwitrZLed2lRJylnNOQjEYFPriI69a2DRWzy5fSF5t/hj54tyUecOn0gkg3RVFM4uKnpvKeQ4iuRwPcmyh4bHcKb2FZsD2JEUH1KOeON2AljCnnyuXnP4CfYT/XNGFuqhz0JLD/++4fjeac8wPiuxYBW9HSG+SS7t+uTmRYMsZ5bOs1F5zjAckdpdOmDa/6syOsSYg+tn7G6yE6GzQ7Mo7ImtVe1sbwnJ5Nucq2YSUo9FRNPS1T/65a+dWpf11bre1cIvJJimd9ooAHT9Ar8BmeHUnmOawCIyec4ViDE3/ht3mwWtQS5JSbztspvlF9wFgm3lDiamFp1ECJZUSrYKz9TQ6UsBSNnL/86qKdjLfnyXV/65aTHLD7lwOJi2Zj2KcYmhKVQreMCtGjWg7XfJLSaLERdh5rVYBWImlSeR+cY77Ea8LT76vopc5lPPiKTIGxE4q511KS7XkQkmfDlpWMQ4ldaUzwbROuOiE9kK9+vckKiIf4+CD3/C0iT0chzU7Azxq6NFMUzXZcuDUo3htTdhmkvUJ+Utt2WHseGY6LTG99VkyAdZ1dsI0e1czzKSlS8Xm1Af+bXYWhZPDRW8m/P4XbfSozpcZWT0tShdSln8q7Wyeg78vV/p6dBD4GZQHmX9RQhEuehyMQxLc53NrBh1Py756udjhD9LdlDuw6Lgtdq6JhwfS39xcEIoXhdEQfTmf8dY4cwQzboso07Jeqtq6UcadAxnNM2sdGRnHz/xLeT+Evmu8wJUZcmA3dHIecerVie7MNNvWxFCarAY1xFRDdG5MCQgFZz/Gv+xQ4dQNV34FcAoW9GvdBOcS2MK5wZlxmHKV6ZPVijAoP57l3fGUPouokcQGN4QurSA4qZQGYPsm6jh91mWe7th5n/aXfiGsif3iyRaZUSMY56cc76lAx9Kdx0aIXbueS4pSc1rSVM3swYYP3MCsZKCMh+qKB/nnDZ7PAbH3AgWtWIeUE34i4Qh31vuiMx1UdyR5JsX9hTvMBr8e6DC1Z4FcAAA=", "archetype": "The Trench Digger", "hype": "Hype: 9,550", "tags": ["Australia Bound", "Deep Trenches", "Beach Archeologist"], "gerald_quotes": null}, {"id": "maidjames", "name": "Maid James", "quirk": "Runs the crew cafe. Every cuppa served with a twirl.", "intro_title": "Maid James joins", "intro_text": "James opens a pop-up cafe in a pink frilly outfit and serves the whole crew tea with a big jump and a wave. It is the best service in England. Gerald leaves a five star review.", "image": "data:image/webp;base64,UklGRs4EAABXRUJQVlA4IMIEAAAwFgCdASpIAEgAPp1Cmkmlo6IhK5VceLATiWMAxnQAkkjJPlK9canBj2gRvqy6eQ8BfwzKgkRjouPe56V3ksKw8xz37ngfZW4oTUPpTxRMekSFKz6ooB4J11Iee+WmjDkz6y9scF6GjyjiPsZwk6bZELF1lRONTUVqJCz04a44+i2BOKYGW2cEaqLbw4grRlaXb0K9k8rcBS3HJ/nyUsB2B0FqInXSb13QDn1mG+Ig03APNOoqHAZNUAAA/vtb0/VcKlf9bZanDS+vfC6Amcm7rW+eEVYSnwHdnQXnnJKP6QEgmyG9NGND95Sdu3bor09EBoVILNSHAi54a4S1/bO6Re9tB5OYMRtp8FxXpCDLq4bbnlO5lCXWKIbMk0c77/DgKPjfUvWhYoJZQZo/4ge8OP233y+kDBjoz8i5w7ZhOnW8+j1pZFHapGsM1NJA8DBy4oeTkQU0Z3pjN+Z31pAYrWteEWdnN+yXYxVJMKfMPT1evdl81vPdfnn94a5482YSVAl+8YWBrtQl1ifco2XOxFYgaAcO3ePUdjbRPdVY/ldUt51I5HrwmeNJh48DOfmlyJZQQklwEqkUl9dF9SUDuK0D1HEot7n4BIIN1K5DpFDIBDDSWeaTGt4vXyO8AHejgUi7/B26a8BUmvLghJNrJUujVutAqoLdxFObQ49opUVAgcLi83LSxSGsDCjd4sRF2v5bDwtS//vziAjPVbPmYxYvP62Fgb4whFWrYwqRSb2kqoI8nXiG3vv83u5Hz/jIqM4XVOEW71/VBAnkSEE00okurOcPej6nB0h6ZU0Gj29ODQ+5uLw0L3pq/UcQuHlPxNBeFQt0GG+N+7LNfEuaiYog5wqABdECd/hGoTB98T6A0XYKyP/QvwJcW5nGvOMz36jIgabWrvc/4uVkjS8VWI/Fje1O6OpKHy8vxn9mIWZ/XHL0abx+83PdZ5ENgf7ys7o6gMWduBXu1AwlZszYJy1lFPR9sa24UY2gD9M2L1HoeXDqVsCRWAWoM5A+FakIqHlxPz7FaAMwFfLIrb9qlq0ntOU3BBE24CpKyRnE3cuOpe9Wa3ev0Xeh+U43IIlT9+xIb3dqCt8pJrhn6Y7GcilzPwypcf/Mf4ZxoHBQnbcVKMe9n/NbbQFlq9sBXWjH6RAtWKNhyOXooGZpYfu5iLKEGtLEVzL1M7172Bh5UL67u8b9PcZ5wlIEtZ7TAnXnSTnRBHH/0+HHOb2hQikOf0fWsFuw61dc36BRoFiDdfIyQuYV96OgmnmP+vxIRh5LuRaKxF1SSXw+kemZEMJE9afndnNngqMHcPQslIa7/T7XfPtailRJJzFjj/B/R62QzAfRcvPN50QsU+5kLp/ECkiyqqPn+n8j9ufvqa1hfBoR3sKBuwFCyIQMAO75vzYYVWiD21zHW9DrvTYIIN1iauh4/RfuS7qCuJ0VyEDTuzwt38DQDCO0OmQvsypRN/UOuck1ntcQKjVHnPEESTZMSo/Nsc46lwotbPPKXfJxSuZD4HpLoh7Mr9PeVCgGeiveBhkR74fsyvuJIyxhJIp2rnbwlScjNNuYkmRgwEXNECGR6OQgAmM3h+KANc9LGYAlrWaNYiTPfTtyDu6U/G0wAAA=", "archetype": "The Cafe Connoisseur", "hype": "Hype: 9,900", "tags": ["Pink Frilly Uniform", "Royal Cuppa", "Five Star Service"], "gerald_quotes": {"smash": "Gerald sighs with bliss: 'Finally, somebody who appreciates proper cafe etiquette and a royal twirl!'", "pass": "Gerald drops his teabag: 'You turned down a five-star cuppa and a pink frill?! Inconceivable!'", "super": "Gerald weeps tears of tea: 'THE ROYAL CAFE IS CROWNED! Unlimited scones for life!'"}}, {"id": "suslucas", "name": "Unsuspecting Lucas", "quirk": "Has no idea he is in the game. Just vibing.", "intro_title": "Unsuspecting Lucas joins", "intro_text": "Lucas looks up at the camera with a calm little smile, completely unaware he has been recruited. Nobody tells him. He is doing great anyway.", "image": "data:image/webp;base64,UklGRoICAABXRUJQVlA4IHYCAACQEACdASpIAEgAPplAmkglo6KjsLiaqLATCWMAyjPtlBvL3NRp2INFaMPb8QZh3oqjIX42KFXXa86BWcrXUOKSxbESfgvSgWzdtX+vsV+QDAHwEESFSUkBHp/unB6ligoup54yYYF0k7trE+h6krI76tdH0PrjmuAjybnWjMCAXeaF5WAWRmGYbRwwucAA/u3P9nzpPnPU2zlf+CfVqNvxBUOTlPeq3/YBEcO6mXwMV7ftUqB05HPaqm9sp6p3zMY84o4ruxJ72mhYaZXeo/wv6SnFzMOWKFmvH45pVEeVGIxPa9X4eDmHUt26rOks2I/5TcZEcpkGr192UVW+USwii44ET+Pc/bZ+aGCGUwJCj8UxRWGscTSMVpdPB9OqUyPU3w3A3mgicv0dNR7k6oAdFUNMGws4cuukNO/jOehK9NWaHIY3NwLimxE2OQHQXs6BUVRFWkYMF/3bHiVCeBSpUXKm+UUrJMS2IdiOJQgdH8ohFSbumzDlve6tLwIB80Uyk3mIsukhRlTdGwFJ//Wip5AvAbM+mR9z9ABu3BP4yIkd+qiOV8HSLKZLAO6le2mlSDXqCq+dauxAdvaGf791fsICjGWEFZ6F7byk7pHkmPPwD4I1BY/B6zletlk/+WbP89BZbEslSM3/dypebVvYxLJdjycLY5GA0Id6mecLZsdUV5sG4gfisSsTS2W7RixuQJyckzGLjizTzrlffLbZMKDiAP51hYoLKZVaO5iDljI29oDdf3Tlg9GD307wyFs/hwGOfLnn6u6AqqCU8kUde4h5EatggjKbuzyn0zvDMd5kRHGCOiwOE0djYm7kq2UTBJ/AYAA=", "archetype": "The Innocent Bystander", "hype": "Hype: 9,300", "tags": ["Unaware Recruit", "Vibing", "Calm Smile"], "gerald_quotes": null}, {"id": "cutieblunden", "name": "Cutie Mr Blunden", "quirk": "Pythagoras, but make it sparkly. Blushes at right angles.", "intro_title": "Cutie Mr Blunden joins", "intro_text": "Mr Blunden returns surrounded by floating pink hearts and sparkles. Nobody knows who added them. He is too polite to ask. Maths has never been this adorable.", "image": "data:image/webp;base64,UklGRvADAABXRUJQVlA4IOQDAABQFQCdASpIAEgAPp0+m0oloyIhq5Oc+LATiUAYkn7KyAytcueNsm6ZqC/nRPbnMTtt65XWB0gWEP4tPnEM2dPf4Fna5FnZSayyHKRukwSjzJNP1w6lIgaD+2Z2fOksHvogIQhSr0jJdyCUR8gjNj7LIduITJjma3BINxoHS0fgDRmUbWxSnX69tHvGxheEgbH3aKYYTo8PGVP1e47+qYTKa8boqUvfU1ShfuIFk8GplWfHAADIolJNqe1G3zrYw7D0eWe79nc+0S4x3S3cJ9hlnn0J+Tn4rhII37olOH+FJ0gdNJ+qYezy4lbGSLz/chWBz1l8ci0qQehq7D/AR9iZCPrpytx8m+Kg7/uBYuOqDLqROQhi+2caGN+ffkJ2valS+SMpK9nA4n4b0vhRd7N1qNkCj0dG45tXPod03ya59vc8eNfL4Xb4IfoPygS4sQfRymq8aAZx4GvoSzL/Vgg0bLA56xcOmD393h8N4+C2Qzy6E44hfPzSfXkGVArQv5lfwUo2fmv3WR7cvhZq0mqZLP//BZnsxQHmjwyZuAcCYViasY0eeVytfyadgS3IvN1jBxDHWg+/Mhq7SK+4RS63ByjEKMMrnyVmmquxFrmJoSd4GvMtFEhUmgwWvQoyvOv5/bU5nhkd15WklHaKhRnsxaIxAkgn2l6wDGRIKzo+rNPiFx3OMBsi3Jygwnj5GvJXLG9ftSybpuVQG8Ag3wVKtUFpJZEuWTGzEcXbqbip/NFfC7EDm4JzKEKyL6ZL91FuS/mwS1n1CMDRQydEQoBIAiuL1Jj5Gg8tewCm2K0XIzJEkRozXct8GiyQJyJQUHi7AyNzHUsTqO3ZSMaYBOzkbx5q0HFivIdcCEZkmfM4gZ1H0nRgpFSXsSEiQa2c7HXsPcqTrxk1kG4LM7GSMLQT2rfW9WyGa+slow/4NQ92FVhG1/jnAARn9ldiZpF0I6w5RGykQFFYJWFpqVGorE4H6vCpQQHe6VNdAkPlaPwu7/g/AL7sOvkpAA6Pizlq6rNDKVz94jQoHCCvxBkaXexLKviwTLdYV/YihAMwT+UlqMoUORlQXzwsPYdy5nmuLArwx/3JDL+G7x7v4prOJqEdrYnNskVW2coIoxdj9S4YM0d85/Lp3VL3j8ieJ0QLGGASPLzSazPEIKUdMYwLems28Vm1TmFzJrgfrG6yjAelHk9Ou6IzzRhFOC6FxMNL9WxZZwzONdoi3doSqZQL5JY7RW9UfcDdq/6W+4kd/EDLTnSN4luPvedmmyaATBpLb+37mRmS565vFhDFhJdHlDovqVVo3mY7zZ7sUmOHCABwIH/AAAA=", "archetype": "The Sparkle Geometrician", "hype": "Hype: 9,700", "tags": ["Floating Pink Hearts", "Sparkly Maths", "Right-Angle Blush"], "gerald_quotes": {"smash": "Gerald blushes: 'Pythagoras himself would calculate this as a 90-degree match made in heaven.'", "pass": "Gerald shakes his head: 'An acute tragedy. Heartbreak at right angles.'", "super": "Gerald floats in pink sparkles: 'MATHEMATICALLY PERFECT ROYAL UNION!'"}}, {"id": "showerleo", "name": "Shower Leo", "quirk": "Takes every call from the shower. Water pressure: maximum.", "intro_title": "Shower Leo joins", "intro_text": "Leo answers the crew group call mid-shower, water pouring off his head, completely calm. He says he does his best thinking in there. Gerald hates water and stays well back.", "image": "data:image/webp;base64,UklGRmwCAABXRUJQVlA4IGACAADwEQCdASpIAEgAPp08mUkloyIhL1Vc6LATiWcAzmwwRFCJQN/k8Y12Jak4FAAuuD1LEggliP5o/lKV3uhPwqqLcGoncpByNqdMW5jjPggjU5ws8B1CF3D1VQpWL1X5H7LKLHokJ1BCJdjUvwpT/11B8XNa7o3RRwiAWZ5y/omMC+fDTfnI+NgfA61AhcLzdruqdVlgp4suAAD+330Ec8xXDZ0BR54QpJV8jGksgdvhf3D2Vy9UD/ML/Kvq1zjJWKNhDx6Z7nSztp8+euv0xTwDdrvE5+xrvENThHO9ff0YWGhcWFGgYzm0VmkCtR+KuTDYGipTgVBnqX76G1636Mtgls6wz4i+TmCch5GQAFqN2Hd9B988tBcoCPfzm8yejcKsjDQuoMe3wNMfAByAuBXESQLq531h8IoilARpCHpAO/n4E+VX9ttfVAMJBhZUZ/9/pZ7G6yz8ghVOP2ODfwVmoMNeqgD0LOdKGZjUnN+dmMij859zuv8GhExKPE/CcdEB+MgUpAvekz8RSaT4NIr2EgkMMctfzuYW0QmKMuqaUKb2i5mr7Swg8mlpyE3y0Z3998O5PFUEzbu3IXfqZ2/hKt3IrT9Yb6dvJyfOVwhQh5cCMlbtbhl+F3/YFMHtGqYMkKzmwAHOeXUXdAqfKsN2lvVhew9wnZUurDnrtNJTky3XNiQy8zfIsB3h0eyV8A1vptN0HUsXfblvUL6Dtwcmxsy3ZGVl3jDGCHmnClKNAe+ZgiXUNha+0OK4tkqHPk0yCoZoj0Kxjg8tKfBC1AQrlD5B+Nxy7JBZf1T+egAAAA==", "archetype": "The Aquanaut Executive", "hype": "Hype: 9,600", "tags": ["Shower Conference", "Max Pressure", "Wet Hair"], "gerald_quotes": {"smash": "Gerald dodges the spray: 'Maximum water pressure, maximum charisma. Good pick!'", "pass": "Gerald nods: 'Sensible. Nobody wants soggy texts in the group chat.'", "super": "Gerald pulls out an umbrella: 'A ROYAL DOWNPOUR OF PASSION!'"}}, {"id": "susoli", "name": "Sus Oli (67)", "quirk": "Six seven. Hands in pockets. Definitely up to something.", "intro_title": "Sus Oli (67) joins", "intro_text": "Oli leans against a wall with his hands in his pockets and a very suspicious smirk. He just says six seven and walks off. Nobody knows what it means. Gerald is terrified.", "image": "data:image/webp;base64,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", "archetype": "The Cryptic Agent (67)", "hype": "Hype: 9,750", "tags": ["Six Seven", "Pockets Deep", "Gerald Threat"], "gerald_quotes": {"smash": "Gerald gasps: 'Six seven... could this be the prophecy fulfilled?!'", "pass": "Gerald breathes a sigh: 'Thank goodness. Whatever he was planning, you avoided it.'", "super": "Gerald clutches his chest: 'THE 67 PROPHECY REIGNS SUPREME!'"}}];
+
+    // Generic commentary for Gerald when no specific quote matches
+    const GERALD_GENERIC_SMASH = [
+      "Gerald nods approvingly from atop his wheelie bin.",
+      "The teabag crown glows with royal consent!",
+      "A match made in the chips of Brighton pier.",
+      "Gerald whispers: 'Hype output just surged x1.5!'",
+      "Gerald flutters his feathers: 'Bold choice, your majesty.'",
+      "The Empire expands by one chaotic legend."
+    ];
+
+    const GERALD_GENERIC_PASS = [
+      "Gerald tosses their photo to a seaside crab.",
+      "Cast out into the relentless English drizzle!",
+      "No chips for them tonight.",
+      "Gerald squawks: 'Brutal rejection! I love it.'",
+      "Banished beyond the seaside arcade!",
+      "Gerald notes: 'The queue was too long for them anyway.'"
+    ];
+
+    const GERALD_GENERIC_SUPER = [
+      "ROYAL CORONATION! Gerald drops the teabag crown in shock!",
+      "THE EMPIRE HAS FOUND TRUE LOVE! Free pasties for everyone!",
+      "Brenda the Giant Seagull is singing in the sky!",
+      "GIGA-HYPE UNLOCKED! The wedding is booked at the pier chippy!"
+    ];
+
+    // Sound Engine (Web Audio API)
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playSmash() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc1 = this.ctx.createOscillator();
+        const osc2 = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc1.type = 'triangle';
+        osc2.type = 'sine';
+        osc1.frequency.setValueAtTime(523.25, now); // C5
+        osc1.frequency.exponentialRampToValueAtTime(659.25, now + 0.15); // E5
+        osc2.frequency.setValueAtTime(659.25, now);
+        osc2.frequency.exponentialRampToValueAtTime(783.99, now + 0.15); // G5
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.35);
+        osc2.stop(now + 0.35);
+      }
+
+      playPass() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.exponentialRampToValueAtTime(90, now + 0.22);
+
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.25);
+      }
+
+      playSuper() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const notes = [440, 554.37, 659.25, 880];
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+
+          gain.gain.setValueAtTime(0, now + idx * 0.06);
+          gain.gain.linearRampToValueAtTime(0.22, now + idx * 0.06 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.35);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now + idx * 0.06);
+          osc.stop(now + idx * 0.06 + 0.35);
+        });
+      }
+
+      playUndo() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(500, now + 0.15);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.18);
+      }
+
+      playFlip() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      }
+
+      playFanfare() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const chords = [
+          [523.25, 659.25], // C5, E5
+          [587.33, 698.46], // D5, F5
+          [659.25, 783.99], // E5, G5
+          [783.99, 1046.50] // G5, C6
+        ];
+        chords.forEach((chord, i) => {
+          chord.forEach(freq => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.18);
+
+            const duration = (i === chords.length - 1) ? 0.8 : 0.25;
+            gain.gain.setValueAtTime(0.18, now + i * 0.18);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.18 + duration);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.18);
+            osc.stop(now + i * 0.18 + duration);
+          });
+        });
+      }
+    }
+
+    // Confetti Engine
+    class ConfettiEngine {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.animId = null;
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+
+      burst(count = 60, isSuper = false) {
+        const colors = isSuper 
+          ? ['#f59e0b', '#fbbf24', '#ffffff', '#fcd34d', '#d97706']
+          : ['#ff3366', '#cf142b', '#10b981', '#f59e0b', '#3b82f6', '#ec4899'];
+        
+        const shapes = isSuper ? ['star', 'crown', 'circle'] : ['circle', 'rect', 'heart'];
+
+        for (let i = 0; i < count; i++) {
+          this.particles.push({
+            x: this.canvas.width / 2 + (Math.random() - 0.5) * 120,
+            y: this.canvas.height / 2 + (Math.random() - 0.5) * 80,
+            vx: (Math.random() - 0.5) * 18,
+            vy: -Math.random() * 16 - 6,
+            size: Math.random() * 8 + 6,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            shape: shapes[Math.floor(Math.random() * shapes.length)],
+            rotation: Math.random() * 360,
+            vRot: (Math.random() - 0.5) * 12,
+            gravity: 0.45,
+            opacity: 1,
+            decay: Math.random() * 0.015 + 0.01
+          });
+        }
+
+        if (!this.animId) {
+          this.loop();
+        }
+      }
+
+      loop() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += p.gravity;
+          p.rotation += p.vRot;
+          p.opacity -= p.decay;
+
+          if (p.opacity <= 0 || p.y > this.canvas.height + 50) {
+            this.particles.splice(i, 1);
+            continue;
+          }
+
+          this.ctx.save();
+          this.ctx.translate(p.x, p.y);
+          this.ctx.rotate((p.rotation * Math.PI) / 180);
+          this.ctx.globalAlpha = Math.max(0, p.opacity);
+          this.ctx.fillStyle = p.color;
+
+          if (p.shape === 'circle') {
+            this.ctx.beginPath();
+            this.ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+            this.ctx.fill();
+          } else if (p.shape === 'rect') {
+            this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+          } else if (p.shape === 'star') {
+            this.drawStar(0, 0, 5, p.size, p.size / 2);
+          } else if (p.shape === 'crown') {
+            this.ctx.font = `${p.size * 1.5}px sans-serif`;
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText('👑', 0, 0);
+          } else if (p.shape === 'heart') {
+            this.ctx.font = `${p.size * 1.4}px sans-serif`;
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText('❤️', 0, 0);
+          }
+
+          this.ctx.restore();
+        }
+
+        if (this.particles.length > 0) {
+          this.animId = requestAnimationFrame(() => this.loop());
+        } else {
+          this.animId = null;
+        }
+      }
+
+      drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+        let rot = (Math.PI / 2) * 3;
+        let x = cx;
+        let y = cy;
+        let step = Math.PI / spikes;
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(cx, cy - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+          x = cx + Math.cos(rot) * outerRadius;
+          y = cy + Math.sin(rot) * outerRadius;
+          this.ctx.lineTo(x, y);
+          rot += step;
+
+          x = cx + Math.cos(rot) * innerRadius;
+          y = cy + Math.sin(rot) * innerRadius;
+          this.ctx.lineTo(x, y);
+          rot += step;
+        }
+        this.ctx.lineTo(cx, cy - outerRadius);
+        this.ctx.closePath();
+        this.ctx.fill();
+      }
+    }
+
+    // Main Game Controller
+    class EmpireSmashGame {
+      constructor() {
+        this.selectedClan = 'all';
+        this.deck = [...ALL_CHARACTERS];
+        this.currentIndex = 0;
+        this.history = []; // { char, action: 'smash' | 'pass' | 'super' }
+        this.smashed = [];
+        this.supers = [];
+        this.passed = [];
+
+        this.sound = new SoundEngine();
+        this.confetti = new ConfettiEngine(document.getElementById('confetti-canvas'));
+
+        this.activeCardEl = null;
+        this.isDragging = false;
+        this.startX = 0;
+        this.startY = 0;
+        this.currentX = 0;
+        this.currentY = 0;
+
+        this.initDOM();
+        this.bindEvents();
+        this.renderDeck();
+        this.updateHUD();
+      }
+
+      initDOM() {
+        this.cardStack = document.getElementById('cardStack');
+        this.geraldText = document.getElementById('geraldText');
+        this.progressBar = document.getElementById('progressBar');
+        this.matchesBadge = document.getElementById('matchesBadge');
+        this.headerCountBadge = document.getElementById('headerCountBadge');
+
+        this.undoBtn = document.getElementById('undoBtn');
+        this.passBtn = document.getElementById('passBtn');
+        this.superBtn = document.getElementById('superBtn');
+        this.smashBtn = document.getElementById('smashBtn');
+        this.flipBtn = document.getElementById('flipBtn');
+        this.soundBtn = document.getElementById('soundBtn');
+
+        this.matchesBtn = document.getElementById('matchesBtn');
+        this.matchesModal = document.getElementById('matchesModal');
+        this.closeModalBtn = document.getElementById('closeModalBtn');
+        this.modalGridContent = document.getElementById('modalGridContent');
+
+        this.endgameScreen = document.getElementById('endgameScreen');
+        this.restartBtn = document.getElementById('restartBtn');
+        this.shareBtn = document.getElementById('shareBtn');
+        this.reviewMatchesBtn = document.getElementById('reviewMatchesBtn');
+        this.toast = document.getElementById('toast');
+      }
+
+      bindEvents() {
+        // Action Buttons
+        this.passBtn.addEventListener('click', () => this.swipe('pass'));
+        this.smashBtn.addEventListener('click', () => this.swipe('smash'));
+        this.superBtn.addEventListener('click', () => this.swipe('super'));
+        this.undoBtn.addEventListener('click', () => this.undo());
+        this.flipBtn.addEventListener('click', () => this.toggleCardFlip());
+
+        // First click unlocks audio context on all browsers
+        window.addEventListener('pointerdown', () => this.sound.init(), { once: true });
+
+        // Sound Toggle
+        this.soundBtn.addEventListener('click', () => {
+          this.sound.muted = !this.sound.muted;
+          this.soundBtn.textContent = this.sound.muted ? '🔇' : '🔊';
+          this.showToast(this.sound.muted ? 'Sound Muted' : 'Sound Enabled');
+        });
+
+        // Keyboard navigation
+        window.addEventListener('keydown', (e) => {
+          if (this.matchesModal.classList.contains('open')) return;
+          const key = e.key.toLowerCase();
+          if (key === 'arrowleft' || key === 'a') {
+            e.preventDefault();
+            this.swipe('pass');
+          } else if (key === 'arrowright' || key === 'd') {
+            e.preventDefault();
+            this.swipe('smash');
+          } else if (key === 'arrowup' || key === 'w') {
+            e.preventDefault();
+            this.swipe('super');
+          } else if (key === 'z' || key === 'backspace') {
+            e.preventDefault();
+            this.undo();
+          } else if (key === ' ' || key === 'i') {
+            e.preventDefault();
+            this.toggleCardFlip();
+          } else if (key === 'm') {
+            e.preventDefault();
+            this.soundBtn.click();
+          }
+        });
+
+        // Filter clan buttons
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+          pill.addEventListener('click', () => {
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            this.filterByClan(pill.dataset.clan);
+          });
+        });
+
+        // Modal triggers
+        this.matchesBtn.addEventListener('click', () => this.openMatchesModal());
+        this.closeModalBtn.addEventListener('click', () => this.closeMatchesModal());
+        this.matchesModal.addEventListener('click', (e) => {
+          if (e.target === this.matchesModal) this.closeMatchesModal();
+        });
+
+        // Modal Tab Buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            this.renderMatchesTab(btn.dataset.tab);
+          });
+        });
+
+        // Endgame screen buttons
+        this.restartBtn.addEventListener('click', () => this.restart());
+        this.shareBtn.addEventListener('click', () => this.shareResults());
+        this.reviewMatchesBtn.addEventListener('click', () => {
+          this.openMatchesModal();
+        });
+
+        // Logo click reshuffle
+        document.getElementById('logoReload').addEventListener('click', () => {
+          this.restart();
+          this.showToast('Deck Reshuffled! 👑');
+        });
+      }
+
+      filterByClan(clan) {
+        this.selectedClan = clan;
+        if (clan === 'all') {
+          this.deck = [...ALL_CHARACTERS];
+        } else {
+          this.deck = ALL_CHARACTERS.filter(c => c.category === clan);
+        }
+
+        // Shuffle filtered deck
+        for (let i = this.deck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+        }
+
+        this.currentIndex = 0;
+        this.history = [];
+        this.smashed = [];
+        this.supers = [];
+        this.passed = [];
+
+        this.headerCountBadge.textContent = `${this.deck.length} CARDS`;
+        this.geraldText.innerHTML = `<strong>Gerald:</strong> Switched arena to <strong>${clan === 'all' ? 'All Legends' : clan}</strong> (${this.deck.length} contenders)!`;
+        this.renderDeck();
+        this.updateHUD();
+      }
+
+      createCardElement(char, index) {
+        const card = document.createElement('div');
+        card.className = `tinder-card card-layer-${index + 1}`;
+        card.dataset.id = char.id;
+
+        card.innerHTML = `
+          <div class="card-inner">
+            <!-- Front Face -->
+            <div class="card-face card-face-front">
+              <div class="card-ambient">
+                <img class="card-ambient-img" src="${char.image}" alt="">
+                <div class="card-ambient-overlay"></div>
+              </div>
+
+              <div class="stamp stamp-smash">SMASH</div>
+              <div class="stamp stamp-pass">PASS</div>
+              <div class="stamp stamp-super">SUPER SMASH 👑</div>
+
+              <div class="card-content">
+                <div class="card-top-info">
+                  <span class="clan-pill">${char.category}</span>
+                  <span class="hype-badge">⚡ ${char.hype}</span>
+                </div>
+
+                <div class="portrait-wrap">
+                  <div class="avatar-halo">
+                    <div class="avatar-inner">
+                      <img class="avatar-img" src="${char.image}" alt="${char.name}">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-meta">
+                  <div class="char-name-row">
+                    <h3 class="char-name">${char.name}</h3>
+                    <span class="char-archetype">${char.archetype}</span>
+                  </div>
+                  <div class="char-quirk-box">
+                    "${char.quirk}"
+                  </div>
+                  <div class="char-tags">
+                    ${char.tags.map(t => `<span class="tag-chip">#${t}</span>`).join('')}
+                  </div>
+                  <div class="flip-hint">
+                    <span>📖 Tap to inspect Gerald's secret dossier</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Back Face (Gerald Dossier) -->
+            <div class="card-face card-face-back">
+              <div class="dossier-header">
+                <div class="dossier-title">
+                  <span>🦅</span> Gerald's Intel Dossier
+                </div>
+                <span class="hype-badge">TOP SECRET</span>
+              </div>
+
+              <div class="dossier-body">
+                <div class="dossier-intro-box">
+                  <div class="dossier-intro-title">${char.intro_title}</div>
+                  <div class="dossier-intro-text">${char.intro_text}</div>
+                </div>
+
+                <div class="dossier-stats-grid">
+                  <div class="dossier-stat">
+                    <div class="dossier-stat-label">Subject ID</div>
+                    <div class="dossier-stat-val">${char.id}</div>
+                  </div>
+                  <div class="dossier-stat">
+                    <div class="dossier-stat-label">Hype Tier</div>
+                    <div class="dossier-stat-val">${char.hype.replace('Hype: ', '')}</div>
+                  </div>
+                  <div class="dossier-stat">
+                    <div class="dossier-stat-label">Clan Group</div>
+                    <div class="dossier-stat-val">${char.category.replace('The ', '')}</div>
+                  </div>
+                  <div class="dossier-stat">
+                    <div class="dossier-stat-label">Threat to Teabag</div>
+                    <div class="dossier-stat-val">MAXIMUM</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="flip-back-btn" type="button">
+                <span>↩️</span> Return to Card
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Card flip listener
+        const flipTrigger = card.querySelector('.flip-hint');
+        const flipBackBtn = card.querySelector('.flip-back-btn');
+
+        if (flipTrigger) {
+          flipTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleCardFlip(card);
+          });
+        }
+        if (flipBackBtn) {
+          flipBackBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleCardFlip(card);
+          });
+        }
+
+        return card;
+      }
+
+      renderDeck() {
+        this.cardStack.innerHTML = '';
+        const remaining = this.deck.slice(this.currentIndex, this.currentIndex + 3);
+
+        if (remaining.length === 0) {
+          this.triggerEndgame();
+          return;
+        }
+
+        remaining.forEach((char, idx) => {
+          const cardEl = this.createCardElement(char, idx);
+          this.cardStack.appendChild(cardEl);
+        });
+
+        this.setupActiveCard();
+      }
+
+      setupActiveCard() {
+        const topCard = this.cardStack.firstElementChild;
+        if (!topCard) return;
+
+        this.activeCardEl = topCard;
+        const secondCard = this.cardStack.children[1];
+
+        // Pointer event listeners (desktop mouse + touch screen)
+        const onPointerDown = (e) => {
+          if (e.target.closest('.flip-hint') || e.target.closest('.flip-back-btn')) return;
+          this.isDragging = true;
+          this.startX = e.clientX;
+          this.startY = e.clientY;
+          this.currentX = 0;
+          this.currentY = 0;
+          this.activeCardEl.classList.add('dragging');
+          this.activeCardEl.setPointerCapture(e.pointerId);
+        };
+
+        const onPointerMove = (e) => {
+          if (!this.isDragging) return;
+          this.currentX = e.clientX - this.startX;
+          this.currentY = e.clientY - this.startY;
+
+          const rot = this.currentX * 0.08;
+          this.activeCardEl.style.transform = `translate3d(${this.currentX}px, ${this.currentY}px, 0) rotate(${rot}deg)`;
+
+          // Subtle elevation of second card
+          const dragMagnitude = Math.min(1, Math.hypot(this.currentX, this.currentY) / 120);
+          if (secondCard) {
+            const scale = 0.95 + dragMagnitude * 0.05;
+            const translateY = 14 - dragMagnitude * 14;
+            secondCard.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            secondCard.style.opacity = `${0.88 + dragMagnitude * 0.12}`;
+          }
+
+          // Visual Stamps
+          const smashStamp = this.activeCardEl.querySelector('.stamp-smash');
+          const passStamp = this.activeCardEl.querySelector('.stamp-pass');
+          const superStamp = this.activeCardEl.querySelector('.stamp-super');
+
+          if (this.currentY < -60 && Math.abs(this.currentX) < 80) {
+            const superOpacity = Math.min(1, Math.abs(this.currentY + 60) / 80);
+            superStamp.style.opacity = superOpacity;
+            smashStamp.style.opacity = 0;
+            passStamp.style.opacity = 0;
+          } else if (this.currentX > 20) {
+            const smashOpacity = Math.min(1, (this.currentX - 20) / 80);
+            smashStamp.style.opacity = smashOpacity;
+            passStamp.style.opacity = 0;
+            superStamp.style.opacity = 0;
+          } else if (this.currentX < -20) {
+            const passOpacity = Math.min(1, (-this.currentX - 20) / 80);
+            passStamp.style.opacity = passOpacity;
+            smashStamp.style.opacity = 0;
+            superStamp.style.opacity = 0;
+          } else {
+            smashStamp.style.opacity = 0;
+            passStamp.style.opacity = 0;
+            superStamp.style.opacity = 0;
+          }
+        };
+
+        const onPointerUp = (e) => {
+          if (!this.isDragging) return;
+          this.isDragging = false;
+          this.activeCardEl.classList.remove('dragging');
+
+          const threshold = 95;
+          const superThreshold = 110;
+
+          // If barely moved, treat as tap to flip
+          if (Math.abs(this.currentX) < 6 && Math.abs(this.currentY) < 6) {
+            this.toggleCardFlip(this.activeCardEl);
+            return;
+          }
+
+          if (this.currentY < -superThreshold && Math.abs(this.currentX) < 100) {
+            this.swipe('super');
+          } else if (this.currentX > threshold) {
+            this.swipe('smash');
+          } else if (this.currentX < -threshold) {
+            this.swipe('pass');
+          } else {
+            // Snap back
+            this.activeCardEl.style.transform = '';
+            if (secondCard) {
+              secondCard.style.transform = '';
+              secondCard.style.opacity = '';
+            }
+            const stamps = this.activeCardEl.querySelectorAll('.stamp');
+            stamps.forEach(s => s.style.opacity = 0);
+          }
+        };
+
+        this.activeCardEl.addEventListener('pointerdown', onPointerDown);
+        this.activeCardEl.addEventListener('pointermove', onPointerMove);
+        this.activeCardEl.addEventListener('pointerup', onPointerUp);
+        this.activeCardEl.addEventListener('pointercancel', onPointerUp);
+      }
+
+      swipe(action) {
+        if (this.currentIndex >= this.deck.length) return;
+        const char = this.deck[this.currentIndex];
+        const card = this.activeCardEl;
+
+        if (!card) return;
+
+        // Play procedural sound
+        if (action === 'smash') this.sound.playSmash();
+        else if (action === 'pass') this.sound.playPass();
+        else if (action === 'super') {
+          this.sound.playSuper();
+          this.confetti.burst(65, true);
+        }
+
+        // Record history
+        this.history.push({ char, action });
+        if (action === 'smash') this.smashed.push(char);
+        else if (action === 'super') {
+          this.supers.push(char);
+          this.smashed.push(char);
+        } else {
+          this.passed.push(char);
+        }
+
+        // Update Gerald's commentary
+        this.updateGeraldCommentary(char, action);
+
+        // Animate card off screen
+        let endX = 0, endY = 0, endRot = 0;
+        if (action === 'smash') {
+          endX = window.innerWidth * 1.25;
+          endRot = 25;
+          const stamp = card.querySelector('.stamp-smash');
+          if (stamp) stamp.style.opacity = 1;
+        } else if (action === 'pass') {
+          endX = -window.innerWidth * 1.25;
+          endRot = -25;
+          const stamp = card.querySelector('.stamp-pass');
+          if (stamp) stamp.style.opacity = 1;
+        } else if (action === 'super') {
+          endY = -window.innerHeight * 1.25;
+          endRot = 0;
+          const stamp = card.querySelector('.stamp-super');
+          if (stamp) stamp.style.opacity = 1;
+        }
+
+        card.style.transition = 'transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease';
+        card.style.transform = `translate3d(${endX}px, ${endY}px, 0) rotate(${endRot}deg)`;
+        card.style.opacity = 0;
+
+        // Smoothly promote 2nd card
+        const secondCard = this.cardStack.children[1];
+        if (secondCard) {
+          secondCard.style.transition = 'transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease';
+          secondCard.style.transform = 'translateY(0px) scale(1)';
+          secondCard.style.opacity = '1';
+        }
+
+        this.currentIndex++;
+        this.updateHUD();
+
+        setTimeout(() => {
+          this.renderDeck();
+        }, 350);
+      }
+
+      undo() {
+        if (this.history.length === 0) return;
+        const last = this.history.pop();
+        this.currentIndex--;
+
+        if (last.action === 'smash') {
+          this.smashed.pop();
+        } else if (last.action === 'super') {
+          this.supers.pop();
+          this.smashed.pop();
+        } else if (last.action === 'pass') {
+          this.passed.pop();
+        }
+
+        this.sound.playUndo();
+        this.geraldText.innerHTML = `<strong>Gerald:</strong> Rewound verdict on <strong>${last.char.name}</strong>. A second royal chance granted!`;
+
+        this.renderDeck();
+        this.updateHUD();
+      }
+
+      toggleCardFlip(targetCard = null) {
+        const card = targetCard || this.activeCardEl;
+        if (!card) return;
+        this.sound.playFlip();
+        card.classList.toggle('flipped');
+      }
+
+      updateHUD() {
+        const total = this.deck.length;
+        const current = this.currentIndex;
+        const pct = Math.min(100, Math.round((current / total) * 100));
+
+        this.progressBar.style.width = `${pct}%`;
+        this.matchesBadge.textContent = this.smashed.length;
+
+        // Undo button state
+        this.undoBtn.disabled = this.history.length === 0;
+
+        // Tab counts
+        const tabSmash = document.getElementById('tabSmashCount');
+        const tabSuper = document.getElementById('tabSuperCount');
+        const tabPass = document.getElementById('tabPassCount');
+        const tabAll = document.getElementById('tabAllCount');
+
+        if (tabSmash) tabSmash.textContent = this.smashed.length;
+        if (tabSuper) tabSuper.textContent = this.supers.length;
+        if (tabPass) tabPass.textContent = this.passed.length;
+        if (tabAll) tabAll.textContent = this.deck.length;
+      }
+
+      updateGeraldCommentary(char, action) {
+        let quote = "";
+        if (char.gerald_quotes && char.gerald_quotes[action]) {
+          quote = char.gerald_quotes[action];
+        } else {
+          if (action === 'smash') {
+            quote = GERALD_GENERIC_SMASH[Math.floor(Math.random() * GERALD_GENERIC_SMASH.length)];
+          } else if (action === 'pass') {
+            quote = GERALD_GENERIC_PASS[Math.floor(Math.random() * GERALD_GENERIC_PASS.length)];
+          } else {
+            quote = GERALD_GENERIC_SUPER[Math.floor(Math.random() * GERALD_GENERIC_SUPER.length)];
+          }
+        }
+
+        this.geraldText.style.opacity = 0;
+        setTimeout(() => {
+          this.geraldText.innerHTML = `<strong>Gerald:</strong> ${quote}`;
+          this.geraldText.style.opacity = 1;
+        }, 140);
+      }
+
+      triggerEndgame() {
+        this.sound.playFanfare();
+        this.confetti.burst(120, true);
+
+        const total = this.deck.length;
+        const smashedCount = this.smashed.length;
+        const supersCount = this.supers.length;
+        const rate = Math.round((smashedCount / total) * 100);
+
+        document.getElementById('endSmashRate').textContent = `${rate}%`;
+        document.getElementById('endTotalSmashed').textContent = smashedCount;
+        document.getElementById('endTotalSupers').textContent = supersCount;
+
+        // Determine Archetype
+        let verdictTitle = "";
+        let verdictDesc = "";
+
+        if (rate >= 80) {
+          verdictTitle = "THE INDISCRIMINATE MONARCH 👑";
+          verdictDesc = "You would smash Gerald the Seagull himself if he wore sunglasses! The England Empire has never seen such overwhelming, unrestrained passion.";
+        } else if (rate >= 60) {
+          verdictTitle = "THE BENEVOLENT EMPEROR 🔥";
+          verdictDesc = "A true connoisseur of British seaside glory. You appreciate chaotic hair, giant sunglasses, and laser-eyed Christmas jumpers in equal measure.";
+        } else if (rate >= 40) {
+          verdictTitle = "THE DISCERNING REGENT 🧐";
+          verdictDesc = "Sharp, selective, and regal. Only top-tier legends make your royal cut. Gerald respects your exacting standards.";
+        } else if (rate >= 20) {
+          verdictTitle = "THE FROZEN SOVEREIGN ❄️";
+          verdictDesc = "Harder to impress than Gerald during a chip drought. Even Maid James serving tea with a twirl barely moved you!";
+        } else {
+          verdictTitle = "THE HERMIT OF THE PIER 🗿";
+          verdictDesc = "Heart of seaside granite. You rejected almost everyone. Gerald advises an emergency cup of tea and a brisk walk along the boardwalk.";
+        }
+
+        document.getElementById('endgameVerdictTitle').textContent = verdictTitle;
+        document.getElementById('endgameVerdictDesc').textContent = verdictDesc;
+
+        // Render top picks thumbnails
+        const topRow = document.getElementById('topPicksRow');
+        topRow.innerHTML = '';
+        const showcase = (this.supers.length > 0 ? this.supers : this.smashed).slice(0, 5);
+        showcase.forEach(c => {
+          const img = document.createElement('img');
+          img.className = 'top-pick-thumb';
+          img.src = c.image;
+          img.title = c.name;
+          topRow.appendChild(img);
+        });
+
+        this.endgameScreen.classList.add('active');
+      }
+
+      restart() {
+        this.endgameScreen.classList.remove('active');
+        this.currentIndex = 0;
+        this.history = [];
+        this.smashed = [];
+        this.supers = [];
+        this.passed = [];
+
+        // Reshuffle deck
+        for (let i = this.deck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+        }
+
+        this.renderDeck();
+        this.updateHUD();
+        this.geraldText.innerHTML = "<strong>Gerald:</strong> Deck reshuffled! The royal contest begins anew.";
+      }
+
+      openMatchesModal() {
+        this.matchesModal.classList.add('open');
+        const activeTab = document.querySelector('.tab-btn.active').dataset.tab || 'smashed';
+        this.renderMatchesTab(activeTab);
+      }
+
+      closeMatchesModal() {
+        this.matchesModal.classList.remove('open');
+      }
+
+      renderMatchesTab(tab) {
+        this.modalGridContent.innerHTML = '';
+        let list = [];
+
+        if (tab === 'smashed') list = this.smashed;
+        else if (tab === 'supers') list = this.supers;
+        else if (tab === 'passed') list = this.passed;
+        else if (tab === 'all') list = this.deck;
+
+        if (list.length === 0) {
+          this.modalGridContent.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">${tab === 'passed' ? '🗑️' : tab === 'supers' ? '⭐' : '💔'}</div>
+              <p>No legends in this category yet. Keep swiping!</p>
+            </div>
+          `;
+          return;
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'matches-grid';
+
+        list.forEach(c => {
+          const isSuper = this.supers.some(s => s.id === c.id);
+          const isSmashed = this.smashed.some(s => s.id === c.id);
+          const isPassed = this.passed.some(p => p.id === c.id);
+
+          const tag = isSuper ? '⭐' : isSmashed ? '🔥' : isPassed ? '❌' : '👥';
+
+          const item = document.createElement('div');
+          item.className = 'match-item-card';
+          item.innerHTML = `
+            <span class="match-tag">${tag}</span>
+            <img class="match-avatar" src="${c.image}" alt="${c.name}">
+            <div class="match-name">${c.name}</div>
+            <div class="match-sub">${c.archetype}</div>
+          `;
+
+          item.addEventListener('click', () => {
+            this.showDetailPopover(c);
+          });
+
+          grid.appendChild(item);
+        });
+
+        this.modalGridContent.appendChild(grid);
+      }
+
+      showDetailPopover(char) {
+        const existing = document.querySelector('.detail-overlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.className = 'detail-overlay';
+        overlay.innerHTML = `
+          <img src="${char.image}" style="width:84px; height:84px; border-radius:50%; border:3px solid #f59e0b;" alt="">
+          <h3 style="font-size:20px; font-weight:800; color:#fff;">${char.name}</h3>
+          <div style="font-size:12px; font-weight:700; color:#f59e0b;">${char.archetype} • ${char.category}</div>
+          <p style="font-size:13px; color:#cbd5e1; font-style:italic;">"${char.quirk}"</p>
+          <div style="font-size:12px; color:#94a3b8; text-align:left; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;">
+            ${char.intro_text}
+          </div>
+          <div class="detail-actions">
+            <button class="detail-btn" style="background:#ff3366; color:#fff;" id="popSmash">🔥 Smash</button>
+            <button class="detail-btn" style="background:#f59e0b; color:#fff;" id="popSuper">⭐ Super</button>
+            <button class="detail-btn" style="background:#ef4444; color:#fff;" id="popPass">❌ Pass</button>
+          </div>
+          <button style="background:transparent; border:none; color:#8c9cb1; font-size:13px; cursor:pointer;" id="popClose">Close Preview</button>
+        `;
+
+        overlay.querySelector('#popClose').addEventListener('click', () => overlay.remove());
+
+        overlay.querySelector('#popSmash').addEventListener('click', () => {
+          this.reassignVote(char, 'smash');
+          overlay.remove();
+        });
+        overlay.querySelector('#popSuper').addEventListener('click', () => {
+          this.reassignVote(char, 'super');
+          overlay.remove();
+        });
+        overlay.querySelector('#popPass').addEventListener('click', () => {
+          this.reassignVote(char, 'pass');
+          overlay.remove();
+        });
+
+        this.matchesModal.querySelector('.modal-sheet').appendChild(overlay);
+      }
+
+      reassignVote(char, newAction) {
+        // Remove from all arrays
+        this.smashed = this.smashed.filter(c => c.id !== char.id);
+        this.supers = this.supers.filter(c => c.id !== char.id);
+        this.passed = this.passed.filter(c => c.id !== char.id);
+
+        if (newAction === 'smash') {
+          this.smashed.push(char);
+          this.sound.playSmash();
+        } else if (newAction === 'super') {
+          this.supers.push(char);
+          this.smashed.push(char);
+          this.sound.playSuper();
+          this.confetti.burst(40, true);
+        } else {
+          this.passed.push(char);
+          this.sound.playPass();
+        }
+
+        this.showToast(`Updated ${char.name} to ${newAction.toUpperCase()}!`);
+        this.updateHUD();
+        const activeTab = document.querySelector('.tab-btn.active').dataset.tab || 'smashed';
+        this.renderMatchesTab(activeTab);
+      }
+
+      shareResults() {
+        const title = document.getElementById('endgameVerdictTitle').textContent;
+        const rate = document.getElementById('endSmashRate').textContent;
+        const fav = (this.supers[0] || this.smashed[0] || { name: 'Gerald' }).name;
+        
+        const shareText = `👑 England Empire: Smash or Pass\nVerdict: ${title}\n🔥 Smash Rate: ${rate} (${this.smashed.length}/${this.deck.length})\n⭐ Top Imperial Match: ${fav}\nTry it yourself: england-empire.web.app`;
+
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(shareText).then(() => {
+            this.showToast('Verdict copied to clipboard! 📋');
+          }).catch(() => {
+            this.showToast('Copied verdict!');
+          });
+        } else {
+          this.showToast('Sharing not supported on this browser.');
+        }
+      }
+
+      showToast(msg) {
+        this.toast.textContent = msg;
+        this.toast.classList.add('show');
+        setTimeout(() => {
+          this.toast.classList.remove('show');
+        }, 2400);
+      }
+    }
+
+    // Launch game on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      window.game = new EmpireSmashGame();
+    });
+  </script>
+</body>
+</html>
